@@ -10,8 +10,24 @@ import Foundation
 
 class Constant {
     
+    // Models
+    static let User = "User"
     static let Goal = "Goal"
     static let Day = "Day"
+    
+    // User
+    static let firstNameKey = "firstName"
+    static let lastNameKey = "lastName"
+    static let userUUIDKey = "userUUID"
+    
+    // Goal
+    static let dateCreatedKey = "dateCreated"
+    static let goalUUIDKey = "goalUUID"
+    static let goalNameKey = "name"
+    static let totalCompletedKey = "totalCompleted"
+    
+    // Day
+    
     
     // Cell Identifiers
     static let goalCellIdentifier = "goalCell"
