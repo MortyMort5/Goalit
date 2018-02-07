@@ -23,11 +23,14 @@ class DayCollectionViewCell: UICollectionViewCell {
     func updateView() {
         guard let day = self.day, let dateDate = day.date else { return }
         let date = dayOfWeek(date: dateDate)
-        dateLabel.text = date
-        if day.completed == 0 {
-            dayCompletedButton.layer.backgroundColor = UIColor.red.cgColor
-        } else {
-            dayCompletedButton.layer.backgroundColor = UIColor.green.cgColor
+        dayCompletedButton.setTitle("\(date)", for: .normal)
+        if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
+            dayCompletedButton.layer.backgroundColor = UIColor(red: 255/255, green: 86/255, blue: 106/255, alpha: 1.0).cgColor
+        }
+        else if day.completed == CompletedGoalForDay.completed.rawValue {
+            dayCompletedButton.layer.backgroundColor = UIColor(red: 91/255, green: 214/255, blue: 111/255, alpha: 1.0).cgColor
+        } else if day.completed == CompletedGoalForDay.excused.rawValue {
+            dayCompletedButton.layer.backgroundColor = UIColor(red: 63/255, green: 130/255, blue: 255/255, alpha: 1.0).cgColor
         }
     }
     
@@ -38,7 +41,7 @@ class DayCollectionViewCell: UICollectionViewCell {
     func dayOfWeek(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "EEEEEE"
+        dateFormatter.dateFormat = "d"
         return dateFormatter.string(from: date).capitalized
     }
     

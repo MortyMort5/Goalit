@@ -12,7 +12,7 @@ class GoalTableViewCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate: buttonTappedDelegate?
-    
+    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var completedGoalButton: UIButton!
     @IBOutlet weak var goalNameLabel: UILabel!
     @IBOutlet weak var totalCompletedLabel: UILabel!
@@ -22,6 +22,8 @@ class GoalTableViewCell: UITableViewCell {
             self.updateView()
         }
     }
+    
+    var recentDay: Day?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,52 +36,45 @@ class GoalTableViewCell: UITableViewCell {
         let totalInRow = totalCountCompletedInARow(days: days)
         goalNameLabel.text = goal.name
         totalCompletedLabel.text = "\(total)"
-        completedGoalButton.setTitle("\(totalInRow)", for: .normal)
+        completedGoalButton.setTitle("\(totalInRow.count)", for: .normal)
+        monthLabel.text = totalInRow.month
     }
     
     func totalCountCompleted(days: [Day]) -> Int {
-        let totalDaysBool = days.flatMap({ $0.completed == 1 })
+        let totalDaysBool = days.flatMap({ $0.completed == CompletedGoalForDay.completed.rawValue })
         let totalTrue = totalDaysBool.filter({ $0 }).count
         return totalTrue
     }
     
-    func totalCountCompletedInARow(days: [Day]) -> Int {
+    func totalCountCompletedInARow(days: [Day]) -> (count: Int, month: String) {
         var count = 0
         let orderedDays = days.sorted(by: { $0.date! > $1.date! })
+        recentDay = orderedDays.first
+        let month = convertDateToStringOfMonth(date: orderedDays.first?.date ?? DateHelper.currentDate())
         for day in orderedDays {
-            if day.completed == 1 {
+            if day.completed == CompletedGoalForDay.completed.rawValue {
                 count = count + 1
+            } else if day.completed == CompletedGoalForDay.excused.rawValue {
+                
             } else {
-                return count
+                return (count, month)
             }
         }
-        return count
+        return (count, month)
     }
     
-    func checkForDuplicates(days: [Day]) -> Bool {
+    func convertDateToStringOfMonth(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.calendar = NSCalendar.current
-        let date1String = dateFormatter.string(from: Date())
-
-        for day in days {
-            guard let date = day.date else { return false }
-            let date2String = dateFormatter.string(from: date)
-            if date1String == date2String {
-                return true
-            }
-        }
-        return false
+        dateFormatter.dateFormat = "LLLL"
+        return dateFormatter.string(from: date)
     }
+    
+
     
     @IBAction func positiveButtonTapped(_ sender: Any) {
-        guard let goal = self.goal, let daysNSSet = goal.days, let days = Array(daysNSSet) as? [Day] else { return }
-        let alreadyHasCurrentDay = checkForDuplicates(days: days)
-        if alreadyHasCurrentDay {
-            print("Date Already Exists")
-            return
-        }
-        DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
+        guard let day = self.recentDay else { return }
+        DayController.shared.modifyDay(day: day)
         delegate?.positiveButtonTapped(sender: self)
     }
 }

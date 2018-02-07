@@ -14,17 +14,88 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     var storedOffsets = [Int: CGFloat]()
     var days: [Day] = []
+    let cellSpacingHeight: CGFloat = 20
+    let backgroundView = UIView()
+    var addGoalView = UIView()
+    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+    var blurEffectView = UIVisualEffectView()
+    let createGoalButton = UIButton()
+    let nameTextField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        addGoalView = UIView(frame: CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: UIScreen.main.bounds.width / 2 + 70, height: UIScreen.main.bounds.height / 2 + 70))
+        addGoalView.center = view.center
         
+        createGoalButton.addTarget(self, action: #selector(self.createGoalButtonTapped), for: .touchUpInside)
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
+    }
+    
+    @IBAction func menuButtonTapped(_ sender: Any) {
+        
+    }
+    
+    @IBAction func addButtonTapped(_ sender: Any) {
+        updateViewToAddNewGoal()
+    }
+    
+    @objc func createGoalButtonTapped() {
+        guard let name = nameTextField.text, !name.isEmpty else { return }
+        GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1)
+        nameTextField.text = ""
+        self.tableView.reloadData()
+        dismissSubViews()
+    }
+    
+    func updateViewToAddNewGoal() {
+        createGoalButton.layer.backgroundColor = UIColor.black.cgColor
+        createGoalButton.frame = CGRect(x: UIScreen.main.bounds.width / 2 - 110, y: 90, width: 80, height: 40)
+//        createGoalButton.frame.size = CGSize(width: 80, height: 40)
+//        createGoalButton.center = addGoalView.center
+        createGoalButton.setTitle("Create", for: .normal)
+        
+        nameTextField.frame = CGRect(x: UIScreen.main.bounds.width / 2 - 165, y: 40, width: 200, height: 40)
+//        nameTextField.frame.size = CGSize(width: 200, height: 40)
+//        nameTextField.center = view.center - 50
+//        nameTextField.layer.backgroundColor = UIColor.lightGray.cgColor
+        nameTextField.tintColor = UIColor.black
+        nameTextField.borderStyle = UITextBorderStyle.none
+        nameTextField.layer.borderWidth = 1.0
+        nameTextField.layer.borderColor = UIColor.gray.cgColor
+        let spacerView = UIView(frame:CGRect(x:0, y:0, width:10, height:10))
+        nameTextField.leftViewMode = UITextFieldViewMode.always
+        nameTextField.leftView = spacerView
+        
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        addGoalView.layer.cornerRadius = 5
+        addGoalView.layer.backgroundColor = UIColor.white.cgColor
+        
+        backgroundView.frame = view.bounds
+        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissSubViews))
+        blurEffectView.addGestureRecognizer(tap)
+        
+        self.view.addSubview(blurEffectView)
+        self.view.addSubview(addGoalView)
+        addGoalView.addSubview(createGoalButton)
+        addGoalView.addSubview(nameTextField)
+    }
+    
+    @objc func dismissSubViews() {
+        nameTextField.text = ""
+        addGoalView.removeFromSuperview()
+        blurEffectView.removeFromSuperview()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -106,8 +177,8 @@ extension GoalsViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.dayCellIdentifier, for: indexPath) as? DayCollectionViewCell else { return UICollectionViewCell() }
-        print(collectionView.tag)
-        print(indexPath)
+//        print(collectionView.tag)
+//        print(indexPath)
         cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         let orderedDays = self.days.sorted(by: { $0.date! > $1.date! })
         cell.day = orderedDays[indexPath.row]

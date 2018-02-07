@@ -26,7 +26,8 @@ class GoalController {
 
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32) {
         guard let user = UserController.shared.currentUser else { return }
-        let _ = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString)
+        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString)
+        DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
         saveToPersistentStore()
     }
     
@@ -44,7 +45,7 @@ class GoalController {
                     
                     while (true) {
                         tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
-                        DayController.shared.createDay(withDate: tomorrow, completed: 0, goal: goal)
+                        DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
                         if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
                     }
                 }

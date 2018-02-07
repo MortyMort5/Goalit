@@ -33,4 +33,9 @@ class Constant {
     static let goalCellIdentifier = "goalCell"
     static let dayCellIdentifier = "dayCell"
     
+    // Segue Identifiers
+    static let loadingTOloginSegue =  "loadingTOloginSegue"
+    static let loadingTOgoalSegue = "loadingTOgoalSegue"
+    static let loginTOgoalSegue = "loginTOgoalSegue"
+    
 }

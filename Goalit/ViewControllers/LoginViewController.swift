@@ -10,26 +10,18 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    
+    @IBAction func createAccountButtonTapped(_ sender: Any) {
+        guard let lastN = lastNameTextField.text, !lastN.isEmpty, let firstN = firstNameTextField.text, !firstN.isEmpty else { return }
+        UserController.shared.createUser(withFirstName: firstN, lastName: lastN)
+        self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
     }
-    */
 
 }

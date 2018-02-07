@@ -27,7 +27,13 @@ class DayController {
             do {
                 let fetchedDays: [Day] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Day]
                 guard let day: Day = fetchedDays.first else { return }
-                day.completed = day.completed == 0 ? 1 : 0
+                if day.completed == CompletedGoalForDay.completed.rawValue {
+                    day.completed = CompletedGoalForDay.excused.rawValue
+                } else if day.completed == CompletedGoalForDay.excused.rawValue {
+                    day.completed = CompletedGoalForDay.failedToComplete.rawValue
+                } else if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
+                    day.completed = CompletedGoalForDay.completed.rawValue
+                }
                 
             } catch {
                 fatalError("Failed to fetch goals: \(error.localizedDescription)")
