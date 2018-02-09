@@ -11,7 +11,7 @@ import UIKit
 class DayCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dayCompletedButton: UIButton!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dayOfWeekLabel: UILabel!
     weak var delegate: updateDayDelegate?
     
     var day: Day? {
@@ -22,8 +22,10 @@ class DayCollectionViewCell: UICollectionViewCell {
     
     func updateView() {
         guard let day = self.day, let dateDate = day.date else { return }
-        let date = dayOfWeek(date: dateDate)
-        dayCompletedButton.setTitle("\(date)", for: .normal)
+        let dateNum = dayOfWeekNumber(date: dateDate)
+        let dateLetters = dayOfWeekLetter(date: dateDate)
+        dayCompletedButton.setTitle("\(dateNum)", for: .normal)
+        dayOfWeekLabel.text = dateLetters
         if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
             dayCompletedButton.layer.backgroundColor = UIColor(red: 255/255, green: 86/255, blue: 106/255, alpha: 1.0).cgColor
         }
@@ -38,10 +40,17 @@ class DayCollectionViewCell: UICollectionViewCell {
         delegate?.updateDayRecord(sender: self)
     }
     
-    func dayOfWeek(date: Date) -> String {
+    func dayOfWeekNumber(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "d"
+        return dateFormatter.string(from: date).capitalized
+    }
+    
+    func dayOfWeekLetter(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "EEEEEE"
         return dateFormatter.string(from: date).capitalized
     }
     

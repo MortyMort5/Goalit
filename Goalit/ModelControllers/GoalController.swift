@@ -55,6 +55,23 @@ class GoalController {
         }
     }
     
+    func modifyGoal(goal: Goal) {
+        let moc = CoreDataStack.context
+        let request = NSFetchRequest<Goal>(entityName: "Goal")
+        request.predicate = NSPredicate(format: "goalUUID like[cd] %@", goal.goalUUID ?? "")
+        moc.perform {
+            do {
+                let fetchedGoals: [Goal] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Goal]
+                guard let goalFetched: Goal = fetchedGoals.first else { return }
+                goalFetched.name = goal.name
+                
+            } catch {
+                fatalError("Failed to fetch goals: \(error.localizedDescription)")
+            }
+            self.saveToPersistentStore()
+        }
+    }
+    
     func deleteGoal(withGoal goal: Goal) {
         if let moc = goal.managedObjectContext {
             moc.delete(goal)
