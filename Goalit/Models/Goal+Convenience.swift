@@ -10,12 +10,14 @@ import Foundation
 import CoreData
 
 extension Goal {
-    @discardableResult convenience init(dateCreated: Date,name: String, totalCompleted: Int32, user: User, goalUUID: String, context: NSManagedObjectContext = CoreDataStack.context) {
+    @discardableResult convenience init(dateCreated: Date,name: String, totalCompleted: Int32, user: User, goalUUID: String, recordID: String = "", goalOwnerRef: String = "", context: NSManagedObjectContext = CoreDataStack.context) {
         self.init(context: context)
         self.name = name
         self.dateCreated = dateCreated
         self.totalCompleted = totalCompleted
         self.user = user
         self.goalUUID = goalUUID
+        self.recordID = recordID
+        self.goalOwnerRef = goalOwnerRef
     }
 }

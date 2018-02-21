@@ -40,7 +40,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30K-ye-cAS">
-                                                    <rect key="frame" x="265" y="0.0" width="50" height="86"/>
+                                                    <rect key="frame" x="265" y="0.0" width="50" height="91"/>
                                                     <color key="backgroundColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="Vj5-aV-WeC"/>
@@ -54,7 +54,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="month" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wan-4y-8Vs">
-                                                    <rect key="frame" x="10" y="28.5" width="36" height="16.5"/>
+                                                    <rect key="frame" x="10" y="33.5" width="36" height="16.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                     <color key="textColor" red="0.51372549019607838" green="0.51372549019607838" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -66,16 +66,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jHy-g7-bOS">
-                                                    <rect key="frame" x="155" y="29" width="100" height="16"/>
+                                                    <rect key="frame" x="155" y="29" width="100" height="21"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="total : " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6XX-dz-csY">
-                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="21"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.51372549019607838" green="0.51372549019607838" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKU-y7-6dm">
-                                                            <rect key="frame" x="52.5" y="0.0" width="47.5" height="16"/>
+                                                            <rect key="frame" x="52.5" y="0.0" width="47.5" height="21"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.51372549019607838" green="0.51372549019607838" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -86,15 +86,15 @@
                                                     </constraints>
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tXv-nD-vMy">
-                                                    <rect key="frame" x="-3" y="86" width="321" height="13"/>
+                                                    <rect key="frame" x="-3" y="91" width="321" height="8"/>
                                                     <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="13" id="m9g-rV-1ts"/>
+                                                        <constraint firstAttribute="height" constant="8" id="m9g-rV-1ts"/>
                                                     </constraints>
                                                 </imageView>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="phN-7A-hxt">
-                                                    <rect key="frame" x="9" y="46" width="247" height="40"/>
+                                                    <rect key="frame" x="9" y="51" width="247" height="40"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="oy9-Ti-NYd"/>
@@ -206,7 +206,7 @@
                                         <rect key="frame" x="214" y="0.0" width="101" height="40"/>
                                         <state key="normal" image="PlusButton Copy"/>
                                         <connections>
-                                            <action selector="addButtonTapped:" destination="PmH-Rh-Is9" eventType="touchUpInside" id="N5f-Vn-hCp"/>
+                                            <segue destination="vF3-TW-6mf" kind="show" id="pzR-km-gzU"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -234,6 +234,141 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yp0-2O-RLj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="333.60000000000002" y="480.80959520239884"/>
+        </scene>
+        <!--Create Goal View Controller-->
+        <scene sceneID="Qb9-Jb-gwb">
+            <objects>
+                <viewController id="vF3-TW-6mf" customClass="CreateGoalViewController" customModule="Goalit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="blG-Wp-csF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="goal name: " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gId-64-q8m">
+                                <rect key="frame" x="109" y="90" width="162" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y0Z-Ws-9hF">
+                                <rect key="frame" x="104" y="173" width="172" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Daily"/>
+                                    <segment title="Weekly"/>
+                                    <segment title="Monthly"/>
+                                </segments>
+                                <connections>
+                                    <action selector="goalTypeSegmentAction:" destination="vF3-TW-6mf" eventType="valueChanged" id="ltz-rh-gda"/>
+                                </connections>
+                            </segmentedControl>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="8eI-y5-xtV" userLabel="weekdays">
+                                <rect key="frame" x="89" y="236" width="222" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-wa-shG">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="SU">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sundayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="yiK-U0-Pow"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPM-Wg-cjK">
+                                        <rect key="frame" x="32" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="MO">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="mondayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="THi-f3-LSE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydd-E9-Ucp">
+                                        <rect key="frame" x="64" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="TU">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tuesdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="gy6-Rw-vGh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tAb-I8-a9n">
+                                        <rect key="frame" x="96" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="WE">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="wednesdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="Lvg-b3-r75"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyx-vX-l76">
+                                        <rect key="frame" x="128" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="TH">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="thursdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="MOW-ba-zqF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vxm-08-vjB">
+                                        <rect key="frame" x="160" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="FR">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="fridayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="Nz7-81-Wqc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSW-8B-8RP">
+                                        <rect key="frame" x="192" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="SA">
+                                            <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="saturdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="lGE-VT-C04"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrl-ow-4Lb">
+                                <rect key="frame" x="141" y="285" width="93" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="create">
+                                    <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="createGoalButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="UgE-ue-0FP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="meA-jo-KFE"/>
+                    </view>
+                    <connections>
+                        <outlet property="createGoalButton" destination="qrl-ow-4Lb" id="XFg-NT-Fbp"/>
+                        <outlet property="fridayButton" destination="Vxm-08-vjB" id="on1-DO-d0g"/>
+                        <outlet property="goalNameTextField" destination="gId-64-q8m" id="dIR-Vl-9r1"/>
+                        <outlet property="goalTypeSegment" destination="Y0Z-Ws-9hF" id="mMi-j4-aZ3"/>
+                        <outlet property="mondayButton" destination="lPM-Wg-cjK" id="gaQ-AY-PFz"/>
+                        <outlet property="saturdayButton" destination="JSW-8B-8RP" id="YeY-f4-fv1"/>
+                        <outlet property="sundayButton" destination="WEk-wa-shG" id="Ld6-qf-5hM"/>
+                        <outlet property="thursdayButton" destination="hyx-vX-l76" id="dWX-Hh-o44"/>
+                        <outlet property="tuesdayButton" destination="Ydd-E9-Ucp" id="ULn-le-xkn"/>
+                        <outlet property="wednesdayButton" destination="tAb-I8-a9n" id="ILi-3e-PSW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ro5-j9-aZL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1080.8" y="480.80959520239884"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="hEe-et-kvt">

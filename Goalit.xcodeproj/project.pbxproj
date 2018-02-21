@@ -18,6 +18,7 @@
 		8133B37F2012A7FB00F7889F /* GoalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B37E2012A7FB00F7889F /* GoalTableViewCell.swift */; };
 		8133B3822012AA4200F7889F /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B3812012AA4200F7889F /* DayCollectionViewCell.swift */; };
 		817C2212201E9339007ABF2B /* StaticFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817C2211201E9339007ABF2B /* StaticFunction.swift */; };
+		819D1CF5203CF1DE00C80F11 /* CreateGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */; };
 		81BC35592022649B00E6A95F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BC35582022649B00E6A95F /* CloudKit.framework */; };
 		81BC355C202276FD00E6A95F /* User+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355B202276FD00E6A95F /* User+Convenience.swift */; };
 		81BC355E2022790E00E6A95F /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355D2022790E00E6A95F /* UserController.swift */; };
@@ -46,6 +47,7 @@
 		8133B37E2012A7FB00F7889F /* GoalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTableViewCell.swift; sourceTree = "<group>"; };
 		8133B3812012AA4200F7889F /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
 		817C2211201E9339007ABF2B /* StaticFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticFunction.swift; sourceTree = "<group>"; };
+		819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGoalViewController.swift; sourceTree = "<group>"; };
 		81BC35562022649A00E6A95F /* Goalit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Goalit.entitlements; sourceTree = "<group>"; };
 		81BC35582022649B00E6A95F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		81BC355B202276FD00E6A95F /* User+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Convenience.swift"; sourceTree = "<group>"; };
@@ -112,9 +114,10 @@
 		8133B3602012898000F7889F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8133B3752012A54700F7889F /* GoalsViewController.swift */,
-				81EDB2BD2023DAAF00CA0FF3 /* LoginViewController.swift */,
 				81EDB2BF2023E79300CA0FF3 /* LoadingViewController.swift */,
+				81EDB2BD2023DAAF00CA0FF3 /* LoginViewController.swift */,
+				8133B3752012A54700F7889F /* GoalsViewController.swift */,
+				819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				81ED3E5420110E9F00D531F6 /* AppDelegate.swift in Sources */,
 				81EDB2BA2023C1ED00CA0FF3 /* Goal+CKRecord.swift in Sources */,
 				8133B370201298D900F7889F /* Day+Convenience.swift in Sources */,
+				819D1CF5203CF1DE00C80F11 /* CreateGoalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
