@@ -58,8 +58,10 @@ class CreateGoalViewController: UIViewController {
         if let goal = self.goal {
             goal.name = name
             GoalController.shared.modifyGoal(goal: goal)
+            self.navigationController?.popViewController(animated: true)
         } else {
             GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     

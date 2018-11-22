@@ -41,7 +41,7 @@ class GoalTableViewCell: UITableViewCell {
     }
     
     func totalCountCompleted(days: [Day]) -> Int {
-        let totalDaysBool = days.flatMap({ $0.completed == CompletedGoalForDay.completed.rawValue })
+        let totalDaysBool = days.compactMap({ $0.completed == CompletedGoalForDay.completed.rawValue })
         let totalTrue = totalDaysBool.filter({ $0 }).count
         return totalTrue
     }
