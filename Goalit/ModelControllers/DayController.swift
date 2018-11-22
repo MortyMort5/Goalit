@@ -21,7 +21,7 @@ class DayController {
     
     func modifyDay(day: Day) {
         let moc = CoreDataStack.context
-        let request = NSFetchRequest<Day>(entityName: "Day")
+        let request = NSFetchRequest<Day>(entityName: Constant.Day)
         request.predicate = NSPredicate(format: "dayUUID like[cd] %@", day.dayUUID ?? "")
         moc.perform {
             do {

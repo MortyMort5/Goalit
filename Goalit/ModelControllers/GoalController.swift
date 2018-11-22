@@ -33,7 +33,7 @@ class GoalController {
     
     func fillMissingDays() {
         let moc = CoreDataStack.context
-        let request = NSFetchRequest<Goal>(entityName: "Goal")
+        let request = NSFetchRequest<Goal>(entityName: Constant.Goal)
         moc.perform {
             do {
                 let fetchedGoals: [Goal] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Goal]
@@ -57,7 +57,7 @@ class GoalController {
     
     func modifyGoal(goal: Goal) {
         let moc = CoreDataStack.context
-        let request = NSFetchRequest<Goal>(entityName: "Goal")
+        let request = NSFetchRequest<Goal>(entityName: Constant.Goal)
         request.predicate = NSPredicate(format: "goalUUID like[cd] %@", goal.goalUUID ?? "")
         moc.perform {
             do {

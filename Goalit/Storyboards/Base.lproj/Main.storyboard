@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rlu-Zd-wiw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rlu-Zd-wiw">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Book</string>
-        </array>
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Bold</string>
-            <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Goals View Controller-->
         <scene sceneID="ZAc-ve-iSw">
@@ -60,22 +50,22 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="goalName" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-pT-ZEp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="27.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="34.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                     <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jHy-g7-bOS">
-                                                    <rect key="frame" x="155" y="29" width="100" height="21"/>
+                                                    <rect key="frame" x="155" y="36" width="100" height="14"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="total : " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6XX-dz-csY">
-                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="21"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="14"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.51372549019607838" green="0.51372549019607838" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKU-y7-6dm">
-                                                            <rect key="frame" x="52.5" y="0.0" width="47.5" height="21"/>
+                                                            <rect key="frame" x="52.5" y="0.0" width="47.5" height="14"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.51372549019607838" green="0.51372549019607838" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -128,7 +118,7 @@
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SU" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="AKd-Q9-wk7">
-                                                                        <rect key="frame" x="2" y="0.0" width="24" height="8"/>
+                                                                        <rect key="frame" x="1.5" y="0.0" width="24" height="8"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -266,7 +256,7 @@
                                 <rect key="frame" x="89" y="236" width="222" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-wa-shG">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-wa-shG">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="SU">
@@ -276,7 +266,7 @@
                                             <action selector="sundayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="yiK-U0-Pow"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPM-Wg-cjK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPM-Wg-cjK">
                                         <rect key="frame" x="32" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="MO">
@@ -286,7 +276,7 @@
                                             <action selector="mondayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="THi-f3-LSE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydd-E9-Ucp">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydd-E9-Ucp">
                                         <rect key="frame" x="64" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="TU">
@@ -296,7 +286,7 @@
                                             <action selector="tuesdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="gy6-Rw-vGh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tAb-I8-a9n">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tAb-I8-a9n">
                                         <rect key="frame" x="96" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="WE">
@@ -306,7 +296,7 @@
                                             <action selector="wednesdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="Lvg-b3-r75"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyx-vX-l76">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyx-vX-l76">
                                         <rect key="frame" x="128" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="TH">
@@ -316,7 +306,7 @@
                                             <action selector="thursdayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="MOW-ba-zqF"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vxm-08-vjB">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vxm-08-vjB">
                                         <rect key="frame" x="160" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="FR">
@@ -326,7 +316,7 @@
                                             <action selector="fridayButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="Nz7-81-Wqc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSW-8B-8RP">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSW-8B-8RP">
                                         <rect key="frame" x="192" y="0.0" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97158092260360718" green="0.33413577079772949" blue="0.41736119985580444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="SA">
@@ -349,8 +339,22 @@
                                     <action selector="createGoalButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="UgE-ue-0FP"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36U-GU-1I2">
+                                <rect key="frame" x="16" y="30" width="34" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="p2P-C9-U9j"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="vF3-TW-6mf" eventType="touchUpInside" id="eSY-wD-KxX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="36U-GU-1I2" firstAttribute="leading" secondItem="meA-jo-KFE" secondAttribute="leading" constant="16" id="152-ze-6ET"/>
+                            <constraint firstItem="36U-GU-1I2" firstAttribute="top" secondItem="meA-jo-KFE" secondAttribute="top" constant="10" id="fdB-LQ-uDK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="meA-jo-KFE"/>
                     </view>
                     <connections>
@@ -411,7 +415,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="j08-9T-Tfs">
-                                <rect key="frame" x="88" y="292.5" width="200" height="82"/>
+                                <rect key="frame" x="87.5" y="292.5" width="200" height="82"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="iJY-pS-DwJ">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="36"/>
@@ -494,7 +498,7 @@
     <resources>
         <image name="Menu" width="16" height="10"/>
         <image name="PlusButton Copy" width="23" height="23"/>
-        <image name="leafs" width="188" height="281"/>
+        <image name="leafs" width="564" height="845"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ss5-Rw-BRa"/>

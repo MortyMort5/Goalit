@@ -22,7 +22,7 @@ class UserController {
     
     func checkIfUserExists() -> Bool {
         let moc = CoreDataStack.context
-        let request = NSFetchRequest<User>(entityName: "User")
+        let request = NSFetchRequest<User>(entityName: Constant.User)
         do {
             let fetchedUsers: [User] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [User]
             guard let user : User = fetchedUsers.first else { return false }

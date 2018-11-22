@@ -53,6 +53,10 @@ class CreateGoalViewController: UIViewController {
     @IBAction func sundayButtonTapped(_ sender: Any) {
     }
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func createGoalButtonTapped(_ sender: Any) {
         guard let name = goalNameTextField.text, !name.isEmpty else { return }
         if let goal = self.goal {

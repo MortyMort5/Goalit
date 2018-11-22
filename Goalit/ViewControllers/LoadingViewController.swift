@@ -19,7 +19,7 @@ class LoadingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 4.0, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.loadingImageView.alpha = 1.0
         }) { (true) in
             let hasAccount = UserController.shared.checkIfUserExists()
