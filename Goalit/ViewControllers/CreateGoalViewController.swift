@@ -22,14 +22,24 @@ class CreateGoalViewController: UIViewController {
     @IBOutlet weak var createGoalButton: UIButton!
     
     var goal: Goal?
+    var goalType:Int32 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func goalTypeSegmentAction(_ sender: Any) {
+        switch goalTypeSegment.selectedSegmentIndex
+        {
+        case 0:
+            self.goalType = 0
+        case 1:
+            self.goalType = 1
+        case 2:
+            self.goalType = 2
+        default:
+            break
+        }
     }
     
     @IBAction func saturdayButtonTapped(_ sender: Any) {
@@ -64,9 +74,8 @@ class CreateGoalViewController: UIViewController {
             GoalController.shared.modifyGoal(goal: goal)
             self.navigationController?.popViewController(animated: true)
         } else {
-            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1)
+            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType)
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
 }

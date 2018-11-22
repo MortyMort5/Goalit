@@ -53,7 +53,6 @@ class DayCollectionViewCell: UICollectionViewCell {
         dateFormatter.dateFormat = "EEEEEE"
         return dateFormatter.string(from: date).capitalized
     }
-    
 }
 
 protocol updateDayDelegate: class {

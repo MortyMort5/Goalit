@@ -41,6 +41,4 @@ class DayController {
             GoalController.shared.saveToPersistentStore()
         }
     }
-    
-    
 }
