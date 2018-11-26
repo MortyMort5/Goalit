@@ -28,6 +28,11 @@ class CreateGoalViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.goalNameTextField.becomeFirstResponder()
+    }
+    
     @IBAction func goalTypeSegmentAction(_ sender: Any) {
         switch goalTypeSegment.selectedSegmentIndex
         {
@@ -35,8 +40,6 @@ class CreateGoalViewController: UIViewController {
             self.goalType = 0
         case 1:
             self.goalType = 1
-        case 2:
-            self.goalType = 2
         default:
             break
         }

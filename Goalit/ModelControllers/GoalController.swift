@@ -27,6 +27,7 @@ class GoalController {
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32, goalType: Int32) {
         guard let user = UserController.shared.currentUser else { return }
         let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString, goalType: goalType)
+        print(goal)
         DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
         saveToPersistentStore()
     }
