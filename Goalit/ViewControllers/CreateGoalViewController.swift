@@ -23,6 +23,7 @@ class CreateGoalViewController: UIViewController {
     
     var goal: Goal?
     var goalType:Int32 = 0
+    var selectedDays:String = "1111111";
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,24 +47,31 @@ class CreateGoalViewController: UIViewController {
     }
     
     @IBAction func saturdayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func fridayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func thursdayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func wednesdayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func tuesdayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func mondayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func sundayButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -77,7 +85,7 @@ class CreateGoalViewController: UIViewController {
             GoalController.shared.modifyGoal(goal: goal)
             self.navigationController?.popViewController(animated: true)
         } else {
-            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType)
+            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays)
             self.navigationController?.popViewController(animated: true)
         }
     }
