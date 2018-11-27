@@ -27,9 +27,24 @@ class GoalController {
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32, goalType: Int32, selectedDays: String) {
         guard let user = UserController.shared.currentUser else { return }
         let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString, selectedDays: selectedDays, goalType: goalType)
+        let currentDaySelected = self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays)
+        if currentDaySelected == 1 {
+            DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
+        }
         print(goal)
-        DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
         saveToPersistentStore()
+    }
+    
+    func checkSelectedDaysBeforeCreatingDayObject(selectedDays: String) -> Int32 {
+        let daysOfTheWeek = ["Su": 0, "Mo": 1, "Tu": 2, "We": 3, "Th": 4, "Fr": 5, "Sa": 6]
+        let today = DateHelper.dayOfWeekLetter(date: Date())
+        guard let value = daysOfTheWeek[today] else { return 0 }
+        let char:Int? = Int(selectedDays[value])
+        if char == 1 {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     func fillMissingDays() {
@@ -87,5 +102,32 @@ class GoalController {
         } catch let error {
             NSLog("Error with saving to Core Data: \n\(error)")
         }
+    }
+}
+
+extension String {
+    
+    var length: Int {
+        return count
+    }
+    
+    subscript (i: Int) -> String {
+        return self[i ..< i + 1]
+    }
+    
+    func substring(fromIndex: Int) -> String {
+        return self[min(fromIndex, length) ..< length]
+    }
+    
+    func substring(toIndex: Int) -> String {
+        return self[0 ..< max(0, toIndex)]
+    }
+    
+    subscript (r: Range<Int>) -> String {
+        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
+                                            upper: min(length, max(0, r.upperBound))))
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
+        return String(self[start ..< end])
     }
 }

@@ -22,4 +22,11 @@ class DateHelper {
         return midnightDate
     }
     
+    static func dayOfWeekLetter(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "EEEEEE"
+        return dateFormatter.string(from: date).capitalized
+    }
+    
 }

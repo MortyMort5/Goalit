@@ -24,6 +24,16 @@ class CreateGoalViewController: UIViewController {
     var goal: Goal?
     var goalType:Int32 = 0
     var selectedDays:String = "1111111";
+    var sunday = 1
+    var monday = 1
+    var tuesday = 1
+    var wednesday = 1
+    var thursday = 1
+    var friday = 1
+    var saturday = 1
+    let selectedColor:UIColor = UIColor.green
+    let unselectedColor:UIColor = UIColor.red
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,32 +56,67 @@ class CreateGoalViewController: UIViewController {
         }
     }
     
-    @IBAction func saturdayButtonTapped(_ sender: Any) {
-        
-    }
-    
-    @IBAction func fridayButtonTapped(_ sender: Any) {
-        
-    }
-    
-    @IBAction func thursdayButtonTapped(_ sender: Any) {
-        
-    }
-    
-    @IBAction func wednesdayButtonTapped(_ sender: Any) {
-        
-    }
-    
-    @IBAction func tuesdayButtonTapped(_ sender: Any) {
-        
+    @IBAction func sundayButtonTapped(_ sender: Any) {
+        sunday = sunday != 1 ? 1 : 0
+        if sunday == 1 {
+            sundayButton.backgroundColor = selectedColor
+        } else {
+            sundayButton.backgroundColor = unselectedColor
+        }
     }
     
     @IBAction func mondayButtonTapped(_ sender: Any) {
-        
+        monday = monday != 1 ? 1 : 0
+        if monday == 1 {
+            mondayButton.backgroundColor = selectedColor
+        } else {
+            mondayButton.backgroundColor = unselectedColor
+        }
     }
     
-    @IBAction func sundayButtonTapped(_ sender: Any) {
-        
+    @IBAction func tuesdayButtonTapped(_ sender: Any) {
+        tuesday = tuesday != 1 ? 1 : 0
+        if tuesday == 1 {
+            tuesdayButton.backgroundColor = selectedColor
+        } else {
+            tuesdayButton.backgroundColor = unselectedColor
+        }
+    }
+    
+    @IBAction func wednesdayButtonTapped(_ sender: Any) {
+        wednesday = wednesday != 1 ? 1 : 0
+        if wednesday == 1 {
+            wednesdayButton.backgroundColor = selectedColor
+        } else {
+            wednesdayButton.backgroundColor = unselectedColor
+        }
+    }
+    
+    @IBAction func thursdayButtonTapped(_ sender: Any) {
+        thursday = thursday != 1 ? 1 : 0
+        if thursday == 1 {
+            thursdayButton.backgroundColor = selectedColor
+        } else {
+            thursdayButton.backgroundColor = unselectedColor
+        }
+    }
+    
+    @IBAction func fridayButtonTapped(_ sender: Any) {
+        friday = friday != 1 ? 1 : 0
+        if friday == 1 {
+            fridayButton.backgroundColor = selectedColor
+        } else {
+            fridayButton.backgroundColor = unselectedColor
+        }
+    }
+    
+    @IBAction func saturdayButtonTapped(_ sender: Any) {
+        saturday = saturday != 1 ? 1 : 0
+        if saturday == 1 {
+            saturdayButton.backgroundColor = selectedColor
+        } else {
+            saturdayButton.backgroundColor = unselectedColor
+        }
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -79,6 +124,7 @@ class CreateGoalViewController: UIViewController {
     }
     
     @IBAction func createGoalButtonTapped(_ sender: Any) {
+        self.selectedDays = convertSelectedDaysToString()
         guard let name = goalNameTextField.text, !name.isEmpty else { return }
         if let goal = self.goal {
             goal.name = name
@@ -88,5 +134,9 @@ class CreateGoalViewController: UIViewController {
             GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays)
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func convertSelectedDaysToString() -> String {
+         return "\(sunday)\(monday)\(tuesday)\(wednesday)\(thursday)\(friday)\(saturday)"
     }
 }
