@@ -41,8 +41,20 @@ class CreateGoalViewController: UIViewController {
     let unselectedColor:UIColor = UIColor.red
     
     func updateViews() {
-        guard let name = goal?.name else { return }
-        print(name)
+        guard let name = goal?.name, let selectedDays = goal?.selectedDays else { return }
+        let daysSelectedArray: [UIButton] = [sundayButton, mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton]
+        goalNameTextField.text = name
+        var counter = 0
+        for day in selectedDays {
+            if day == "1" {
+                let buttonTapped = daysSelectedArray[counter]
+                buttonTapped.backgroundColor = selectedColor
+            } else {
+                let buttonTapped = daysSelectedArray[counter]
+                buttonTapped.backgroundColor = unselectedColor
+            }
+            counter = counter + 1
+        }
     }
     
     override func viewDidLoad() {
