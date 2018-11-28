@@ -21,7 +21,13 @@ class CreateGoalViewController: UIViewController {
     @IBOutlet weak var sundayButton: UIButton!
     @IBOutlet weak var createGoalButton: UIButton!
     
-    var goal: Goal?
+    var goal: Goal? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
     var goalType:Int32 = 0
     var selectedDays:String = "1111111";
     var sunday = 1
@@ -34,6 +40,10 @@ class CreateGoalViewController: UIViewController {
     let selectedColor:UIColor = UIColor.green
     let unselectedColor:UIColor = UIColor.red
     
+    func updateViews() {
+        guard let name = goal?.name else { return }
+        print(name)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

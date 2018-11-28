@@ -172,6 +172,7 @@
                                             <outlet property="goalNameLabel" destination="JrS-pT-ZEp" id="Z5c-QK-hGs"/>
                                             <outlet property="monthLabel" destination="wan-4y-8Vs" id="TM6-SC-WIW"/>
                                             <outlet property="totalCompletedLabel" destination="fKU-y7-6dm" id="Vyx-oM-ILj"/>
+                                            <segue destination="vF3-TW-6mf" kind="show" identifier="toCreateGoalVC" id="RT0-i6-kUq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -500,6 +501,7 @@
         <image name="leafs" width="564" height="845"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="RT0-i6-kUq"/>
         <segue reference="k3O-nS-j32"/>
     </inferredMetricsTieBreakers>
 </document>

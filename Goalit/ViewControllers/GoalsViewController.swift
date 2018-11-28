@@ -27,6 +27,11 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setBackgroundImageWhenTableViewEmpty()
+    }
+    
     @IBAction func menuButtonTapped(_ sender: Any) {
         
     }
@@ -51,6 +56,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let goal = GoalController.shared.goals[indexPath.row]
             GoalController.shared.deleteGoal(withGoal: goal)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            setBackgroundImageWhenTableViewEmpty()
         }
     }
     
@@ -67,6 +73,15 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = GoalController.shared.goals[indexPath.row]
         self.goal = goal
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if segue.identifier == Constant.goalTOcreateSegue {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            guard let destinationViewController = segue.destination as? CreateGoalViewController else {return}
+            let goal = GoalController.shared.goals[indexPath.row]
+            destinationViewController.goal = goal
+        }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -98,6 +113,17 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         guard let day = sender.day else { return }
         DayController.shared.modifyDay(day: day)
         self.tableView.reloadData()
+    }
+    
+    func setBackgroundImageWhenTableViewEmpty() {
+        if GoalController.shared.goals.count == 0 {
+            let backgroundImage = UIImage(named: "emptyTableView.png")
+            let imageView = UIImageView(image: backgroundImage)
+            self.tableView.backgroundView = imageView
+            imageView.contentMode = .scaleAspectFit
+        } else {
+            self.tableView.backgroundView = nil
+        }
     }
 }
 

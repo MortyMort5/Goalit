@@ -16,7 +16,6 @@ class GoalController {
     var goals: [Goal] {
         let request: NSFetchRequest<Goal> = Goal.fetchRequest() // Telling what object to grab fromm the managed object context
         let moc = CoreDataStack.context
-        
         do {
             return try moc.fetch(request)
         } catch  {
