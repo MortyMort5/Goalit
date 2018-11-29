@@ -8,10 +8,12 @@
 
 import Foundation
 import CoreData
+import Firebase
 
 class GoalController {
     
     static let shared = GoalController()
+    var ref: DatabaseReference!
 
     var goals: [Goal] {
         let request: NSFetchRequest<Goal> = Goal.fetchRequest() // Telling what object to grab fromm the managed object context
@@ -24,12 +26,13 @@ class GoalController {
     }
 
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32, goalType: Int32, selectedDays: String) {
-        guard let user = UserController.shared.currentUser else { return }
+        guard let user = UserController.shared.currentUser, let userUUID = user.userUUID else { return }
         let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString, selectedDays: selectedDays, goalType: goalType)
         if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: DateHelper.currentDate()) {
             DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
         }
-        print(goal)
+        ref = Database.database().reference()
+        ref.child("goals").child(userUUID).setValue(["name": name, "dateCreated": dateCreated, "totalCompleted": totalCompleted, "goalType": goalType, "selectedDays": selectedDays])
         saveToPersistentStore()
     }
     

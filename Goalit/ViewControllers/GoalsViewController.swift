@@ -35,7 +35,12 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func menuButtonTapped(_ sender: Any) {
         // MARK: Find a place for the sign out button
-        try! Auth.auth().signOut()
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
         self.dismiss(animated: true, completion: nil)
     }
     

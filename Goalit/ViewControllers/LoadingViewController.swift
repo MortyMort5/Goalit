@@ -24,7 +24,7 @@ class LoadingViewController: UIViewController {
             self.loadingImageView.alpha = 1.0
         }) { (true) in
 //            let hasAccount = UserController.shared.checkIfUserExists()
-            if let _ = Auth.auth().currentUser {
+            if let user = Auth.auth().currentUser {
                 self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
             } else {
                 self.performSegue(withIdentifier: Constant.loadingTOloginSegue, sender: nil)
