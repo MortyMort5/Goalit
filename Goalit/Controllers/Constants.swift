@@ -38,5 +38,6 @@ class Constant {
     static let loadingTOgoalSegue = "loadingTOgoalSegue"
     static let loginTOgoalSegue = "loginTOgoalSegue"
     static let goalTOcreateSegue = "toCreateGoalVC"
+    static let signUpTOgoalSegue = "signUpToGoals"
     
 }

@@ -7,15 +7,30 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var firstNameTextField: UITextField!
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
-    @IBAction func createAccountButtonTapped(_ sender: Any) {
-        guard let lastN = lastNameTextField.text, !lastN.isEmpty, let firstN = firstNameTextField.text, !firstN.isEmpty else { return }
-        UserController.shared.createUser(withFirstName: firstN, lastName: lastN)
+    @IBAction func loginButtonTapped(_ sender: Any) {
+        guard let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if error != nil && user == nil {
+                print("Error on logging in \(error!.localizedDescription)")
+            }
+            self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
+        }
+    }
+    
+    @IBAction func signUpButtonTapped(_ sender: Any) {
+        
+    }
+    
+    @IBAction func continueWithoutLoginButtonTapped(_ sender: Any) {
         self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
     }
     

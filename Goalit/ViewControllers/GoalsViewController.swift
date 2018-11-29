@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, buttonTappedDelegate, updateDayDelegate {
 
@@ -33,7 +34,9 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func menuButtonTapped(_ sender: Any) {
-        
+        // MARK: Find a place for the sign out button
+        try! Auth.auth().signOut()
+        self.dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

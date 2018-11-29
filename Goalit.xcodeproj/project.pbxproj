@@ -30,6 +30,7 @@
 		81ED3E6120110E9F00D531F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81ED3E5F20110E9F00D531F6 /* LaunchScreen.storyboard */; };
 		81EDB2BE2023DAAF00CA0FF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDB2BD2023DAAF00CA0FF3 /* LoginViewController.swift */; };
 		81EDB2C02023E79300CA0FF3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDB2BF2023E79300CA0FF3 /* LoadingViewController.swift */; };
+		B3E6F35E21AF9ADD00244934 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */; };
 		B3EA56B121CD207F000BDF93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		81EDB2BD2023DAAF00CA0FF3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		81EDB2BF2023E79300CA0FF3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		91FFBA76414C219B8BFBF56F /* Pods-Goalit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalit/Pods-Goalit.debug.xcconfig"; sourceTree = "<group>"; };
+		B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 			children = (
 				81EDB2BF2023E79300CA0FF3 /* LoadingViewController.swift */,
 				81EDB2BD2023DAAF00CA0FF3 /* LoginViewController.swift */,
+				B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */,
 				8133B3752012A54700F7889F /* GoalsViewController.swift */,
 				819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */,
 			);
@@ -351,6 +354,7 @@
 				8133B37B2012A5FD00F7889F /* DateHelper.swift in Sources */,
 				8133B372201299FA00F7889F /* GoalController.swift in Sources */,
 				81EDB2C02023E79300CA0FF3 /* LoadingViewController.swift in Sources */,
+				B3E6F35E21AF9ADD00244934 /* SignUpViewController.swift in Sources */,
 				81ED3E5C20110E9F00D531F6 /* Goalit.xcdatamodeld in Sources */,
 				81BC355E2022790E00E6A95F /* UserController.swift in Sources */,
 				81ED3E5420110E9F00D531F6 /* AppDelegate.swift in Sources */,

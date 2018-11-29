@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoadingViewController: UIViewController {
 
@@ -22,8 +23,8 @@ class LoadingViewController: UIViewController {
         UIView.animate(withDuration: 0.5, animations: {
             self.loadingImageView.alpha = 1.0
         }) { (true) in
-            let hasAccount = UserController.shared.checkIfUserExists()
-            if hasAccount {
+//            let hasAccount = UserController.shared.checkIfUserExists()
+            if let _ = Auth.auth().currentUser {
                 self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
             } else {
                 self.performSegue(withIdentifier: Constant.loadingTOloginSegue, sender: nil)
