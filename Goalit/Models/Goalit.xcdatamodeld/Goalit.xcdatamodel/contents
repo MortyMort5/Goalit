@@ -5,7 +5,6 @@
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="dayOwnerRef" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dayUUID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recordID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="goal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="days" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <entity name="Goal" representedClassName="Goal" syncable="YES" codeGenerationType="class">
@@ -14,7 +13,6 @@
         <attribute name="goalType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalUUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recordID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="selectedDays" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalCompleted" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="days" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Day" inverseName="goal" inverseEntity="Day" syncable="YES"/>
@@ -23,13 +21,12 @@
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recordID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userUUID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="goals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="user" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Day" positionX="223" positionY="-18" width="128" height="135"/>
-        <element name="Goal" positionX="-63" positionY="-81" width="128" height="195"/>
-        <element name="User" positionX="81" positionY="-18" width="128" height="120"/>
+        <element name="Day" positionX="223" positionY="-18" width="128" height="120"/>
+        <element name="Goal" positionX="-63" positionY="-81" width="128" height="180"/>
+        <element name="User" positionX="81" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

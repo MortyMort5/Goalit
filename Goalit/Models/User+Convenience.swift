@@ -10,11 +10,10 @@ import Foundation
 import CoreData
 
 extension User {
-    @discardableResult convenience init(firstName: String, lastName: String, userUUID: String, recordID: String = "", context: NSManagedObjectContext = CoreDataStack.context) {
+    @discardableResult convenience init(firstName: String, lastName: String, userUUID: String, context: NSManagedObjectContext = CoreDataStack.context) {
         self.init(context: context)
         self.firstName = firstName
         self.lastName = lastName
         self.userUUID = userUUID
-        self.recordID = recordID
     }
 }

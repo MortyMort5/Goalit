@@ -21,4 +21,11 @@ class DateHelper {
         return dateFormatter.string(from: date).capitalized
     }
     
+    static func convertDateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy"
+        let myString = formatter.string(from: date)
+        return myString
+    }
+    
 }

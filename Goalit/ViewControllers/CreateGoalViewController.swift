@@ -10,6 +10,7 @@ import UIKit
 
 class CreateGoalViewController: UIViewController {
 
+    @IBOutlet weak var goalCreationDateLabel: UILabel!
     @IBOutlet weak var goalNameTextField: UITextField!
     @IBOutlet weak var goalTypeSegment: UISegmentedControl!
     @IBOutlet weak var saturdayButton: UIButton!
@@ -39,23 +40,6 @@ class CreateGoalViewController: UIViewController {
     var saturday = 1
     let selectedColor:UIColor = UIColor.green
     let unselectedColor:UIColor = UIColor.red
-    
-    func updateViews() {
-        guard let name = goal?.name, let selectedDays = goal?.selectedDays else { return }
-        let daysSelectedArray: [UIButton] = [sundayButton, mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton]
-        goalNameTextField.text = name
-        var counter = 0
-        for day in selectedDays {
-            if day == "1" {
-                let buttonTapped = daysSelectedArray[counter]
-                buttonTapped.backgroundColor = selectedColor
-            } else {
-                let buttonTapped = daysSelectedArray[counter]
-                buttonTapped.backgroundColor = unselectedColor
-            }
-            counter = counter + 1
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,5 +151,24 @@ class CreateGoalViewController: UIViewController {
         let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func updateViews() {
+        guard let name = goal?.name, let selectedDays = goal?.selectedDays, let creationDate = goal?.dateCreated else { return }
+        let daysSelectedArray: [UIButton] = [sundayButton, mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton]
+        goalNameTextField.text = name
+        goalCreationDateLabel.text = "Created: \(DateHelper.convertDateToString(date: creationDate))"
+        goalCreationDateLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        var counter = 0
+        for day in selectedDays {
+            if day == "1" {
+                let buttonTapped = daysSelectedArray[counter]
+                buttonTapped.backgroundColor = selectedColor
+            } else {
+                let buttonTapped = daysSelectedArray[counter]
+                buttonTapped.backgroundColor = unselectedColor
+            }
+            counter = counter + 1
+        }
     }
 }
