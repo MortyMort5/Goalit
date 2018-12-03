@@ -15,8 +15,8 @@ class UserController {
     static let shared = UserController()
     var currentUser: User?
     
-    func createUser(withFirstName firstName: String, lastName: String) {
-        let user = User(firstName: firstName, lastName: lastName, userUUID: NSUUID().uuidString)
+    func createUser(withUsername username: String, email: String) {
+        let user = User(username: username, email: email, userUUID: NSUUID().uuidString)
         self.currentUser = user
         GoalController.shared.saveToPersistentStore()
     }
