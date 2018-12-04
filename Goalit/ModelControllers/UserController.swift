@@ -19,10 +19,10 @@ class UserController {
     func createUser(withUsername username: String, email: String, userID: String) {
         ref = Database.database().reference()
         
-        guard let key = ref.child("users").childByAutoId().key else { return }
+//        guard let key = ref.child("users").childByAutoId().key else { return }
         let userDictionary = [Constant.userNameKey: username,
                     Constant.userUUIDKey: userID] as [String : Any]
-        let childUpdates = ["\(key)": userDictionary]
+        let childUpdates = ["\(userID)": userDictionary]
         
         ref.child("users").updateChildValues(childUpdates) {
             (error:Error?, ref:DatabaseReference) in

@@ -21,6 +21,7 @@ class CreateGoalViewController: UIViewController {
     @IBOutlet weak var mondayButton: UIButton!
     @IBOutlet weak var sundayButton: UIButton!
     @IBOutlet weak var createGoalButton: UIButton!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var goal: Goal? {
         didSet {
@@ -130,6 +131,8 @@ class CreateGoalViewController: UIViewController {
     }
     
     @IBAction func createGoalButtonTapped(_ sender: Any) {
+        loadingIndicator.startAnimating()
+        createGoalButton.isEnabled = false
         self.selectedDays = convertSelectedDaysToString()
         guard let name = goalNameTextField.text, !name.isEmpty else { self.missingFieldAlert(); return }
         
@@ -139,6 +142,7 @@ class CreateGoalViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         } else {
             GoalController.shared.createGoal(withName: name, dateCreated: Date(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays)
+            loadingIndicator.stopAnimating()
             self.navigationController?.popViewController(animated: true)
         }
     }

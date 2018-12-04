@@ -16,8 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+//        let ref = Database.database().reference().child("goals").child("name-test")
+//        ref.observeSingleEvent(of: .value, with: { snapshot in
+//
+//            if !snapshot.exists() { return }
+//
+//            print(snapshot)
+//        })
         
         let connectedRef = Database.database().reference(withPath: ".info/connected")
         connectedRef.observe(.value, with: { snapshot in
