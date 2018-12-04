@@ -32,7 +32,9 @@ class SignUpViewController: UIViewController {
                     print("Error on change request \(error!.localizedDescription)")
                 }
                 print("Created USER succesfully")
-                UserController.shared.createUser(withUsername: username, email: email)
+                guard let userID = user?.user.uid else { return }
+                print("userID = \(userID)")
+                UserController.shared.createUser(withUsername: username, email: email, userID: userID)
                 self.performSegue(withIdentifier: Constant.signUpTOgoalSegue, sender: nil)
             })
         }

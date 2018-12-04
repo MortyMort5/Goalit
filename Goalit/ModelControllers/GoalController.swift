@@ -26,14 +26,43 @@ class GoalController {
     }
 
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32, goalType: Int32, selectedDays: String) {
-        guard let user = UserController.shared.currentUser, let userUUID = user.userUUID else { return }
-        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString, selectedDays: selectedDays, goalType: goalType)
-        if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: DateHelper.currentDate()) {
-            DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
-        }
+        guard let userID = Auth.auth().currentUser?.uid else { return }
         ref = Database.database().reference()
-        ref.child("goals").child(userUUID).setValue(["name": name, "dateCreated": dateCreated, "totalCompleted": totalCompleted, "goalType": goalType, "selectedDays": selectedDays])
-        saveToPersistentStore()
+        guard let user = UserController.shared.currentUser else { return }
+        let dateCreatedString = DateHelper.convertDateToString(date: dateCreated)
+        
+        guard let key = ref.child("goals").childByAutoId().key else { return }
+        let goal = [Constant.userIDRefKey: userID,
+                    Constant.goalNameKey: name,
+                    Constant.goalDateCreatedKey: dateCreatedString,
+                    Constant.goalUUIDKey: key,
+                    Constant.totalCompletedKey: totalCompleted,
+                    Constant.goalTypeKey: goalType,
+                    Constant.selectedDaysKey: selectedDays] as [String : Any]
+        let childUpdates = ["\(key)": goal]
+        
+        ref.child("goals").updateChildValues(childUpdates) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Goal could not be saved: \(error).")
+            } else {
+                print("Goal saved successfully!")
+                let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: key, selectedDays: selectedDays, goalType: goalType)
+                if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: DateHelper.currentDate()) {
+                    DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
+                }
+                self.saveToPersistentStore()
+            }
+        }
+    }
+    
+    func writeGoalToServer() {
+        //MARK: If there is internet create goal on the server
+    }
+    
+    func checkForInternetConnect() -> Bool {
+        //MARK: If there is internet return Bool
+    return true
     }
     
     func checkSelectedDaysBeforeCreatingDayObject(selectedDays: String, date: Date) -> Bool {

@@ -132,12 +132,13 @@ class CreateGoalViewController: UIViewController {
     @IBAction func createGoalButtonTapped(_ sender: Any) {
         self.selectedDays = convertSelectedDaysToString()
         guard let name = goalNameTextField.text, !name.isEmpty else { self.missingFieldAlert(); return }
+        
         if let goal = self.goal {
             goal.name = name
             GoalController.shared.modifyGoal(goal: goal)
             self.navigationController?.popViewController(animated: true)
         } else {
-            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays)
+            GoalController.shared.createGoal(withName: name, dateCreated: Date(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays)
             self.navigationController?.popViewController(animated: true)
         }
     }

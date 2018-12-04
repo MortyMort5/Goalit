@@ -41,6 +41,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
+        print("Signed Out")
         self.dismiss(animated: true, completion: nil)
     }
     

@@ -16,17 +16,24 @@ class Constant {
     static let Day = "Day"
     
     // User
-    static let firstNameKey = "firstName"
-    static let lastNameKey = "lastName"
+    static let userNameKey = "username"
+    static let emailKey = "email"
     static let userUUIDKey = "userUUID"
     
     // Goal
-    static let dateCreatedKey = "dateCreated"
+    static let goalDateCreatedKey = "dateCreated"
     static let goalUUIDKey = "goalUUID"
     static let goalNameKey = "name"
     static let totalCompletedKey = "totalCompleted"
+    static let selectedDaysKey = "selectedDays"
+    static let goalTypeKey = "goalType"
+    static let userIDRefKey = "userIDRef"
     
     // Day
+    static let dayCompletedKey = "completed"
+    static let dayDateKey = "date"
+    static let dayUUIDKey = "dayUUID"
+    static let dayGoalIDRefKey = "goalIDRef"
     
     
     // Cell Identifiers

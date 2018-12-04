@@ -14,10 +14,29 @@ import Firebase
 class DayController {
     
     static let shared = DayController()
+    var ref: DatabaseReference!
     
     func createDay(withDate date: Date, completed: Int32, goal: Goal) {
-        let _ = Day(date: date, completed: completed, goal: goal, dayUUID: NSUUID().uuidString)
-        GoalController.shared.saveToPersistentStore()
+        ref = Database.database().reference()
+        guard let goalIDRef = goal.goalUUID else { return }
+        let dateString = DateHelper.convertDateToString(date: date)
+        guard let key = ref.child("days").childByAutoId().key else { return }
+        let dayDictionary = [Constant.dayDateKey: dateString,
+                              Constant.dayCompletedKey: completed,
+                              Constant.dayUUIDKey: key,
+                              Constant.dayGoalIDRefKey: goalIDRef] as [String : Any]
+        let childUpdates = ["\(key)": dayDictionary]
+        
+        ref.child("days").updateChildValues(childUpdates) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Day could not be saved: \(error).")
+            } else {
+                print("Day saved successfully!")
+                let _ = Day(date: date, completed: completed, goal: goal, dayUUID: key)
+                GoalController.shared.saveToPersistentStore()
+            }
+        }
     }
     
     func modifyDay(day: Day) {
