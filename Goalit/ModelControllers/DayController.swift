@@ -40,6 +40,26 @@ class DayController {
         }
     }
     
+    func fetchDaysForGoal(goal: Goal, completion:@escaping() -> Void) {
+        ref = Database.database().reference()
+        let goalID = goal.goalUUID
+        var days: [Day] = []
+        
+        ref.child("days").child(goalID).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let snapshotValues = snapshot.value as? NSDictionary else { completion(); return }
+            for snap in snapshotValues {
+                guard let dict = snap.value as? [String: Any], let day = Day(dictionary: dict) else { completion(); return }
+                days.append(day)
+            }
+            let orderedDays = days.sorted(by: { $0.date < $1.date })
+            GoalController.shared.goals.filter{ $0.goalUUID == goalID }.first?.days = orderedDays
+            completion()
+        }) { (error) in
+            print("Error fetching Days \(error.localizedDescription)")
+            completion()
+        }
+    }
+    
 //    func modifyDay(day: Day) {
 //        let moc = CoreDataStack.context
 //        let request = NSFetchRequest<Day>(entityName: Constant.Day)

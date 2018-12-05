@@ -21,4 +21,17 @@ class Day {
         self.dayUUID = dayUUID
         self.goalIDRef = goalIDRef
     }
+    
+    init?(dictionary: [String:Any]) {
+        guard let completed = dictionary[Constant.dayCompletedKey] as? Int,
+            let dateString = dictionary[Constant.dayDateKey] as? String,
+            let dayUUID = dictionary[Constant.dayUUIDKey] as? String,
+            let goalIDRef = dictionary[Constant.dayGoalIDRefKey] as? String else { return nil }
+        
+        self.completed = completed
+        let date = DateHelper.convertStringToDate(stringDate: dateString)
+        self.date = date
+        self.dayUUID = dayUUID
+        self.goalIDRef = goalIDRef
+    }
 }

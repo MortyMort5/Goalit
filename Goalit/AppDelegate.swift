@@ -17,14 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
-//        let ref = Database.database().reference().child("goals").child("name-test")
-//        ref.observeSingleEvent(of: .value, with: { snapshot in
-//
-//            if !snapshot.exists() { return }
-//
-//            print(snapshot)
-//        })
-        
         let connectedRef = Database.database().reference(withPath: ".info/connected")
         connectedRef.observe(.value, with: { snapshot in
             if snapshot.value as? Bool ?? false {
@@ -33,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Not connected")
             }
         })
-        //MARK: Fix
-//        GoalController.shared.fillMissingDays()
         return true
     }
 
@@ -50,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        //MARK: Fix
-//        GoalController.shared.fillMissingDays()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

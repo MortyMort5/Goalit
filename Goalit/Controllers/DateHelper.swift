@@ -30,12 +30,10 @@ class DateHelper {
     
     static func convertStringToDate(stringDate: String) -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "MM-dd-yyyy"
         dateFormatter.locale = Locale.current
         guard let date = dateFormatter.date(from: stringDate) else { return Date() }
         return date
         
     }
-    
 }

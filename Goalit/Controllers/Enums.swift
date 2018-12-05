@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CompletedGoalForDay: Int32 {
+enum CompletedGoalForDay: Int {
     case failedToComplete = 0
     case completed = 1
     case excused = 2
