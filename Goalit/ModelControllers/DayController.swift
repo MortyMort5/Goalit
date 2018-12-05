@@ -25,7 +25,7 @@ class DayController {
                               Constant.dayCompletedKey: completed,
                               Constant.dayUUIDKey: key,
                               Constant.dayGoalIDRefKey: goalIDRef] as [String : Any]
-        let childUpdates = ["\(key)": dayDictionary]
+        let childUpdates = ["\(goalIDRef)/\(key)": dayDictionary]
         
         ref.child("days").updateChildValues(childUpdates) {
             (error:Error?, ref:DatabaseReference) in

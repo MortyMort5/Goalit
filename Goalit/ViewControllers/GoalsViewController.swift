@@ -34,7 +34,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func menuButtonTapped(_ sender: Any) {
-        
+        signOut()
     }
     
     func signOut() {

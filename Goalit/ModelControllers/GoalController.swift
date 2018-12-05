@@ -39,7 +39,7 @@ class GoalController {
                     Constant.totalCompletedKey: totalCompleted,
                     Constant.goalTypeKey: goalType,
                     Constant.selectedDaysKey: selectedDays] as [String : Any]
-        let childUpdates = ["\(key)": goal]
+        let childUpdates = ["\(userID)/\(key)": goal]
         
         ref.child("goals").updateChildValues(childUpdates) {
             (error:Error?, ref:DatabaseReference) in
