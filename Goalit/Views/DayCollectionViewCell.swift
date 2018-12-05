@@ -21,7 +21,8 @@ class DayCollectionViewCell: UICollectionViewCell {
     }
     
     func updateView() {
-        guard let day = self.day, let dateDate = day.date else { return }
+        guard let day = self.day else { return }
+        let dateDate = day.date
         let dateNum = dayOfWeekNumber(date: dateDate)
         let dateLetters = dayOfWeekLetter(date: dateDate)
         dayCompletedButton.setTitle("\(dateNum)", for: .normal)

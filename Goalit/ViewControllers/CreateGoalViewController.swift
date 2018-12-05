@@ -30,7 +30,7 @@ class CreateGoalViewController: UIViewController {
             }
         }
     }
-    var goalType:Int32 = 0
+    var goalType:Int = 0
     var selectedDays:String = "1111111";
     var sunday = 1
     var monday = 1
@@ -138,12 +138,13 @@ class CreateGoalViewController: UIViewController {
         
         if let goal = self.goal {
             goal.name = name
-            GoalController.shared.modifyGoal(goal: goal)
+//            GoalController.shared.modifyGoal(goal: goal)
             self.navigationController?.popViewController(animated: true)
         } else {
-            GoalController.shared.createGoal(withName: name, dateCreated: Date(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays)
-            loadingIndicator.stopAnimating()
-            self.navigationController?.popViewController(animated: true)
+            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays) {
+                self.loadingIndicator.stopAnimating()
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     

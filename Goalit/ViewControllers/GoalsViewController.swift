@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 import Firebase
 
 class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, buttonTappedDelegate, updateDayDelegate {
@@ -56,9 +55,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constant.goalCellIdentifier, for: indexPath) as? GoalTableViewCell else { return GoalTableViewCell() }
         let goal = GoalController.shared.goals[indexPath.row]
         cell.goal = goal
-        guard let daysNSSet = goal.days else { return cell }
-        guard let days: [Day] = Array(daysNSSet) as? [Day] else { return cell }
-        self.days = days
+        self.days = goal.days
         cell.delegate = self
         return cell
     }
@@ -66,7 +63,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let goal = GoalController.shared.goals[indexPath.row]
-            GoalController.shared.deleteGoal(withGoal: goal)
+//            GoalController.shared.deleteGoal(withGoal: goal)
             tableView.deleteRows(at: [indexPath], with: .fade)
             setBackgroundImageWhenTableViewEmpty()
         }
@@ -96,34 +93,13 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        switch type {
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        case .move:
-            guard let indexPath = indexPath, let newIndexPath = newIndexPath else { return }
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
     func positiveButtonTapped(sender: GoalTableViewCell) {
         self.tableView.reloadData()
     }
     
     func updateDayRecord(sender: DayCollectionViewCell) {
         guard let day = sender.day else { return }
-        DayController.shared.modifyDay(day: day)
+//        DayController.shared.modifyDay(day: day)
         self.tableView.reloadData()
     }
     
@@ -145,7 +121,7 @@ extension GoalsViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let days = GoalController.shared.goals[collectionView.tag].days else { return 0 }
+        let days = GoalController.shared.goals[collectionView.tag].days
         return days.count
     }
     
@@ -155,9 +131,8 @@ extension GoalsViewController {
 //        print(indexPath)
         cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         let goal = GoalController.shared.goals[collectionView.tag]
-        guard let daysNSSet = goal.days else { return cell }
-        guard let days: [Day] = Array(daysNSSet) as? [Day] else { return cell }
-        let orderedDays = days.sorted(by: { $0.date! > $1.date! })
+        let days = goal.days
+        let orderedDays = days.sorted(by: { $0.date > $1.date })
         cell.day = orderedDays[indexPath.row]
         cell.delegate = self
         return cell

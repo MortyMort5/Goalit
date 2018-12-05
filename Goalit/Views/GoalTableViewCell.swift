@@ -31,7 +31,8 @@ class GoalTableViewCell: UITableViewCell {
     }
     
     func updateView() {
-        guard let goal = self.goal, let daysNSSet = goal.days, let days = Array(daysNSSet) as? [Day] else { return }
+        guard let goal = self.goal else { return }
+        let days = goal.days
         let total = totalCountCompleted(days: days)
         let totalInRow = totalCountCompletedInARow(days: days)
         goalNameLabel.text = goal.name
@@ -48,7 +49,7 @@ class GoalTableViewCell: UITableViewCell {
     
     func totalCountCompletedInARow(days: [Day]) -> (count: Int, month: String) {
         var count = 0
-        let orderedDays = days.sorted(by: { $0.date! > $1.date! })
+        let orderedDays = days.sorted(by: { $0.date > $1.date })
         recentDay = orderedDays.first
         let month = convertDateToStringOfMonth(date: orderedDays.first?.date ?? DateHelper.currentDate())
         for day in orderedDays {
@@ -74,7 +75,7 @@ class GoalTableViewCell: UITableViewCell {
     
     @IBAction func positiveButtonTapped(_ sender: Any) {
         guard let day = self.recentDay else { return }
-        DayController.shared.modifyDay(day: day)
+//        DayController.shared.modifyDay(day: day)
         delegate?.positiveButtonTapped(sender: self)
     }
 }

@@ -6,8 +6,7 @@
 //  Copyright © 2018 Sterling Mortensen. All rights reserved.
 //
 
-import Foundation
-import CoreData
+import UIKit
 import Firebase
 
 class GoalController {
@@ -15,23 +14,17 @@ class GoalController {
     static let shared = GoalController()
     var ref: DatabaseReference!
 
-    var goals: [Goal] {
-        let request: NSFetchRequest<Goal> = Goal.fetchRequest() // Telling what object to grab fromm the managed object context
-        let moc = CoreDataStack.context
-        do {
-            return try moc.fetch(request)
-        } catch  {
-            return []
-        }
-    }
+    var goals: [Goal] = []
 
-    func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32, goalType: Int32, selectedDays: String) {
-        guard let userID = Auth.auth().currentUser?.uid else { return }
-        ref = Database.database().reference()
-        guard let user = UserController.shared.currentUser else { return }
-        let dateCreatedString = DateHelper.convertDateToString(date: dateCreated)
+    func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int, goalType: Int, selectedDays: String, completion:@escaping() -> Void) {
+        guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         
-        guard let key = ref.child("goals").childByAutoId().key else { return }
+        ref = Database.database().reference()
+        
+        let dateCreatedString = DateHelper.convertDateToString(date: dateCreated)
+
+        guard let key = ref.child("goals").childByAutoId().key else { completion(); return }
+        
         let goal = [Constant.userIDRefKey: userID,
                     Constant.goalNameKey: name,
                     Constant.goalDateCreatedKey: dateCreatedString,
@@ -39,25 +32,49 @@ class GoalController {
                     Constant.totalCompletedKey: totalCompleted,
                     Constant.goalTypeKey: goalType,
                     Constant.selectedDaysKey: selectedDays] as [String : Any]
-        let childUpdates = ["\(userID)/\(key)": goal]
         
+        let childUpdates = ["\(userID)/\(key)": goal]
+
         ref.child("goals").updateChildValues(childUpdates) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Goal could not be saved: \(error).")
+                completion()
             } else {
                 print("Goal saved successfully!")
-                let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: key, selectedDays: selectedDays, goalType: goalType)
+                
+                let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: key, selectedDays: selectedDays, goalType: goalType)
+                
                 if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: DateHelper.currentDate()) {
-                    DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
+                    
+                    DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal, completion: { (day) in
+                        guard let day = day else { completion(); return }
+                        goal.days.append(day)
+                        self.goals.append(goal)
+                        completion()
+                    })
+                    
+                } else {
+                    completion()
                 }
-                self.saveToPersistentStore()
             }
         }
     }
     
-    func writeGoalToServer() {
-        //MARK: If there is internet create goal on the server
+    func fetchAllGoals(completion:@escaping() -> Void) {
+        guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
+        ref = Database.database().reference()
+        ref.child("goals").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let snapshotValues = snapshot.value as? NSDictionary else { completion(); return }
+            for snap in snapshotValues {
+                guard let dict = snap.value as? [String: Any], let goal = Goal(dictionary: dict) else { completion(); return }
+                self.goals.append(goal)
+            }
+            completion()
+        }) { (error) in
+            print("Error fetching User \(error.localizedDescription)")
+            completion()
+        }
     }
     
     func checkForInternetConnect() -> Bool {
@@ -77,81 +94,48 @@ class GoalController {
         }
     }
     
-    func fillMissingDays() {
-        let moc = CoreDataStack.context
-        let request = NSFetchRequest<Goal>(entityName: Constant.Goal)
-        moc.perform {
-            do {
-                let fetchedGoals: [Goal] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Goal]
-                var tomorrow = DateHelper.currentDate()
-                goalArr: for goal in fetchedGoals {
-                    guard let selectedDays = goal.selectedDays, let dateCreated = goal.dateCreated else { return }
-                    guard let daysNSSet = goal.days, let days: [Day] = Array(daysNSSet) as? [Day], let date = days.last?.date else {
-                        var changingDateFromGoalCreationDate = dateCreated
-                        if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-                        while (true) {
-                            if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
-                                DayController.shared.createDay(withDate: changingDateFromGoalCreationDate, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
-                                changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
-                                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-                            } else {
-                                changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
-                                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-                            }
-                        }
-                    }
-                    tomorrow = date
-                    if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                    tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
-                    while (true) {
-                        if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
-                            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                            DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
-                            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
-                        } else {
-                            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
-                            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                        }
-                    }
-                }
-            } catch {
-                fatalError("Failed to fetch goals: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func modifyGoal(goal: Goal) {
-        let moc = CoreDataStack.context
-        let request = NSFetchRequest<Goal>(entityName: Constant.Goal)
-        request.predicate = NSPredicate(format: "goalUUID like[cd] %@", goal.goalUUID ?? "")
-        moc.perform {
-            do {
-                let fetchedGoals: [Goal] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Goal]
-                guard let goalFetched: Goal = fetchedGoals.first else { return }
-                goalFetched.name = goal.name
-                
-            } catch {
-                fatalError("Failed to fetch goals: \(error.localizedDescription)")
-            }
-            self.saveToPersistentStore()
-        }
-    }
-    
-    func deleteGoal(withGoal goal: Goal) {
-        if let moc = goal.managedObjectContext {
-            moc.delete(goal)
-            saveToPersistentStore()
-        }
-    }
-    
-    func saveToPersistentStore() {
-        do {
-            try CoreDataStack.context.save()
-            print("Saved to persistent Store")
-        } catch let error {
-            NSLog("Error with saving to Core Data: \n\(error)")
-        }
-    }
+//    func fillMissingDays() {
+//        let moc = CoreDataStack.context
+//        let request = NSFetchRequest<Goal>(entityName: Constant.Goal)
+//        moc.perform {
+//            do {
+//                let fetchedGoals: [Goal] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Goal]
+//                var tomorrow = DateHelper.currentDate()
+//                goalArr: for goal in fetchedGoals {
+//                    guard let selectedDays = goal.selectedDays, let dateCreated = goal.dateCreated else { return }
+//                    guard let daysNSSet = goal.days, let days: [Day] = Array(daysNSSet) as? [Day], let date = days.last?.date else {
+//                        var changingDateFromGoalCreationDate = dateCreated
+//                        if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+//                        while (true) {
+//                            if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
+//                                DayController.shared.createDay(withDate: changingDateFromGoalCreationDate, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
+//                                changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
+//                                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+//                            } else {
+//                                changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
+//                                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+//                            }
+//                        }
+//                    }
+//                    tomorrow = date
+//                    if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+//                    tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+//                    while (true) {
+//                        if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
+//                            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+//                            DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
+//                            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+//                        } else {
+//                            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+//                            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+//                        }
+//                    }
+//                }
+//            } catch {
+//                fatalError("Failed to fetch goals: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 }
 
 extension String {

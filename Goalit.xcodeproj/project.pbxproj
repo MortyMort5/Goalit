@@ -8,9 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		60A60F44688E806CE67F1ADB /* Pods_Goalit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F5E435D89419521C7B54057 /* Pods_Goalit.framework */; };
-		8133B36C201298B700F7889F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B36B201298B700F7889F /* CoreDataStack.swift */; };
-		8133B36E201298CB00F7889F /* Goal+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B36D201298CB00F7889F /* Goal+Convenience.swift */; };
-		8133B370201298D900F7889F /* Day+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B36F201298D900F7889F /* Day+Convenience.swift */; };
+		8133B36E201298CB00F7889F /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B36D201298CB00F7889F /* Goal.swift */; };
+		8133B370201298D900F7889F /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B36F201298D900F7889F /* Day.swift */; };
 		8133B372201299FA00F7889F /* GoalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B371201299FA00F7889F /* GoalController.swift */; };
 		8133B37420129A0300F7889F /* DayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B37320129A0300F7889F /* DayController.swift */; };
 		8133B3762012A54700F7889F /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B3752012A54700F7889F /* GoalsViewController.swift */; };
@@ -20,12 +19,11 @@
 		8133B3822012AA4200F7889F /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133B3812012AA4200F7889F /* DayCollectionViewCell.swift */; };
 		817C2212201E9339007ABF2B /* StaticFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817C2211201E9339007ABF2B /* StaticFunction.swift */; };
 		819D1CF5203CF1DE00C80F11 /* CreateGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */; };
-		81BC355C202276FD00E6A95F /* User+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355B202276FD00E6A95F /* User+Convenience.swift */; };
+		81BC355C202276FD00E6A95F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355B202276FD00E6A95F /* User.swift */; };
 		81BC355E2022790E00E6A95F /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355D2022790E00E6A95F /* UserController.swift */; };
 		81DE935F202B8B6300BAC472 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DE935E202B8B6300BAC472 /* Enums.swift */; };
 		81ED3E5420110E9F00D531F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ED3E5320110E9F00D531F6 /* AppDelegate.swift */; };
 		81ED3E5920110E9F00D531F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81ED3E5720110E9F00D531F6 /* Main.storyboard */; };
-		81ED3E5C20110E9F00D531F6 /* Goalit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81ED3E5A20110E9F00D531F6 /* Goalit.xcdatamodeld */; };
 		81ED3E5E20110E9F00D531F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81ED3E5D20110E9F00D531F6 /* Assets.xcassets */; };
 		81ED3E6120110E9F00D531F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81ED3E5F20110E9F00D531F6 /* LaunchScreen.storyboard */; };
 		81EDB2BE2023DAAF00CA0FF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDB2BD2023DAAF00CA0FF3 /* LoginViewController.swift */; };
@@ -37,9 +35,8 @@
 /* Begin PBXFileReference section */
 		22F35FE2ADE37F7293C66E08 /* Pods-Goalit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalit.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalit/Pods-Goalit.release.xcconfig"; sourceTree = "<group>"; };
 		2F5E435D89419521C7B54057 /* Pods_Goalit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8133B36B201298B700F7889F /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		8133B36D201298CB00F7889F /* Goal+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Goal+Convenience.swift"; sourceTree = "<group>"; };
-		8133B36F201298D900F7889F /* Day+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+Convenience.swift"; sourceTree = "<group>"; };
+		8133B36D201298CB00F7889F /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		8133B36F201298D900F7889F /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		8133B371201299FA00F7889F /* GoalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalController.swift; sourceTree = "<group>"; };
 		8133B37320129A0300F7889F /* DayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayController.swift; sourceTree = "<group>"; };
 		8133B3752012A54700F7889F /* GoalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
@@ -50,13 +47,12 @@
 		817C2211201E9339007ABF2B /* StaticFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticFunction.swift; sourceTree = "<group>"; };
 		819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGoalViewController.swift; sourceTree = "<group>"; };
 		81BC35562022649A00E6A95F /* Goalit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Goalit.entitlements; sourceTree = "<group>"; };
-		81BC355B202276FD00E6A95F /* User+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Convenience.swift"; sourceTree = "<group>"; };
+		81BC355B202276FD00E6A95F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		81BC355D2022790E00E6A95F /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		81DE935E202B8B6300BAC472 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		81ED3E5020110E9F00D531F6 /* Goalit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goalit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81ED3E5320110E9F00D531F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81ED3E5820110E9F00D531F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		81ED3E5B20110E9F00D531F6 /* Goalit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Goalit.xcdatamodel; sourceTree = "<group>"; };
 		81ED3E5D20110E9F00D531F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81ED3E6020110E9F00D531F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81ED3E6220110E9F00D531F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,11 +88,9 @@
 		8133B35E2012897E00F7889F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				81ED3E5A20110E9F00D531F6 /* Goalit.xcdatamodeld */,
-				8133B36B201298B700F7889F /* CoreDataStack.swift */,
-				8133B36D201298CB00F7889F /* Goal+Convenience.swift */,
-				8133B36F201298D900F7889F /* Day+Convenience.swift */,
-				81BC355B202276FD00E6A95F /* User+Convenience.swift */,
+				8133B36D201298CB00F7889F /* Goal.swift */,
+				8133B36F201298D900F7889F /* Day.swift */,
+				81BC355B202276FD00E6A95F /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -346,22 +340,20 @@
 				817C2212201E9339007ABF2B /* StaticFunction.swift in Sources */,
 				8133B37D2012A72A00F7889F /* Constants.swift in Sources */,
 				8133B3822012AA4200F7889F /* DayCollectionViewCell.swift in Sources */,
-				8133B36E201298CB00F7889F /* Goal+Convenience.swift in Sources */,
+				8133B36E201298CB00F7889F /* Goal.swift in Sources */,
 				81DE935F202B8B6300BAC472 /* Enums.swift in Sources */,
 				8133B3762012A54700F7889F /* GoalsViewController.swift in Sources */,
 				8133B37F2012A7FB00F7889F /* GoalTableViewCell.swift in Sources */,
 				81EDB2BE2023DAAF00CA0FF3 /* LoginViewController.swift in Sources */,
-				81BC355C202276FD00E6A95F /* User+Convenience.swift in Sources */,
-				8133B36C201298B700F7889F /* CoreDataStack.swift in Sources */,
+				81BC355C202276FD00E6A95F /* User.swift in Sources */,
 				8133B37420129A0300F7889F /* DayController.swift in Sources */,
 				8133B37B2012A5FD00F7889F /* DateHelper.swift in Sources */,
 				8133B372201299FA00F7889F /* GoalController.swift in Sources */,
 				81EDB2C02023E79300CA0FF3 /* LoadingViewController.swift in Sources */,
 				B3E6F35E21AF9ADD00244934 /* SignUpViewController.swift in Sources */,
-				81ED3E5C20110E9F00D531F6 /* Goalit.xcdatamodeld in Sources */,
 				81BC355E2022790E00E6A95F /* UserController.swift in Sources */,
 				81ED3E5420110E9F00D531F6 /* AppDelegate.swift in Sources */,
-				8133B370201298D900F7889F /* Day+Convenience.swift in Sources */,
+				8133B370201298D900F7889F /* Day.swift in Sources */,
 				819D1CF5203CF1DE00C80F11 /* CreateGoalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,19 +547,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		81ED3E5A20110E9F00D531F6 /* Goalit.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				81ED3E5B20110E9F00D531F6 /* Goalit.xcdatamodel */,
-			);
-			currentVersion = 81ED3E5B20110E9F00D531F6 /* Goalit.xcdatamodel */;
-			path = Goalit.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 81ED3E4820110E9F00D531F6 /* Project object */;
 }

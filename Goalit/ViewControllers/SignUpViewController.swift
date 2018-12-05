@@ -31,8 +31,10 @@ class SignUpViewController: UIViewController {
                 self.createUserButton.isEnabled = true
                 // MARK: Throw alert saying there was an error that occured
             }
+            
             let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
             changeRequest?.displayName = username
+            
             changeRequest?.commitChanges(completion: { (error) in
                 if error != nil {
                     print("Error on change request \(error!.localizedDescription)")
@@ -41,10 +43,10 @@ class SignUpViewController: UIViewController {
                 }
                 print("Created USER succesfully")
                 guard let userID = user?.user.uid else { return }
-                print("userID = \(userID)")
-                UserController.shared.createUser(withUsername: username, email: email, userID: userID)
-                self.loadingIndicator.stopAnimating()
-                self.performSegue(withIdentifier: Constant.signUpTOgoalSegue, sender: nil)
+                UserController.shared.createUser(withUsername: username, userID: userID, completion: {
+                    self.loadingIndicator.stopAnimating()
+                    self.performSegue(withIdentifier: Constant.signUpTOgoalSegue, sender: nil)
+                })
             })
         }
     }

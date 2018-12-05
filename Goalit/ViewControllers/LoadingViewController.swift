@@ -23,9 +23,12 @@ class LoadingViewController: UIViewController {
         UIView.animate(withDuration: 0.5, animations: {
             self.loadingImageView.alpha = 1.0
         }) { (true) in
-            if let _ = Auth.auth().currentUser {
-                let _ = UserController.shared.checkIfUserExists()
-                self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
+            if let userID = Auth.auth().currentUser?.uid {
+                UserController.shared.fetchUser(userID: userID, completion: {
+                    GoalController.shared.fetchAllGoals {
+                        self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)                        
+                    }
+                })
             } else {
                 self.performSegue(withIdentifier: Constant.loadingTOloginSegue, sender: nil)
             }
