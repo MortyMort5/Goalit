@@ -124,17 +124,17 @@ class GoalController {
                             self.goals.filter{ $0.goalUUID == goalID }.first?.days.append(newDay)
                             group.leave()
                         }
-                        changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
+                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
                         if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
                     } else {
-                        changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
+                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
                         if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
                     }
                 }
             }
             tomorrow = date
             if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+            tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
             while (true) {
                 if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
                     if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
@@ -145,9 +145,9 @@ class GoalController {
                         self.goals.filter{ $0.goalUUID == goalID }.first?.days.append(newDay)
                         group.leave()
                     }
-                    tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
                 } else {
-                    tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
                     if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
                 }
             }

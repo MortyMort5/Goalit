@@ -39,17 +39,19 @@ class DateHelper {
     }
     
     static func compareDateWithCurrentDate(date: Date) -> Bool {
-        print("dateComingIN \(date)")
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date1String = dateFormatter.string(from: Date())
-        print("current date \(date1String)")
         let date2String = dateFormatter.string(from: date)
-        print("dateComingIN but now a string \(date2String)")
         if date1String == date2String {
             return true
         }
         return false
+    }
+    
+    static func incrementDateByOne(date: Date) -> Date {
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+        return tomorrow
     }
 }
