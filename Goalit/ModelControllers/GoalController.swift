@@ -61,19 +61,26 @@ class GoalController {
         }
     }
     
-    func fetchAllGoals(completion:@escaping() -> Void) {
+    func fetchAllDataForUser(completion:@escaping() -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         ref = Database.database().reference()
-        ref.queryOrdered(byChild: "name")
+        let group = DispatchGroup()
         ref.child("goals").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            print(Thread.isMainThread)
             guard let snapshotValues = snapshot.value as? NSDictionary else { completion(); return }
             for snap in snapshotValues {
                 guard let dict = snap.value as? [String: Any], let goal = Goal(dictionary: dict) else { completion(); return }
                 self.goals.append(goal)
+                group.enter()
+                DayController.shared.fetchDaysForGoal(goal: goal, completion: {
+                    group.leave()
+                })
             }
-            completion()
+            group.notify(queue: .main) {
+                completion()
+            }
         }) { (error) in
-            print("Error fetching Goals \(error.localizedDescription)")
+            print("Error fetching EVERYTHING \(error.localizedDescription)")
             completion()
         }
     }
@@ -97,6 +104,7 @@ class GoalController {
     
     func fillMissingDays(completion:@escaping() -> Void) {
         var tomorrow = DateHelper.currentDate()
+        let group = DispatchGroup()
         
         goalArr: for goal in self.goals {
             let selectedDays = goal.selectedDays
@@ -105,37 +113,48 @@ class GoalController {
             
             guard let date = days.last?.date else {
                 var changingDateFromGoalCreationDate = dateCreated
-                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+                if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
                 
                 while (true) {
                     if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
-
-                        DayController.shared.createDay(withDate: changingDateFromGoalCreationDate, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal) { (_) in
+                        group.enter()
+                        DayController.shared.createDay(withDate: changingDateFromGoalCreationDate, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal) { (day) in
+                            guard let newDay = day else { completion(); return }
+                            let goalID = goal.goalUUID
+                            self.goals.filter{ $0.goalUUID == goalID }.first?.days.append(newDay)
+                            group.leave()
                         }
                         changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
-                        if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
                     } else {
                         changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
-                        if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
                     }
                 }
             }
             tomorrow = date
-            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+            if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
             tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
             while (true) {
                 if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
-                    if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                    DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal) { (_) in
+                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+                    group.enter()
+                    DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal) { (day) in
+                        guard let newDay = day else { completion(); return }
+                        let goalID = goal.goalUUID
+                        self.goals.filter{ $0.goalUUID == goalID }.first?.days.append(newDay)
+                        group.leave()
                     }
                     tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
                 } else {
                     tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
-                    if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
                 }
             }
         }
-        completion()
+        group.notify(queue: .main) {
+            completion()
+        }
     }
 }
 

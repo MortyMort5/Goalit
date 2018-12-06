@@ -20,9 +20,9 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-//        GoalController.shared.fillMissingDays {
-//            self.tableView.reloadData()
-//        }
+        GoalController.shared.fillMissingDays {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

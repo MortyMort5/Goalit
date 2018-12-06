@@ -29,8 +29,14 @@ class LoginViewController: UIViewController {
                 print("Error on logging in \(error!.localizedDescription)")
                 self.enableAllButtons()
             }
-            self.loadingIndicator.stopAnimating()
-            self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
+            if let userID = user?.user.uid {
+                UserController.shared.fetchUser(userID: userID, completion: {
+                    GoalController.shared.fetchAllDataForUser {
+                        self.loadingIndicator.stopAnimating()
+                        self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
+                    }
+                })
+            }
         }
     }
     

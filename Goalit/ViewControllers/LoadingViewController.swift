@@ -25,10 +25,8 @@ class LoadingViewController: UIViewController {
         }) { (true) in
             if let userID = Auth.auth().currentUser?.uid {
                 UserController.shared.fetchUser(userID: userID, completion: {
-                    GoalController.shared.fetchAllGoals {
-//                        GoalController.shared.fetchDaysForGoal {
-//                            self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
-//                        }
+                    GoalController.shared.fetchAllDataForUser {
+                        self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
                     }
                 })
             } else {

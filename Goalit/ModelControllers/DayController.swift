@@ -52,6 +52,7 @@ class DayController {
                 days.append(day)
             }
             let orderedDays = days.sorted(by: { $0.date < $1.date })
+            print(orderedDays.last?.date)
             GoalController.shared.goals.filter{ $0.goalUUID == goalID }.first?.days = orderedDays
             completion()
         }) { (error) in
