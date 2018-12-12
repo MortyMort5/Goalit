@@ -10,7 +10,7 @@ import Foundation
 
 class Day: Codable {
     
-    let completed: Int
+    var completed: Int
     let date: Date
     let dayUUID: String
     let goalIDRef: String

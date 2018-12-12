@@ -103,8 +103,9 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func updateDayRecord(sender: DayCollectionViewCell) {
         guard let day = sender.day else { return }
-//        DayController.shared.modifyDay(day: day)
-        self.tableView.reloadData()
+        DayController.shared.modifyDay(day: day) {
+            self.tableView.reloadData()
+        }
     }
     
     func setBackgroundImageWhenTableViewEmpty() {

@@ -19,7 +19,7 @@ class DayController {
         let date = DateHelper.convertDateToString(date: day.date)
         let completed = day.completed
         let goalUUID = day.goalIDRef
-        let uuid = NSUUID().uuidString
+        let uuid = day.dayUUID
         let dayDictionary = [Constant.dayDateKey: date,
                              Constant.dayCompletedKey: completed,
                              Constant.dayGoalIDRefKey: goalUUID,
@@ -46,59 +46,33 @@ class DayController {
             return Day(date: date, completed: completed, dayUUID: dayUUID, goalIDRef: goalIDRef)
     }
     
-//    func fetchDaysForGoal(goal: Goal, completion:@escaping() -> Void) {
-//        ref = Database.database().reference()
-//        let goalID = goal.goalUUID
-//        var days: [Day] = []
-//
-//        ref.child("days").child(goalID).observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let snapshotValues = snapshot.value as? NSDictionary {
-//                for snap in snapshotValues {
-//                    guard let dict = snap.value as? [String: Any], let day = Day(dictionary: dict) else { completion(); return }
-//                    days.append(day)
-//                }
-//                let orderedDays = days.sorted(by: { $0.date < $1.date })
-//                GoalController.shared.goals.filter{ $0.goalUUID == goalID }.first?.days = orderedDays
-//                completion()
-//            } else {
-////                GoalController.shared.fillMissingDays {
-////                    completion()
-////                }
-//            }
-//
-//        }) { (error) in
-//            print("Error fetching Days \(error.localizedDescription)")
-//            completion()
-//        }
-//    }
-    
     func deleteAllDays() {
         ref = Database.database().reference()
         ref.child("days").removeValue()
-            
-        
-        
     }
     
-//    func modifyDay(day: Day) {
-//        let moc = CoreDataStack.context
-//        let request = NSFetchRequest<Day>(entityName: Constant.Day)
-//        request.predicate = NSPredicate(format: "dayUUID like[cd] %@", day.dayUUID ?? "")
-//        moc.perform {
-//            do {
-//                let fetchedDays: [Day] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Day]
-//                guard let day: Day = fetchedDays.first else { return }
-//                if day.completed == CompletedGoalForDay.completed.rawValue {
-//                    day.completed = CompletedGoalForDay.excused.rawValue
-//                } else if day.completed == CompletedGoalForDay.excused.rawValue {
-//                    day.completed = CompletedGoalForDay.failedToComplete.rawValue
-//                } else if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
-//                    day.completed = CompletedGoalForDay.completed.rawValue
-//                }
-//            } catch {
-//                fatalError("Failed to fetch goals: \(error.localizedDescription)")
-//            }
-//            GoalController.shared.saveToPersistentStore()
-//        }
-//    }
+    func modifyDay(day: Day, completion:@escaping() -> Void) {
+        guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
+        let goalID = day.goalIDRef
+        let dayID = day.dayUUID
+        
+        if day.completed == CompletedGoalForDay.completed.rawValue {
+            day.completed = CompletedGoalForDay.failedToComplete.rawValue
+        } else if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
+            day.completed = CompletedGoalForDay.completed.rawValue
+        }
+        
+        let dayDict = createDayDictionary(day: day)
+        ref = Database.database().reference()
+        ref.child("goals").child(userID).child(goalID).child(dayID).updateChildValues(dayDict) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Day could not be Modified: \(error.localizedDescription).")
+                completion()
+            } else {
+                print("Day was modified successfully!")
+                completion()
+            }
+        }
+    }
 }

@@ -93,10 +93,11 @@ class GoalController {
         let userID = goal.userIDRef
         let goalID = goal.goalUUID
         let goalDict = createGoalDictionary(goal: goal)
+        ref = Database.database().reference()
         ref.child("goals").child(userID).child(goalID).updateChildValues(goalDict) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
-                print("Goal could not be saved: \(error).")
+                print("Goal could not be saved: \(error.localizedDescription).")
                 completion()
             } else {
                 print("Goal saved successfully!")
