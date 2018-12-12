@@ -139,7 +139,7 @@ class CreateGoalViewController: UIViewController {
         if let goal = self.goal {
             goal.name = name
             goal.selectedDays = selectedDays
-            GoalController.shared.modifyGoal(Goal: goal) {
+            GoalController.shared.modifyGoal(goal: goal) {
                 self.loadingIndicator.stopAnimating()
                 self.navigationController?.popViewController(animated: true)
             }

@@ -66,7 +66,6 @@ class GoalController {
     
     func createGoalDictionary(goal: Goal, day: [String: Any]) -> [String: Any] {
         let dateCreatedString = DateHelper.convertDateToString(date: goal.dateCreated)
-
         let goal = [Constant.userIDRefKey: goal.userIDRef,
                     Constant.goalNameKey: goal.name,
                     Constant.goalDateCreatedKey: dateCreatedString,
@@ -75,12 +74,35 @@ class GoalController {
                     Constant.goalTypeKey: goal.goalType,
                     Constant.selectedDaysKey: goal.selectedDays,
                     Constant.goalDaysKey: day] as [String : Any]
-        
         return goal
     }
     
-    func modifyGoal(Goal: Goal, completion:@escaping() -> Void) {
-        
+    func createGoalDictionary(goal: Goal) -> [String: Any] {
+        let dateCreatedString = DateHelper.convertDateToString(date: goal.dateCreated)
+        let goal = [Constant.userIDRefKey: goal.userIDRef,
+                    Constant.goalNameKey: goal.name,
+                    Constant.goalDateCreatedKey: dateCreatedString,
+                    Constant.goalUUIDKey: goal.goalUUID,
+                    Constant.totalCompletedKey: goal.totalCompleted,
+                    Constant.goalTypeKey: goal.goalType,
+                    Constant.selectedDaysKey: goal.selectedDays] as [String : Any]
+        return goal
+    }
+    
+    func modifyGoal(goal: Goal, completion:@escaping() -> Void) {
+        let userID = goal.userIDRef
+        let goalID = goal.goalUUID
+        let goalDict = createGoalDictionary(goal: goal)
+        ref.child("goals").child(userID).child(goalID).updateChildValues(goalDict) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Goal could not be saved: \(error).")
+                completion()
+            } else {
+                print("Goal saved successfully!")
+                completion()
+            }
+        }
     }
     
     func fetchDataForUser(completion:@escaping() -> Void) {
