@@ -146,6 +146,14 @@ class GoalController {
         }
     }
     
+    func deleteGoal(goal: Goal) {
+        ref = Database.database().reference()
+        ref.child("goals").child(goal.userIDRef).child(goal.goalUUID).removeValue()
+        guard let goalIndex = self.goals.index(where: {$0.goalUUID == goal.goalUUID }) else { return }
+        self.goals.remove(at: goalIndex)
+        print("Deleted Goal")
+    }
+    
 //    func fillMissingDays(completion:@escaping() -> Void) {
 //        var tomorrow = DateHelper.currentDate()
 //

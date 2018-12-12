@@ -67,7 +67,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let goal = GoalController.shared.goals[indexPath.row]
-//            GoalController.shared.deleteGoal(withGoal: goal)
+            GoalController.shared.deleteGoal(goal: goal)
             tableView.deleteRows(at: [indexPath], with: .fade)
             setBackgroundImageWhenTableViewEmpty()
         }
