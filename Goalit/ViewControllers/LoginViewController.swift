@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
             }
             if let userID = user?.user.uid {
                 UserController.shared.fetchUser(userID: userID, completion: {
-                    GoalController.shared.fetchAllDataForUser {
+                    GoalController.shared.fetchDataForUser {
                         self.loadingIndicator.stopAnimating()
                         self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
                     }

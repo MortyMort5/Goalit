@@ -30,6 +30,7 @@
 		81EDB2C02023E79300CA0FF3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDB2BF2023E79300CA0FF3 /* LoadingViewController.swift */; };
 		B3E6F35E21AF9ADD00244934 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */; };
 		B3EA56B121CD207F000BDF93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */; };
+		B3F9441C21B7DF5300AA4530 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9441B21B7DF5300AA4530 /* DummyData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		91FFBA76414C219B8BFBF56F /* Pods-Goalit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalit/Pods-Goalit.debug.xcconfig"; sourceTree = "<group>"; };
 		B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B3F9441B21B7DF5300AA4530 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				8133B37C2012A72A00F7889F /* Constants.swift */,
 				817C2211201E9339007ABF2B /* StaticFunction.swift */,
 				81DE935E202B8B6300BAC472 /* Enums.swift */,
+				B3F9441B21B7DF5300AA4530 /* DummyData.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				8133B37F2012A7FB00F7889F /* GoalTableViewCell.swift in Sources */,
 				81EDB2BE2023DAAF00CA0FF3 /* LoginViewController.swift in Sources */,
 				81BC355C202276FD00E6A95F /* User.swift in Sources */,
+				B3F9441C21B7DF5300AA4530 /* DummyData.swift in Sources */,
 				8133B37420129A0300F7889F /* DayController.swift in Sources */,
 				8133B37B2012A5FD00F7889F /* DateHelper.swift in Sources */,
 				8133B372201299FA00F7889F /* GoalController.swift in Sources */,

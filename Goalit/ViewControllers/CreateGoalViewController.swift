@@ -138,13 +138,20 @@ class CreateGoalViewController: UIViewController {
         
         if let goal = self.goal {
             goal.name = name
-//            GoalController.shared.modifyGoal(goal: goal)
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays) {
+            goal.selectedDays = selectedDays
+            GoalController.shared.modifyGoal(Goal: goal) {
                 self.loadingIndicator.stopAnimating()
                 self.navigationController?.popViewController(animated: true)
             }
+        } else {
+            self.createGoal(name: name, selectedDays: self.selectedDays)
+        }
+    }
+    
+    func createGoal(name: String, selectedDays: String) {
+        GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays) {
+            self.loadingIndicator.stopAnimating()
+            self.navigationController?.popViewController(animated: true)
         }
     }
     

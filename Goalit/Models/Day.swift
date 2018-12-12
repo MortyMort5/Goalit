@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Day {
+class Day: Codable {
     
     let completed: Int
     let date: Date
     let dayUUID: String
     let goalIDRef: String
     
-    init(date: Date, completed: Int = 0, goal: Goal, dayUUID: String, goalIDRef: String = "") {
+    init(date: Date, completed: Int = 0, dayUUID: String, goalIDRef: String = "") {
         self.date = date
         self.completed = completed
         self.dayUUID = dayUUID
@@ -33,5 +33,12 @@ class Day {
         self.date = date
         self.dayUUID = dayUUID
         self.goalIDRef = goalIDRef
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.completed, forKey: Constant.dayCompletedKey)
+        aCoder.encode(self.date, forKey: Constant.dayDateKey)
+        aCoder.encode(self.dayUUID, forKey: Constant.dayUUIDKey)
+        aCoder.encode(self.goalIDRef, forKey: Constant.dayGoalIDRefKey)
     }
 }

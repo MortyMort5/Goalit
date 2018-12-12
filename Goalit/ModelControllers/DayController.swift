@@ -15,55 +15,69 @@ class DayController {
     static let shared = DayController()
     var ref: DatabaseReference!
     
-    func createDay(withDate date: Date, completed: Int, goal: Goal, completion:@escaping(Day?) -> Void) {
-        ref = Database.database().reference()
-        let goalIDRef = goal.goalUUID
-        let dateString = DateHelper.convertDateToString(date: date)
-        guard let key = ref.child("days").childByAutoId().key else { completion(nil); return }
-        let dayDictionary = [Constant.dayDateKey: dateString,
-                              Constant.dayCompletedKey: completed,
-                              Constant.dayUUIDKey: key,
-                              Constant.dayGoalIDRefKey: goalIDRef] as [String : Any]
-        
-        let childUpdates = ["\(goalIDRef)/\(key)": dayDictionary]
-
-        ref.child("days").updateChildValues(childUpdates) {
-            (error:Error?, ref:DatabaseReference) in
-            if let error = error {
-                print("Day could not be saved: \(error).")
-                completion(nil)
-            } else {
-                print("Day saved successfully!")
-                let day = Day(date: date, completed: completed, goal: goal, dayUUID: key)
-                completion(day)
-            }
-        }
+    func createDayDictionary(day: Day) -> [String:Any] {
+        let date = DateHelper.convertDateToString(date: day.date)
+        let completed = day.completed
+        let goalUUID = day.goalIDRef
+        let uuid = NSUUID().uuidString
+        let dayDictionary = [Constant.dayDateKey: date,
+                             Constant.dayCompletedKey: completed,
+                             Constant.dayGoalIDRefKey: goalUUID,
+                             Constant.dayUUIDKey: uuid] as [String : Any]
+        return dayDictionary
     }
     
-    func fetchDaysForGoal(goal: Goal, completion:@escaping() -> Void) {
-        ref = Database.database().reference()
+    
+    func addDayToGoal(goal: Goal, dayDate: Date) {
+        let userID = goal.userIDRef
         let goalID = goal.goalUUID
-        var days: [Day] = []
-        
-        ref.child("days").child(goalID).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let snapshotValues = snapshot.value as? NSDictionary {
-                for snap in snapshotValues {
-                    guard let dict = snap.value as? [String: Any], let day = Day(dictionary: dict) else { completion(); return }
-                    days.append(day)
-                }
-                let orderedDays = days.sorted(by: { $0.date < $1.date })
-                GoalController.shared.goals.filter{ $0.goalUUID == goalID }.first?.days = orderedDays
-                completion()
-            } else {
-                GoalController.shared.fillMissingDays {
-                    completion()
-                }
-            }
+        let uuid = NSUUID().uuidString
+        let date = DateHelper.convertDateToString(date: dayDate)
+        let dayDictionary = [Constant.dayDateKey: date,
+                             Constant.dayCompletedKey: CompletedGoalForDay.failedToComplete.rawValue,
+                             Constant.dayGoalIDRefKey: goalID,
+                             Constant.dayUUIDKey: uuid] as [String : Any]
+        let childUpdates = [uuid: dayDictionary]
+        ref = Database.database().reference().child("goals/\(userID)/\(goalID)/days")
+        ref.updateChildValues(childUpdates)
+    }
+    
+    func createDay(date: Date, completed: Int, dayUUID: String, goalIDRef: String, selectedDays: String) -> Day? {
+            return Day(date: date, completed: completed, dayUUID: dayUUID, goalIDRef: goalIDRef)
+    }
+    
+//    func fetchDaysForGoal(goal: Goal, completion:@escaping() -> Void) {
+//        ref = Database.database().reference()
+//        let goalID = goal.goalUUID
+//        var days: [Day] = []
+//
+//        ref.child("days").child(goalID).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let snapshotValues = snapshot.value as? NSDictionary {
+//                for snap in snapshotValues {
+//                    guard let dict = snap.value as? [String: Any], let day = Day(dictionary: dict) else { completion(); return }
+//                    days.append(day)
+//                }
+//                let orderedDays = days.sorted(by: { $0.date < $1.date })
+//                GoalController.shared.goals.filter{ $0.goalUUID == goalID }.first?.days = orderedDays
+//                completion()
+//            } else {
+////                GoalController.shared.fillMissingDays {
+////                    completion()
+////                }
+//            }
+//
+//        }) { (error) in
+//            print("Error fetching Days \(error.localizedDescription)")
+//            completion()
+//        }
+//    }
+    
+    func deleteAllDays() {
+        ref = Database.database().reference()
+        ref.child("days").removeValue()
             
-        }) { (error) in
-            print("Error fetching Days \(error.localizedDescription)")
-            completion()
-        }
+        
+        
     }
     
 //    func modifyDay(day: Day) {

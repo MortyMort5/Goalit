@@ -24,6 +24,7 @@ class Constant {
     static let goalDateCreatedKey = "dateCreated"
     static let goalUUIDKey = "goalUUID"
     static let goalNameKey = "name"
+    static let goalDaysKey = "days"
     static let totalCompletedKey = "totalCompleted"
     static let selectedDaysKey = "selectedDays"
     static let goalTypeKey = "goalType"

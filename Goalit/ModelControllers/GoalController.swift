@@ -20,20 +20,37 @@ class GoalController {
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         
         ref = Database.database().reference()
+        guard let goalNodeKey = ref.child("goals").childByAutoId().key else { completion(); return }
+        guard let daysNodeKey = ref.child("days").childByAutoId().key else { completion(); return }
         
-        let dateCreatedString = DateHelper.convertDateToString(date: dateCreated)
+        var optDay: Day?
+        if checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: dateCreated) {
+            optDay = DayController.shared.createDay(date: dateCreated,
+                                                    completed: CompletedGoalForDay.completed.rawValue,
+                                                    dayUUID: daysNodeKey,
+                                                    goalIDRef: goalNodeKey,
+                                                    selectedDays: selectedDays)
+        } else {
+            optDay = DayController.shared.createDay(date: dateCreated,
+                                                    completed: CompletedGoalForDay.excused.rawValue,
+                                                    dayUUID: daysNodeKey,
+                                                    goalIDRef: goalNodeKey,
+                                                    selectedDays: selectedDays)
+        }
+        
+        guard let day = optDay else { completion(); return }
+        
+        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: goalNodeKey, selectedDays: selectedDays, goalType: goalType)
+        
+        goal.days.append(day)
+        self.goals.append(goal)
 
-        guard let key = ref.child("goals").childByAutoId().key else { completion(); return }
+        let dayDictionary = DayController.shared.createDayDictionary(day: day)
+        let dayUpdate = [daysNodeKey: dayDictionary]
         
-        let goal = [Constant.userIDRefKey: userID,
-                    Constant.goalNameKey: name,
-                    Constant.goalDateCreatedKey: dateCreatedString,
-                    Constant.goalUUIDKey: key,
-                    Constant.totalCompletedKey: totalCompleted,
-                    Constant.goalTypeKey: goalType,
-                    Constant.selectedDaysKey: selectedDays] as [String : Any]
+        let goalDict = createGoalDictionary(goal: goal, day: dayUpdate)
         
-        let childUpdates = ["\(userID)/\(key)": goal]
+        let childUpdates = ["\(userID)/\(goalNodeKey)": goalDict]
 
         ref.child("goals").updateChildValues(childUpdates) {
             (error:Error?, ref:DatabaseReference) in
@@ -42,43 +59,47 @@ class GoalController {
                 completion()
             } else {
                 print("Goal saved successfully!")
-                
-                let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: key, selectedDays: selectedDays, goalType: goalType)
-                
-                if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: DateHelper.currentDate()) {
-                    
-                    DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal, completion: { (day) in
-                        guard let day = day else { completion(); return }
-                        goal.days.append(day)
-                        self.goals.append(goal)
-                        completion()
-                    })
-                    
-                } else {
-                    completion()
-                }
+                completion()
             }
         }
     }
     
-    func fetchAllDataForUser(completion:@escaping() -> Void) {
+    func createGoalDictionary(goal: Goal, day: [String: Any]) -> [String: Any] {
+        let dateCreatedString = DateHelper.convertDateToString(date: goal.dateCreated)
+
+        let goal = [Constant.userIDRefKey: goal.userIDRef,
+                    Constant.goalNameKey: goal.name,
+                    Constant.goalDateCreatedKey: dateCreatedString,
+                    Constant.goalUUIDKey: goal.goalUUID,
+                    Constant.totalCompletedKey: goal.totalCompleted,
+                    Constant.goalTypeKey: goal.goalType,
+                    Constant.selectedDaysKey: goal.selectedDays,
+                    Constant.goalDaysKey: day] as [String : Any]
+        
+        return goal
+    }
+    
+    func modifyGoal(Goal: Goal, completion:@escaping() -> Void) {
+        
+    }
+    
+    func fetchDataForUser(completion:@escaping() -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         ref = Database.database().reference()
-        let group = DispatchGroup()
         ref.child("goals").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
             print(Thread.isMainThread)
             guard let snapshotValues = snapshot.value as? NSDictionary else { completion(); return }
             for snap in snapshotValues {
-                guard let dict = snap.value as? [String: Any], let goal = Goal(dictionary: dict) else { completion(); return }
+                guard let dict = snap.value as? [String: Any],
+                        let goal = Goal(dictionary: dict) else { completion(); return }
+                
+                guard let daysDict = dict[Constant.goalDaysKey] as? [String:[String: Any]] else { return }
+                let days = daysDict.values.compactMap({ Day(dictionary: $0) })
+                goal.days = days
                 self.goals.append(goal)
-                group.enter()
-                DayController.shared.fetchDaysForGoal(goal: goal, completion: {
-                    group.leave()
-                })
             }
-            group.notify(queue: .main) {
-                completion()
-            }
+            print("Fetched user's data successfully")
+            completion()
         }) { (error) in
             print("Error fetching EVERYTHING \(error.localizedDescription)")
             completion()
@@ -104,7 +125,6 @@ class GoalController {
     
     func fillMissingDays(completion:@escaping() -> Void) {
         var tomorrow = DateHelper.currentDate()
-        let group = DispatchGroup()
         
         goalArr: for goal in self.goals {
             let selectedDays = goal.selectedDays
@@ -117,13 +137,7 @@ class GoalController {
                 
                 while (true) {
                     if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
-                        group.enter()
-                        DayController.shared.createDay(withDate: changingDateFromGoalCreationDate, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal) { (day) in
-                            guard let newDay = day else { completion(); return }
-                            let goalID = goal.goalUUID
-                            self.goals.filter{ $0.goalUUID == goalID }.first?.days.append(newDay)
-                            group.leave()
-                        }
+                        DayController.shared.addDayToGoal(goal: goal, dayDate: changingDateFromGoalCreationDate)
                         changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
                         if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
                     } else {
@@ -137,14 +151,8 @@ class GoalController {
             tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
             while (true) {
                 if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
+                    DayController.shared.addDayToGoal(goal: goal, dayDate: tomorrow)
                     if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                    group.enter()
-                    DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal) { (day) in
-                        guard let newDay = day else { completion(); return }
-                        let goalID = goal.goalUUID
-                        self.goals.filter{ $0.goalUUID == goalID }.first?.days.append(newDay)
-                        group.leave()
-                    }
                     tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
                 } else {
                     tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
@@ -152,9 +160,7 @@ class GoalController {
                 }
             }
         }
-        group.notify(queue: .main) {
-            completion()
-        }
+        completion()
     }
 }
 

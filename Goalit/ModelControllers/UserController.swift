@@ -38,13 +38,20 @@ class UserController {
     func fetchUser(userID: String, completion: @escaping() -> Void) {
         ref = Database.database().reference()
         ref.child("users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let value = snapshot.value as? NSDictionary
-            let username = value?["username"] as? String ?? ""
-            let user = User(username: username, userID: userID)
-            self.currentUser = user
-            completion()
-            
+            if !snapshot.exists() {
+                guard let username = Auth.auth().currentUser?.displayName else { return }
+                UserController.shared.createUser(withUsername: username, userID: userID, completion: {
+                    self.fetchUser(userID: userID, completion: {
+                        completion()
+                    })
+                })
+            } else {
+                let value = snapshot.value as? NSDictionary
+                let username = value?["username"] as? String ?? ""
+                let user = User(username: username, userID: userID)
+                self.currentUser = user
+                completion()
+            }
         }) { (error) in
             print("Error fetching User \(error.localizedDescription)")
             completion()
