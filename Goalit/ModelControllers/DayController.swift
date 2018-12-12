@@ -28,19 +28,19 @@ class DayController {
     }
     
     
-    func addDayToGoal(goal: Goal, dayDate: Date) {
-        let userID = goal.userIDRef
-        let goalID = goal.goalUUID
-        let uuid = NSUUID().uuidString
-        let date = DateHelper.convertDateToString(date: dayDate)
-        let dayDictionary = [Constant.dayDateKey: date,
-                             Constant.dayCompletedKey: CompletedGoalForDay.failedToComplete.rawValue,
-                             Constant.dayGoalIDRefKey: goalID,
-                             Constant.dayUUIDKey: uuid] as [String : Any]
-        let childUpdates = [uuid: dayDictionary]
-        ref = Database.database().reference().child("goals/\(userID)/\(goalID)/days")
-        ref.updateChildValues(childUpdates)
-    }
+//    func addDayToGoal(goal: Goal, dayDate: Date) {
+//        let userID = goal.userIDRef
+//        let goalID = goal.goalUUID
+//        let uuid = NSUUID().uuidString
+//        let date = DateHelper.convertDateToString(date: dayDate)
+//        let dayDictionary = [Constant.dayDateKey: date,
+//                             Constant.dayCompletedKey: CompletedGoalForDay.failedToComplete.rawValue,
+//                             Constant.dayGoalIDRefKey: goalID,
+//                             Constant.dayUUIDKey: uuid] as [String : Any]
+//        let childUpdates = [uuid: dayDictionary]
+//        ref = Database.database().reference().child("goals/\(userID)/\(goalID)/days")
+//        ref.updateChildValues(childUpdates)
+//    }
     
     func createDay(date: Date, completed: Int, dayUUID: String, goalIDRef: String, selectedDays: String) -> Day? {
             return Day(date: date, completed: completed, dayUUID: dayUUID, goalIDRef: goalIDRef)
@@ -64,7 +64,7 @@ class DayController {
         
         let dayDict = createDayDictionary(day: day)
         ref = Database.database().reference()
-        ref.child("goals").child(userID).child(goalID).child(dayID).updateChildValues(dayDict) {
+        ref.child("goals").child(userID).child(goalID).child("days").child(dayID).updateChildValues(dayDict) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Day could not be Modified: \(error.localizedDescription).")

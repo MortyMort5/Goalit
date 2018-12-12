@@ -146,45 +146,45 @@ class GoalController {
         }
     }
     
-    func fillMissingDays(completion:@escaping() -> Void) {
-        var tomorrow = DateHelper.currentDate()
-        
-        goalArr: for goal in self.goals {
-            let selectedDays = goal.selectedDays
-            let dateCreated = goal.dateCreated
-            let days = goal.days
-            
-            guard let date = days.last?.date else {
-                var changingDateFromGoalCreationDate = dateCreated
-                if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-                
-                while (true) {
-                    if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
-                        DayController.shared.addDayToGoal(goal: goal, dayDate: changingDateFromGoalCreationDate)
-                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
-                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-                    } else {
-                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
-                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-                    }
-                }
-            }
-            tomorrow = date
-            if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-            tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
-            while (true) {
-                if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
-                    DayController.shared.addDayToGoal(goal: goal, dayDate: tomorrow)
-                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
-                } else {
-                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
-                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                }
-            }
-        }
-        completion()
-    }
+//    func fillMissingDays(completion:@escaping() -> Void) {
+//        var tomorrow = DateHelper.currentDate()
+//
+//        goalArr: for goal in self.goals {
+//            let selectedDays = goal.selectedDays
+//            let dateCreated = goal.dateCreated
+//            let days = goal.days
+//
+//            guard let date = days.last?.date else {
+//                var changingDateFromGoalCreationDate = dateCreated
+//                if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+//
+//                while (true) {
+//                    if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
+//                        DayController.shared.addDayToGoal(goal: goal, dayDate: changingDateFromGoalCreationDate)
+//                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
+//                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+//                    } else {
+//                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
+//                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+//                    }
+//                }
+//            }
+//            tomorrow = date
+//            if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+//            tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
+//            while (true) {
+//                if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
+//                    DayController.shared.addDayToGoal(goal: goal, dayDate: tomorrow)
+//                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+//                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
+//                } else {
+//                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
+//                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+//                }
+//            }
+//        }
+//        completion()
+//    }
 }
 
 extension String {
