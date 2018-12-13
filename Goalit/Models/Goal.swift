@@ -20,7 +20,7 @@ class Goal {
     let userIDRef: String
     var days: [Day]
     
-    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String = "", days: [Day] = []) {
+    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, days: [Day] = []) {
         self.name = name
         self.dateCreated = dateCreated
         self.totalCompleted = totalCompleted

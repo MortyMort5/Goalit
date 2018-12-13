@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AudioToolbox
 
 class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, buttonTappedDelegate, updateDayDelegate {
 
@@ -23,7 +24,6 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //        GoalController.shared.fillMissingDays {
 //            self.tableView.reloadData()
 //        }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -91,13 +91,14 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if segue.identifier == Constant.goalTOcreateSegue {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            guard let destinationViewController = segue.destination as? CreateGoalViewController else {return}
+            guard let destinationViewController = segue.destination as? CreateGoalViewController else { return }
             let goal = GoalController.shared.goals[indexPath.row]
             destinationViewController.goal = goal
         }
     }
     
     func positiveButtonTapped(sender: GoalTableViewCell) {
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) 
         self.tableView.reloadData()
     }
     

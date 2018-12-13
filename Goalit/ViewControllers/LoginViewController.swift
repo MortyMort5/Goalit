@@ -50,7 +50,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     func disableAllButtons() {

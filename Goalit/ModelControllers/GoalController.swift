@@ -40,7 +40,7 @@ class GoalController {
         
         guard let day = optDay else { completion(); return }
         
-        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: goalNodeKey, selectedDays: selectedDays, goalType: goalType)
+        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: goalNodeKey, selectedDays: selectedDays, goalType: goalType, userIDRef: userID)
         
         goal.days.append(day)
         self.goals.append(goal)
