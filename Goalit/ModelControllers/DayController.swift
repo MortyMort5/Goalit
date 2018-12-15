@@ -27,21 +27,6 @@ class DayController {
         return dayDictionary
     }
     
-    
-//    func addDayToGoal(goal: Goal, dayDate: Date) {
-//        let userID = goal.userIDRef
-//        let goalID = goal.goalUUID
-//        let uuid = NSUUID().uuidString
-//        let date = DateHelper.convertDateToString(date: dayDate)
-//        let dayDictionary = [Constant.dayDateKey: date,
-//                             Constant.dayCompletedKey: CompletedGoalForDay.failedToComplete.rawValue,
-//                             Constant.dayGoalIDRefKey: goalID,
-//                             Constant.dayUUIDKey: uuid] as [String : Any]
-//        let childUpdates = [uuid: dayDictionary]
-//        ref = Database.database().reference().child("goals/\(userID)/\(goalID)/days")
-//        ref.updateChildValues(childUpdates)
-//    }
-    
     func createDay(date: Date, completed: Int, dayUUID: String, goalIDRef: String, selectedDays: String) -> Day? {
             return Day(date: date, completed: completed, dayUUID: dayUUID, goalIDRef: goalIDRef)
     }

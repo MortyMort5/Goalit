@@ -116,8 +116,9 @@ class GoalController {
                 guard let dict = snap.value as? [String: Any],
                         let goal = Goal(dictionary: dict) else { completion(); return }
                 
-                guard let daysDict = dict[Constant.goalDaysKey] as? [String:[String: Any]] else { return }
-                let days = daysDict.values.compactMap({ Day(dictionary: $0) })
+                guard let daysDict = dict[Constant.goalDaysKey] as? [String:[String: Any]] else { completion(); return }
+                var days = daysDict.values.compactMap({ Day(dictionary: $0) })
+                days.sort(by: { $0.date > $1.date })
                 goal.days = days
                 self.goals.append(goal)
             }
@@ -154,70 +155,70 @@ class GoalController {
         print("Deleted Goal")
     }
     
-//    func fillMissingDays(completion:@escaping() -> Void) {
-//        var tomorrow = DateHelper.currentDate()
-//
-//        goalArr: for goal in self.goals {
-//            let selectedDays = goal.selectedDays
-//            let dateCreated = goal.dateCreated
-//            let days = goal.days
-//
-//            guard let date = days.last?.date else {
-//                var changingDateFromGoalCreationDate = dateCreated
-//                if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-//
-//                while (true) {
-//                    if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
-//                        DayController.shared.addDayToGoal(goal: goal, dayDate: changingDateFromGoalCreationDate)
-//                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
-//                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-//                    } else {
-//                        changingDateFromGoalCreationDate = DateHelper.incrementDateByOne(date: changingDateFromGoalCreationDate)
-//                        if DateHelper.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
-//                    }
-//                }
-//            }
-//            tomorrow = date
-//            if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-//            tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
-//            while (true) {
-//                if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
-//                    DayController.shared.addDayToGoal(goal: goal, dayDate: tomorrow)
-//                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-//                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
-//                } else {
-//                    tomorrow = DateHelper.incrementDateByOne(date: tomorrow)
-//                    if DateHelper.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-//                }
-//            }
-//        }
-//        completion()
-//    }
-}
-
-extension String {
-    
-    var length: Int {
-        return count
+    func createMissingDays(completion:@escaping() -> Void) {
+        var incrementedLastDayDate = Date()
+        var completedDayOrExcused = 0
+        
+        goalArr: for goal in self.goals {
+            let days = goal.days
+            let userID = goal.userIDRef
+            var daysCreated: [Day] = []
+            let goalID = goal.goalUUID
+            let selectedDays = goal.selectedDays
+            
+            // check if array is empty
+            if days.isEmpty {
+                incrementedLastDayDate = goal.dateCreated
+            } else {
+                // the array is sorted when fetched so we need to grab the first one which is the newest
+                guard let lastDayDate = days.first?.date else { completion(); return }
+                incrementedLastDayDate = lastDayDate
+            }
+            
+            // check to see if the last day.date is equal to today's date
+            if DateHelper.compareDateWithCurrentDate(date: incrementedLastDayDate) { continue goalArr } // Yes equals todays date
+            
+            while (true) {
+                // if NO increment the date from the last day.date and create day
+                incrementedLastDayDate = DateHelper.incrementDateByOne(date: incrementedLastDayDate)
+                
+                if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: incrementedLastDayDate) {
+                    completedDayOrExcused = CompletedGoalForDay.failedToComplete.rawValue
+                } else {
+                    completedDayOrExcused = CompletedGoalForDay.excused.rawValue
+                }
+                
+                guard let newDay = DayController.shared.createDay(date: incrementedLastDayDate,
+                                                                  completed: completedDayOrExcused,
+                                                                  dayUUID: NSUUID().uuidString,
+                                                                  goalIDRef: goalID,
+                                                                  selectedDays: selectedDays) else { completion(); return }
+                
+                // then append to daysCreated array
+                daysCreated.append(newDay)
+                
+                // then check again if that date is equal to today's date and go until it does equal todays date
+                if DateHelper.compareDateWithCurrentDate(date: incrementedLastDayDate) {
+                    // then send up daysCreated to the server
+                    self.writeNewDaysToServer(days: daysCreated, userID: userID, goalID: goalID)
+                    continue goalArr
+                }   
+            }
+        }
+        completion()
     }
     
-    subscript (i: Int) -> String {
-        return self[i ..< i + 1]
-    }
-    
-    func substring(fromIndex: Int) -> String {
-        return self[min(fromIndex, length) ..< length]
-    }
-    
-    func substring(toIndex: Int) -> String {
-        return self[0 ..< max(0, toIndex)]
-    }
-    
-    subscript (r: Range<Int>) -> String {
-        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
-                                            upper: min(length, max(0, r.upperBound))))
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
-        return String(self[start ..< end])
+    func writeNewDaysToServer(days: [Day], userID: String, goalID: String) {
+        ref = Database.database().reference()
+        if userID.count == 0 || goalID.count == 0 {
+            return
+        }
+        ref = Database.database().reference().child("goals/\(userID)/\(goalID)/days")
+        print("Total days to write \(days.count)")
+        for day in days {
+            let data = day.dictionaryRepresentaion
+            let childUpdate = [day.dayUUID: data]
+            ref.updateChildValues(childUpdate)
+        }
     }
 }

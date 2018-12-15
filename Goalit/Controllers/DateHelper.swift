@@ -39,15 +39,12 @@ class DateHelper {
     }
     
     static func compareDateWithCurrentDate(date: Date) -> Bool {
-        print("date coming in \(date)")
-        let tomorrow = incrementDateByOne(date: Date())
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date1String = dateFormatter.string(from: tomorrow)
-        print("Tomorrows Date from current \(tomorrow)")
+        let date1String = dateFormatter.string(from: DateHelper.currentDate())
         let date2String = dateFormatter.string(from: date)
-        print("date that came in string form \(date)")
+        print("Current Date \(date1String) ------ Changing Date \(date2String)")
         if date1String == date2String {
             return true
         }

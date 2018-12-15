@@ -21,9 +21,9 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-//        GoalController.shared.fillMissingDays {
-//            self.tableView.reloadData()
-//        }
+        GoalController.shared.createMissingDays {
+            print("finished creating missing Days")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -138,8 +138,7 @@ extension GoalsViewController {
         cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         let goal = GoalController.shared.goals[collectionView.tag]
         let days = goal.days
-        let orderedDays = days.sorted(by: { $0.date > $1.date })
-        cell.day = orderedDays[indexPath.row]
+        cell.day = days[indexPath.row]
         cell.delegate = self
         return cell
     }
