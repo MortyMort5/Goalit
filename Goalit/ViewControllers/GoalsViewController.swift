@@ -13,6 +13,7 @@ import AudioToolbox
 class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, buttonTappedDelegate, updateDayDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    var refreshControl = UIRefreshControl()
     var storedOffsets = [Int: CGFloat]()
     var days: [Day] = []
     var goal: Goal?
@@ -22,8 +23,13 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.delegate = self
         self.tableView.dataSource = self
         GoalController.shared.createMissingDays {
-            print("finished creating missing Days")
+            self.tableView.reloadData()
         }
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing Data")
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,6 +44,12 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func menuButtonTapped(_ sender: Any) {
         signOut()
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        GoalController.shared.fetchDataForUser {
+            self.refreshControl.endRefreshing()
+        }
     }
     
     func signOut() {

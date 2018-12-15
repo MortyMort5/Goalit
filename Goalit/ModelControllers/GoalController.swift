@@ -200,6 +200,8 @@ class GoalController {
                 // then check again if that date is equal to today's date and go until it does equal todays date
                 if DateHelper.compareDateWithCurrentDate(date: incrementedLastDayDate) {
                     // then send up daysCreated to the server
+                    guard let goalIndex = self.goals.index(where: {$0.goalUUID == goalID }) else { return }
+                    self.goals[goalIndex].days.append(contentsOf: daysCreated)
                     self.writeNewDaysToServer(days: daysCreated, userID: userID, goalID: goalID)
                     continue goalArr
                 }   
