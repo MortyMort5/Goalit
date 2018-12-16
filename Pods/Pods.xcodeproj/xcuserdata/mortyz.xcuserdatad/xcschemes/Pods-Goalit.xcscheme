@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4B54D44A04317E0C59AFBD46BC687B2A"
+               BlueprintIdentifier = "0717E31CBD07FD4CA6C06E6D105B2B5C"
                BuildableName = "Pods_Goalit.framework"
                BlueprintName = "Pods-Goalit"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4B54D44A04317E0C59AFBD46BC687B2A"
+            BlueprintIdentifier = "0717E31CBD07FD4CA6C06E6D105B2B5C"
             BuildableName = "Pods_Goalit.framework"
             BlueprintName = "Pods-Goalit"
             ReferencedContainer = "container:Pods.xcodeproj">
