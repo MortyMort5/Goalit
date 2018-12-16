@@ -45,7 +45,7 @@ class GoalController {
         goal.days.append(day)
         self.goals.append(goal)
 
-        let dayDictionary = DayController.shared.createDayDictionary(day: day)
+        let dayDictionary = day.dictionaryRepresentaion
         let dayUpdate = [daysNodeKey: dayDictionary]
         
         let goalDict = createGoalDictionary(goal: goal, day: dayUpdate)
@@ -77,22 +77,10 @@ class GoalController {
         return goal
     }
     
-    func createGoalDictionary(goal: Goal) -> [String: Any] {
-        let dateCreatedString = DateHelper.convertDateToString(date: goal.dateCreated)
-        let goal = [Constant.userIDRefKey: goal.userIDRef,
-                    Constant.goalNameKey: goal.name,
-                    Constant.goalDateCreatedKey: dateCreatedString,
-                    Constant.goalUUIDKey: goal.goalUUID,
-                    Constant.totalCompletedKey: goal.totalCompleted,
-                    Constant.goalTypeKey: goal.goalType,
-                    Constant.selectedDaysKey: goal.selectedDays] as [String : Any]
-        return goal
-    }
-    
     func modifyGoal(goal: Goal, completion:@escaping() -> Void) {
         let userID = goal.userIDRef
         let goalID = goal.goalUUID
-        let goalDict = createGoalDictionary(goal: goal)
+        let goalDict = goal.dictionaryRepresentaion
         ref = Database.database().reference()
         ref.child("goals").child(userID).child(goalID).updateChildValues(goalDict) {
             (error:Error?, ref:DatabaseReference) in
@@ -109,6 +97,7 @@ class GoalController {
     func fetchDataForUser(completion:@escaping() -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         ref = Database.database().reference()
+        var goalsTemp: [Goal] = []
         ref.child("goals").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
             print(Thread.isMainThread)
             guard let snapshotValues = snapshot.value as? NSDictionary else { completion(); return }
@@ -120,8 +109,9 @@ class GoalController {
                 var days = daysDict.values.compactMap({ Day(dictionary: $0) })
                 days.sort(by: { $0.date > $1.date })
                 goal.days = days
-                self.goals.append(goal)
+                goalsTemp.append(goal)
             }
+            self.goals = goalsTemp
             print("Fetched user's data successfully")
             completion()
         }) { (error) in

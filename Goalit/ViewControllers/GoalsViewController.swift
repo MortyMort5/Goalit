@@ -49,6 +49,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @objc func refresh(sender:AnyObject) {
         GoalController.shared.fetchDataForUser {
             self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
         }
     }
     
@@ -60,7 +61,7 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             print ("Error signing out: %@", signOutError)
         }
         print("Signed Out")
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController!.popToRootViewController(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

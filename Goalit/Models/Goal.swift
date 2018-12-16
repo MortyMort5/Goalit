@@ -50,4 +50,18 @@ class Goal {
         self.userIDRef = userIDRef
         self.days = []
     }
+    
+    var dictionaryRepresentaion: [String: Any] {
+        let stringDateCreated = DateHelper.convertDateToString(date: self.dateCreated)
+        let dictionary = [Constant.userIDRefKey: self.userIDRef,
+                    Constant.goalNameKey: self.name,
+                    Constant.goalDateCreatedKey: stringDateCreated,
+                    Constant.goalUUIDKey: self.goalUUID,
+                    Constant.totalCompletedKey: self.totalCompleted,
+                    Constant.goalTypeKey: self.goalType,
+                    Constant.selectedDaysKey: self.selectedDays] as [String : Any]
+        return dictionary
+    }
+    
+    
 }

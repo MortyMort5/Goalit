@@ -7,7 +7,20 @@
 //
 
 import Foundation
+import UIKit
 
 class StaticFunction {
+    static func errorAlert(viewController: UIViewController, error: Error) {
+        let alertController = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        let travelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(travelAction)
+        viewController.present(alertController, animated: true, completion: nil)
+    }
     
+    static func missingFieldAlert(viewController: UIViewController, message: String) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        viewController.present(alertController, animated: true, completion: nil)
+    }
 }

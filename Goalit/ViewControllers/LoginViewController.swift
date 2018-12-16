@@ -11,8 +11,6 @@ import Firebase
 
 class LoginViewController: UIViewController {
 
-
-    @IBOutlet weak var withoutLoginButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -25,9 +23,11 @@ class LoginViewController: UIViewController {
         guard let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else { return }
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-            if error != nil && user == nil {
-                print("Error on logging in \(error!.localizedDescription)")
+            if let error = error {
+                print("Error on logging in \(error.localizedDescription)")
                 self.enableAllButtons()
+                self.loadingIndicator.stopAnimating()
+                StaticFunction.errorAlert(viewController: self, error: error)
             }
             if let userID = user?.user.uid {
                 UserController.shared.fetchUser(userID: userID, completion: {
@@ -41,11 +41,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUpButtonTapped(_ sender: Any) {
-        
-    }
-    
-    @IBAction func continueWithoutLoginButtonTapped(_ sender: Any) {
-        self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
     }
     
     override func viewDidLoad() {
@@ -53,13 +48,11 @@ class LoginViewController: UIViewController {
     }
     
     func disableAllButtons() {
-        withoutLoginButton.isEnabled = false
         loginButton.isEnabled = false
         signUpButton.isEnabled = false
     }
     
     func enableAllButtons() {
-        withoutLoginButton.isEnabled = true
         loginButton.isEnabled = true
         signUpButton.isEnabled = true
     }

@@ -15,18 +15,6 @@ class DayController {
     static let shared = DayController()
     var ref: DatabaseReference!
     
-    func createDayDictionary(day: Day) -> [String:Any] {
-        let date = DateHelper.convertDateToString(date: day.date)
-        let completed = day.completed
-        let goalUUID = day.goalIDRef
-        let uuid = day.dayUUID
-        let dayDictionary = [Constant.dayDateKey: date,
-                             Constant.dayCompletedKey: completed,
-                             Constant.dayGoalIDRefKey: goalUUID,
-                             Constant.dayUUIDKey: uuid] as [String : Any]
-        return dayDictionary
-    }
-    
     func createDay(date: Date, completed: Int, dayUUID: String, goalIDRef: String, selectedDays: String) -> Day? {
             return Day(date: date, completed: completed, dayUUID: dayUUID, goalIDRef: goalIDRef)
     }
@@ -47,7 +35,7 @@ class DayController {
             day.completed = CompletedGoalForDay.completed.rawValue
         }
         
-        let dayDict = createDayDictionary(day: day)
+        let dayDict = day.dictionaryRepresentaion
         ref = Database.database().reference()
         ref.child("goals").child(userID).child(goalID).child("days").child(dayID).updateChildValues(dayDict) {
             (error:Error?, ref:DatabaseReference) in

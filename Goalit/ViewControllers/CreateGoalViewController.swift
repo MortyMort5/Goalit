@@ -10,9 +10,9 @@ import UIKit
 
 class CreateGoalViewController: UIViewController {
 
+    @IBOutlet weak var reminderTextField: UITextField!
     @IBOutlet weak var goalCreationDateLabel: UILabel!
     @IBOutlet weak var goalNameTextField: UITextField!
-    @IBOutlet weak var goalTypeSegment: UISegmentedControl!
     @IBOutlet weak var saturdayButton: UIButton!
     @IBOutlet weak var fridayButton: UIButton!
     @IBOutlet weak var thursdayButton: UIButton!
@@ -44,6 +44,7 @@ class CreateGoalViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUpDatePicker()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,16 +52,22 @@ class CreateGoalViewController: UIViewController {
         self.goalNameTextField.becomeFirstResponder()
     }
     
-    @IBAction func goalTypeSegmentAction(_ sender: Any) {
-        switch goalTypeSegment.selectedSegmentIndex
-        {
-        case 0:
-            self.goalType = 0
-        case 1:
-            self.goalType = 1
-        default:
-            break
-        }
+    func setUpDatePicker() {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .time
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
+        self.reminderTextField.inputView = datePicker
+    }
+    
+    @objc func datePickerValueChanged(sender: UIDatePicker) {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        self.reminderTextField.text = formatter.string(from: sender.date)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     @IBAction func sundayButtonTapped(_ sender: Any) {
@@ -134,7 +141,7 @@ class CreateGoalViewController: UIViewController {
         loadingIndicator.startAnimating()
         createGoalButton.isEnabled = false
         self.selectedDays = convertSelectedDaysToString()
-        guard let name = goalNameTextField.text, !name.isEmpty else { self.missingFieldAlert(); return }
+        guard let name = goalNameTextField.text, !name.isEmpty else { StaticFunction.missingFieldAlert(viewController: self, message: "Must enter name"); return }
         
         if let goal = self.goal {
             goal.name = name
@@ -157,13 +164,6 @@ class CreateGoalViewController: UIViewController {
     
     func convertSelectedDaysToString() -> String {
          return "\(sunday)\(monday)\(tuesday)\(wednesday)\(thursday)\(friday)\(saturday)"
-    }
-    
-    func missingFieldAlert() {
-        let alertController = UIAlertController(title: "Must enter a name.", message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
     }
     
     func updateViews() {
