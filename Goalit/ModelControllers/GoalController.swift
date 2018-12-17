@@ -218,7 +218,7 @@ extension GoalController {
     
     func scheduleUserNotification(goal: Goal) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat =  "HH:mm"
+        dateFormatter.dateFormat =  "hh:mm a"
         guard let reminderDate = dateFormatter.date(from: goal.reminderTime) else { return }
         
         let content = UNMutableNotificationContent()
@@ -226,7 +226,7 @@ extension GoalController {
         content.body = "\(goal.name)"
         content.sound = UNNotificationSound.default
         
-        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: reminderDate)
+        let components = Calendar.current.dateComponents([.hour, .minute], from: reminderDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
         let request = UNNotificationRequest(identifier: goal.goalUUID, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { (error) in
