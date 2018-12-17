@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import Firebase
 
 class UserController {
@@ -61,10 +62,13 @@ class UserController {
                 let email = value?[Constant.emailKey] as? String,
                 let imageURL = value?[Constant.userImageURL] as? String else { return }
                 self.fetchImageData(WithURL: imageURL, completion: { (data) in
-                    guard let data = data else { completion(); return }
-                    let user = User(username: username, userID: userID, email: email, profileImageData: data)
-                    self.currentUser = user
-                    completion()
+                    if let data = data {
+                        let user = User(username: username, userID: userID, email: email, profileImageData: data)
+                        self.currentUser = user
+                        completion()
+                    } else {
+                        completion()
+                    }
                 })
             }
         }) { (error) in
@@ -75,11 +79,12 @@ class UserController {
     
     func fetchImageData(WithURL url: String, completion:@escaping(Data?) -> Void) {
         if url.isEmpty { completion(nil); return }
-        let storageRef = Storage.storage().reference()
-        storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        let storageRef = Storage.storage().reference(forURL: url)
+        storageRef.getData(maxSize: 15 * 1024 * 1024) { data, error in
             if let error = error {
                 print("Error fetching image data with url: \(error.localizedDescription)")
                 completion(nil)
+                return
             }
             completion(data)
         }

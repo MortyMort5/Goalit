@@ -30,6 +30,7 @@
 		81EDB2C02023E79300CA0FF3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDB2BF2023E79300CA0FF3 /* LoadingViewController.swift */; };
 		B3E6F35E21AF9ADD00244934 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */; };
 		B3EA56B121CD207F000BDF93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */; };
+		B3F5559B21C7472300A0454E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F5559A21C7472300A0454E /* ProfileViewController.swift */; };
 		B3F9441C21B7DF5300AA4530 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9441B21B7DF5300AA4530 /* DummyData.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		91FFBA76414C219B8BFBF56F /* Pods-Goalit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalit/Pods-Goalit.debug.xcconfig"; sourceTree = "<group>"; };
 		B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B3F5559A21C7472300A0454E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B3F9441B21B7DF5300AA4530 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 				B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */,
 				8133B3752012A54700F7889F /* GoalsViewController.swift */,
 				819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */,
+				B3F5559A21C7472300A0454E /* ProfileViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			files = (
 				817C2212201E9339007ABF2B /* StaticFunction.swift in Sources */,
 				8133B37D2012A72A00F7889F /* Constants.swift in Sources */,
+				B3F5559B21C7472300A0454E /* ProfileViewController.swift in Sources */,
 				8133B3822012AA4200F7889F /* DayCollectionViewCell.swift in Sources */,
 				8133B36E201298CB00F7889F /* Goal.swift in Sources */,
 				81DE935F202B8B6300BAC472 /* Enums.swift in Sources */,

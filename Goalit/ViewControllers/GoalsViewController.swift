@@ -12,6 +12,7 @@ import AudioToolbox
 
 class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, buttonTappedDelegate, updateDayDelegate {
 
+    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var refreshControl = UIRefreshControl()
     var storedOffsets = [Int: CGFloat]()
@@ -30,6 +31,10 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
         
+        self.profileButton.setImage(UserController.shared.currentUser?.profileImage, for: .normal)
+        self.profileButton.layer.masksToBounds = false
+        self.profileButton.layer.cornerRadius = self.profileButton.frame.height/2
+        self.profileButton.clipsToBounds = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,7 +48,6 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func menuButtonTapped(_ sender: Any) {
-        signOut()
     }
     
     @objc func refresh(sender:AnyObject) {
@@ -51,17 +55,6 @@ class GoalsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.refreshControl.endRefreshing()
             self.tableView.reloadData()
         }
-    }
-    
-    func signOut() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
-        print("Signed Out")
-        self.navigationController!.popToRootViewController(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
