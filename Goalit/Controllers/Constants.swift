@@ -31,6 +31,7 @@ class Constant {
     static let goalTypeKey = "goalType"
     static let userIDRefKey = "userIDRef"
     static let goalReminderTimeKey = "reminderTime"
+    static let goalDescriptionKey = "description"
     
     // Day
     static let dayCompletedKey = "completed"

@@ -16,7 +16,7 @@ class GoalController {
 
     var goals: [Goal] = []
 
-    func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int, goalType: Int, reminderTime: String, selectedDays: String, completion:@escaping() -> Void) {
+    func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int, goalType: Int, reminderTime: String, selectedDays: String, goalDescription: String, completion:@escaping() -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         
         ref = Database.database().reference()
@@ -40,7 +40,7 @@ class GoalController {
         
         guard let day = optDay else { completion(); return }
         
-        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: goalNodeKey, selectedDays: selectedDays, goalType: goalType, userIDRef: userID, reminderTime: reminderTime)
+        let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: goalNodeKey, selectedDays: selectedDays, goalType: goalType, userIDRef: userID, reminderTime: reminderTime, goalDescription: goalDescription)
         
         goal.days.append(day)
         self.goals.append(goal)
@@ -74,6 +74,7 @@ class GoalController {
                     Constant.goalTypeKey: goal.goalType,
                     Constant.selectedDaysKey: goal.selectedDays,
                     Constant.goalReminderTimeKey: goal.reminderTime,
+                    Constant.goalDescriptionKey: goal.goalDescription,
                     Constant.goalDaysKey: day] as [String : Any]
         return goal
     }

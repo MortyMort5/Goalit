@@ -19,9 +19,10 @@ class Goal {
     let totalCompleted: Int
     let userIDRef: String
     var reminderTime: String
+    var goalDescription: String
     var days: [Day]
     
-    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, reminderTime: String, days: [Day] = []) {
+    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, reminderTime: String, goalDescription: String = "", days: [Day] = []) {
         self.name = name
         self.dateCreated = dateCreated
         self.totalCompleted = totalCompleted
@@ -30,6 +31,7 @@ class Goal {
         self.goalType = goalType
         self.userIDRef = userIDRef
         self.reminderTime = reminderTime
+        self.goalDescription = goalDescription
         self.days = days
     }
     
@@ -41,6 +43,7 @@ class Goal {
             let selectedDays = dictionary[Constant.selectedDaysKey] as? String,
             let goalType = dictionary[Constant.goalTypeKey] as? Int,
             let userIDRef = dictionary[Constant.userIDRefKey] as? String,
+            let goalDescription = dictionary[Constant.goalDescriptionKey] as? String,
             let reminderTime = dictionary[Constant.goalReminderTimeKey] as? String else { return nil }
         
         self.name = name
@@ -52,6 +55,7 @@ class Goal {
         self.goalType = goalType
         self.userIDRef = userIDRef
         self.reminderTime = reminderTime
+        self.goalDescription = goalDescription
         self.days = []
     }
     
@@ -64,9 +68,8 @@ class Goal {
                     Constant.totalCompletedKey: self.totalCompleted,
                     Constant.goalTypeKey: self.goalType,
                     Constant.goalReminderTimeKey: self.reminderTime,
+                    Constant.goalDescriptionKey: self.goalDescription,
                     Constant.selectedDaysKey: self.selectedDays] as [String : Any]
         return dictionary
     }
-    
-    
 }

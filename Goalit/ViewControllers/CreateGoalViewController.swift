@@ -11,6 +11,7 @@ import UIKit
 class CreateGoalViewController: UIViewController {
 
     @IBOutlet weak var reminderTextField: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var goalCreationDateLabel: UILabel!
     @IBOutlet weak var goalNameTextField: UITextField!
     @IBOutlet weak var saturdayButton: UIButton!
@@ -41,6 +42,7 @@ class CreateGoalViewController: UIViewController {
     var saturday = 1
     let selectedColor:UIColor = UIColor.green
     let unselectedColor:UIColor = UIColor.red
+    let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,10 +55,15 @@ class CreateGoalViewController: UIViewController {
     }
     
     func setUpDatePicker() {
-        let datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
         self.reminderTextField.inputView = datePicker
+        self.reminderTextField.text = "9:00 AM"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "HH:mm"
+        if let date = dateFormatter.date(from: "09:00") {
+            datePicker.date = date
+        }
     }
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {
@@ -142,28 +149,32 @@ class CreateGoalViewController: UIViewController {
         createGoalButton.isEnabled = false
         self.selectedDays = convertSelectedDaysToString()
         guard let name = goalNameTextField.text, !name.isEmpty,
-            let time = reminderTextField.text, !time.isEmpty
+            let time = reminderTextField.text, !time.isEmpty,
+            let goalDescription = descriptionTextView.text
             else { StaticFunction.missingFieldAlert(viewController: self, message: "Must enter name"); return }
         
         if let goal = self.goal {
             goal.name = name
             goal.selectedDays = selectedDays
+            goal.reminderTime = time
+            goal.goalDescription = goalDescription
             GoalController.shared.modifyGoal(goal: goal) {
                 self.loadingIndicator.stopAnimating()
                 self.navigationController?.popViewController(animated: true)
             }
         } else {
-            self.createGoal(name: name, time: time, selectedDays: self.selectedDays)
+            self.createGoal(name: name, time: time, goalDescription: goalDescription, selectedDays: self.selectedDays)
         }
     }
     
-    func createGoal(name: String, time: String, selectedDays: String) {
+    func createGoal(name: String, time: String, goalDescription: String, selectedDays: String) {
         GoalController.shared.createGoal(withName: name,
                                          dateCreated: DateHelper.currentDate(),
                                          totalCompleted: 1,
                                          goalType: self.goalType,
                                          reminderTime: time,
-                                         selectedDays: self.selectedDays) {
+                                         selectedDays: self.selectedDays,
+                                         goalDescription: goalDescription) {
             self.loadingIndicator.stopAnimating()
             self.navigationController?.popViewController(animated: true)
         }
@@ -177,7 +188,10 @@ class CreateGoalViewController: UIViewController {
         guard let name = goal?.name,
             let selectedDays = goal?.selectedDays,
             let creationDate = goal?.dateCreated,
-            let reminderTime = goal?.reminderTime else { return }
+            let reminderTime = goal?.reminderTime,
+            let goalDescription = goal?.goalDescription else { return }
+        
+        self.createGoalButton.setTitle("Update", for: .normal)
         
         let daysSelectedArray: [UIButton] = [sundayButton,
                                              mondayButton,
@@ -188,6 +202,7 @@ class CreateGoalViewController: UIViewController {
                                              saturdayButton]
         goalNameTextField.text = name
         reminderTextField.text = reminderTime
+        descriptionTextView.text = goalDescription
         goalCreationDateLabel.text = "Created: \(DateHelper.convertDateToString(date: creationDate))"
         goalCreationDateLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
         
