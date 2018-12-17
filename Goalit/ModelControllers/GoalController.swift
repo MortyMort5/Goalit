@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 class GoalController {
     
@@ -59,6 +60,7 @@ class GoalController {
                 completion()
             } else {
                 print("Goal saved successfully!")
+                self.scheduleUserNotification(goal: goal)
                 completion()
             }
         }
@@ -120,11 +122,6 @@ class GoalController {
             print("Error fetching EVERYTHING \(error.localizedDescription)")
             completion()
         }
-    }
-    
-    func checkForInternetConnect() -> Bool {
-        //MARK: If there is internet return Bool
-    return true
     }
     
     func checkSelectedDaysBeforeCreatingDayObject(selectedDays: String, date: Date) -> Bool {
@@ -214,5 +211,33 @@ class GoalController {
             let childUpdate = [day.dayUUID: data]
             ref.updateChildValues(childUpdate)
         }
+    }
+}
+
+extension GoalController {
+    
+    func scheduleUserNotification(goal: Goal) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "HH:mm"
+        guard let reminderDate = dateFormatter.date(from: goal.reminderTime) else { return }
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Reminder"
+        content.body = "\(goal.name)"
+        content.sound = UNNotificationSound.default
+        
+        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: reminderDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+        let request = UNNotificationRequest(identifier: goal.goalUUID, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error{
+                print("Error scheduling local user notifications \(error.localizedDescription)  :  \(error)")
+            }
+            print("Saved user notification")
+        }
+    }
+    
+    func cancelUserNotification(for goal: Goal){
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [goal.goalUUID])
     }
 }
