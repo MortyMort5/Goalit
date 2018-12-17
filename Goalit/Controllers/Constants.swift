@@ -19,6 +19,7 @@ class Constant {
     static let userNameKey = "username"
     static let emailKey = "email"
     static let userUUIDKey = "userUUID"
+    static let userImageURL = "imageURL"
     
     // Goal
     static let goalDateCreatedKey = "dateCreated"
