@@ -80,7 +80,7 @@ class UserController {
     func fetchImageData(WithURL url: String, completion:@escaping(Data?) -> Void) {
         if url.isEmpty { completion(nil); return }
         let storageRef = Storage.storage().reference(forURL: url)
-        storageRef.getData(maxSize: 15 * 1024 * 1024) { data, error in
+        storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
             if let error = error {
                 print("Error fetching image data with url: \(error.localizedDescription)")
                 completion(nil)

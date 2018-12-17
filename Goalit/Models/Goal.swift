@@ -18,9 +18,10 @@ class Goal {
     var selectedDays: String
     let totalCompleted: Int
     let userIDRef: String
+    var reminderTime: String
     var days: [Day]
     
-    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, days: [Day] = []) {
+    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, reminderTime: String, days: [Day] = []) {
         self.name = name
         self.dateCreated = dateCreated
         self.totalCompleted = totalCompleted
@@ -28,6 +29,7 @@ class Goal {
         self.selectedDays = selectedDays
         self.goalType = goalType
         self.userIDRef = userIDRef
+        self.reminderTime = reminderTime
         self.days = days
     }
     
@@ -38,7 +40,8 @@ class Goal {
             let goalUUID = dictionary[Constant.goalUUIDKey] as? String,
             let selectedDays = dictionary[Constant.selectedDaysKey] as? String,
             let goalType = dictionary[Constant.goalTypeKey] as? Int,
-            let userIDRef = dictionary[Constant.userIDRefKey] as? String else { return nil }
+            let userIDRef = dictionary[Constant.userIDRefKey] as? String,
+            let reminderTime = dictionary[Constant.goalReminderTimeKey] as? String else { return nil }
         
         self.name = name
         let dateCreated = DateHelper.convertStringToDate(stringDate: dateCreatedString)
@@ -48,6 +51,7 @@ class Goal {
         self.selectedDays = selectedDays
         self.goalType = goalType
         self.userIDRef = userIDRef
+        self.reminderTime = reminderTime
         self.days = []
     }
     
@@ -59,6 +63,7 @@ class Goal {
                     Constant.goalUUIDKey: self.goalUUID,
                     Constant.totalCompletedKey: self.totalCompleted,
                     Constant.goalTypeKey: self.goalType,
+                    Constant.goalReminderTimeKey: self.reminderTime,
                     Constant.selectedDaysKey: self.selectedDays] as [String : Any]
         return dictionary
     }

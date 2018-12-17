@@ -141,7 +141,9 @@ class CreateGoalViewController: UIViewController {
         loadingIndicator.startAnimating()
         createGoalButton.isEnabled = false
         self.selectedDays = convertSelectedDaysToString()
-        guard let name = goalNameTextField.text, !name.isEmpty else { StaticFunction.missingFieldAlert(viewController: self, message: "Must enter name"); return }
+        guard let name = goalNameTextField.text, !name.isEmpty,
+            let time = reminderTextField.text, !time.isEmpty
+            else { StaticFunction.missingFieldAlert(viewController: self, message: "Must enter name"); return }
         
         if let goal = self.goal {
             goal.name = name
@@ -151,12 +153,17 @@ class CreateGoalViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         } else {
-            self.createGoal(name: name, selectedDays: self.selectedDays)
+            self.createGoal(name: name, time: time, selectedDays: self.selectedDays)
         }
     }
     
-    func createGoal(name: String, selectedDays: String) {
-        GoalController.shared.createGoal(withName: name, dateCreated: DateHelper.currentDate(), totalCompleted: 1, goalType: self.goalType, selectedDays: self.selectedDays) {
+    func createGoal(name: String, time: String, selectedDays: String) {
+        GoalController.shared.createGoal(withName: name,
+                                         dateCreated: DateHelper.currentDate(),
+                                         totalCompleted: 1,
+                                         goalType: self.goalType,
+                                         reminderTime: time,
+                                         selectedDays: self.selectedDays) {
             self.loadingIndicator.stopAnimating()
             self.navigationController?.popViewController(animated: true)
         }
@@ -167,11 +174,23 @@ class CreateGoalViewController: UIViewController {
     }
     
     func updateViews() {
-        guard let name = goal?.name, let selectedDays = goal?.selectedDays, let creationDate = goal?.dateCreated else { return }
-        let daysSelectedArray: [UIButton] = [sundayButton, mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton]
+        guard let name = goal?.name,
+            let selectedDays = goal?.selectedDays,
+            let creationDate = goal?.dateCreated,
+            let reminderTime = goal?.reminderTime else { return }
+        
+        let daysSelectedArray: [UIButton] = [sundayButton,
+                                             mondayButton,
+                                             tuesdayButton,
+                                             wednesdayButton,
+                                             thursdayButton,
+                                             fridayButton,
+                                             saturdayButton]
         goalNameTextField.text = name
+        reminderTextField.text = reminderTime
         goalCreationDateLabel.text = "Created: \(DateHelper.convertDateToString(date: creationDate))"
         goalCreationDateLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        
         var counter = 0
         for day in selectedDays {
             if day == "1" {

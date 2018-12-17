@@ -33,6 +33,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var backButton: UIButton!
     
+    let size: CGSize = CGSize(width: 200, height: 200)
+    
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -155,7 +157,8 @@ extension SignUpViewController {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        profileImageView.image = selectedImage
+        let smallerImage = selectedImage.resizeImage(200.0, opaque: true)
+        profileImageView.image = smallerImage
         dismiss(animated: true, completion: nil)
     }
 }
