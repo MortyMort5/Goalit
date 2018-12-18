@@ -14,10 +14,17 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        let defaultImage = #imageLiteral(resourceName: "app_profile_icon")
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
+        profileImageView.image = defaultImage
+        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.layer.borderWidth = 0.5
+        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)

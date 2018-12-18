@@ -44,6 +44,7 @@ class GoalController {
         let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, goalUUID: goalNodeKey, selectedDays: selectedDays, goalType: goalType, userIDRef: userID, reminderTime: reminderTime, goalDescription: goalDescription)
         
         goal.days.append(day)
+        goal.todayCompleted = true
         self.goals.append(goal)
 
         let dayDictionary = day.dictionaryRepresentaion
@@ -113,8 +114,10 @@ class GoalController {
                 var days = daysDict.values.compactMap({ Day(dictionary: $0) })
                 days.sort(by: { $0.date > $1.date })
                 goal.days = days
+                goal.todayCompleted = self.completedGoalForToday(goal: goal)
                 goalsTemp.append(goal)
             }
+            goalsTemp.sort(by: { !$0.todayCompleted && $1.todayCompleted })
             self.goals = goalsTemp
             print("Fetched user's data successfully")
             completion()
@@ -122,6 +125,17 @@ class GoalController {
             print("Error fetching EVERYTHING \(error.localizedDescription)")
             completion()
         }
+    }
+    
+    func completedGoalForToday(goal: Goal) -> Bool {
+        if goal.days.first?.completed == CompletedGoalForDay.completed.rawValue {
+            return true
+        } else if goal.days.first?.completed == CompletedGoalForDay.excused.rawValue {
+            return true
+        } else if goal.days.first?.completed == CompletedGoalForDay.failedToComplete.rawValue {
+            return false
+        }
+        return false
     }
     
     func checkSelectedDaysBeforeCreatingDayObject(selectedDays: String, date: Date) -> Bool {
@@ -141,6 +155,7 @@ class GoalController {
         ref.child("goals").child(goal.userIDRef).child(goal.goalUUID).removeValue()
         guard let goalIndex = self.goals.index(where: {$0.goalUUID == goal.goalUUID }) else { return }
         self.goals.remove(at: goalIndex)
+        cancelUserNotification(for: goal)
         print("Deleted Goal")
     }
     

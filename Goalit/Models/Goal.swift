@@ -21,6 +21,7 @@ class Goal {
     var reminderTime: String
     var goalDescription: String
     var days: [Day]
+    var todayCompleted: Bool = false
     
     init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, reminderTime: String, goalDescription: String = "", days: [Day] = []) {
         self.name = name
