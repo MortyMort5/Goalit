@@ -9,22 +9,30 @@
 import UIKit
 import Firebase
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
+        
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+        emailTextField.delegate = self
+        
+        usernameTextField.setBottomBorder(withColor: Constant.grayMainColor)
+        emailTextField.setBottomBorder(withColor: Constant.grayMainColor)
+        
+        textFieldBackgroundView.layer.cornerRadius = Constant.viewCornerRadius
+        
         let defaultImage = #imageLiteral(resourceName: "app_profile_icon")
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
         profileImageView.image = defaultImage
-        profileImageView.contentMode = .scaleAspectFit
-        profileImageView.layer.borderWidth = 0.5
-        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.contentMode = .center
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.cornerRadius = profileImageView.frame.height/2
         profileImageView.clipsToBounds = true
+        createUserButton.layer.cornerRadius = Constant.buttonCornerRadius
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
@@ -39,11 +47,24 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var backButton: UIButton!
-    
-    let size: CGSize = CGSize(width: 200, height: 200)
+    @IBOutlet weak var textFieldBackgroundView: UIView!
     
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == usernameTextField {
+            textField.resignFirstResponder()
+            emailTextField.becomeFirstResponder()
+        } else if textField == emailTextField {
+            textField.resignFirstResponder()
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
     func disableButtons() {

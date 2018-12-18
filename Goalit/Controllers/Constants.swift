@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sterling Mortensen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Constant {
     
@@ -51,4 +51,15 @@ class Constant {
     static let goalTOcreateSegue = "toCreateGoalVC"
     static let signUpTOgoalSegue = "signUpToGoals"
     
+    // Buttons
+    static let buttonCornerRadius: CGFloat = 15
+    
+    // Main Colors
+    static let grayMainColor: UIColor = UIColor(red: 88/255, green: 89/255, blue: 91/255, alpha: 1.0)
+    static let lightBlueMainColor: UIColor = UIColor(red: 225/255, green: 235/255, blue: 232/255, alpha: 1.0)
+    static let blueMainColor: UIColor = UIColor(red: 58/255, green: 121/255, blue: 166/255, alpha: 1.0)
+    static let yellowMainColor: UIColor = UIColor(red: 253/255, green: 216/255, blue: 92/255, alpha: 1.0)
+    
+    // View Around TextFields
+    static let viewCornerRadius: CGFloat = 10
 }

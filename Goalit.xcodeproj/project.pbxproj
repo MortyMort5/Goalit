@@ -21,7 +21,7 @@
 		819D1CF5203CF1DE00C80F11 /* CreateGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D1CF4203CF1DE00C80F11 /* CreateGoalViewController.swift */; };
 		81BC355C202276FD00E6A95F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355B202276FD00E6A95F /* User.swift */; };
 		81BC355E2022790E00E6A95F /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BC355D2022790E00E6A95F /* UserController.swift */; };
-		81DE935F202B8B6300BAC472 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DE935E202B8B6300BAC472 /* Enums.swift */; };
+		81DE935F202B8B6300BAC472 /* Enums+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DE935E202B8B6300BAC472 /* Enums+Extensions.swift */; };
 		81ED3E5420110E9F00D531F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ED3E5320110E9F00D531F6 /* AppDelegate.swift */; };
 		81ED3E5920110E9F00D531F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81ED3E5720110E9F00D531F6 /* Main.storyboard */; };
 		81ED3E5E20110E9F00D531F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81ED3E5D20110E9F00D531F6 /* Assets.xcassets */; };
@@ -51,7 +51,7 @@
 		81BC35562022649A00E6A95F /* Goalit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Goalit.entitlements; sourceTree = "<group>"; };
 		81BC355B202276FD00E6A95F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		81BC355D2022790E00E6A95F /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
-		81DE935E202B8B6300BAC472 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		81DE935E202B8B6300BAC472 /* Enums+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enums+Extensions.swift"; sourceTree = "<group>"; };
 		81ED3E5020110E9F00D531F6 /* Goalit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goalit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81ED3E5320110E9F00D531F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81ED3E5820110E9F00D531F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 				8133B37A2012A5FD00F7889F /* DateHelper.swift */,
 				8133B37C2012A72A00F7889F /* Constants.swift */,
 				817C2211201E9339007ABF2B /* StaticFunction.swift */,
-				81DE935E202B8B6300BAC472 /* Enums.swift */,
+				81DE935E202B8B6300BAC472 /* Enums+Extensions.swift */,
 				B3F9441B21B7DF5300AA4530 /* DummyData.swift */,
 			);
 			path = Controllers;
@@ -350,7 +350,7 @@
 				B3F5559B21C7472300A0454E /* ProfileViewController.swift in Sources */,
 				8133B3822012AA4200F7889F /* DayCollectionViewCell.swift in Sources */,
 				8133B36E201298CB00F7889F /* Goal.swift in Sources */,
-				81DE935F202B8B6300BAC472 /* Enums.swift in Sources */,
+				81DE935F202B8B6300BAC472 /* Enums+Extensions.swift in Sources */,
 				8133B3762012A54700F7889F /* GoalsViewController.swift in Sources */,
 				8133B37F2012A7FB00F7889F /* GoalTableViewCell.swift in Sources */,
 				81EDB2BE2023DAAF00CA0FF3 /* LoginViewController.swift in Sources */,

@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var textFieldBackgroundView: UIView!
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         loadingIndicator.startAnimating()
@@ -45,6 +46,9 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginButton.layer.cornerRadius = Constant.buttonCornerRadius
+        textFieldBackgroundView.layer.cornerRadius = Constant.viewCornerRadius
+        emailTextField.setBottomBorder(withColor: Constant.grayMainColor)
     }
     
     func disableAllButtons() {
