@@ -30,7 +30,7 @@ class LoadingViewController: UIViewController {
                     }
                 })
             } else {
-                self.performSegue(withIdentifier: Constant.loadingTOloginSegue, sender: nil)
+                self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
             }
         }
     }

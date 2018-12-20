@@ -16,6 +16,10 @@ class GoalController {
     var ref: DatabaseReference!
 
     var goals: [Goal] = []
+    
+    init() {
+        loadFromPersistentStorage()
+    }
 
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int, goalType: Int, reminderTime: String, selectedDays: String, goalDescription: String, completion:@escaping() -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
@@ -65,6 +69,31 @@ class GoalController {
                 completion()
             }
         }
+    }
+    
+    func createGoalWithoutUser(withName name: String, dateCreated: Date, totalCompleted: Int, goalType: Int, reminderTime: String, selectedDays: String, goalDescription: String) {
+        
+        let goalUUID = NSUUID().uuidString
+        let dayUUID = NSUUID().uuidString
+        let goal = Goal(dateCreated: dateCreated,
+                        name: name,
+                        totalCompleted: totalCompleted,
+                        goalUUID: goalUUID,
+                        selectedDays: selectedDays,
+                        goalType: goalType,
+                        reminderTime: reminderTime,
+                        goalDescription: goalDescription)
+        
+        let dayOpt = DayController.shared.createDay(date: dateCreated,
+                                                 completed: CompletedGoalForDay.completed.rawValue,
+                                                 dayUUID: dayUUID,
+                                                 goalIDRef: goalUUID,
+                                                 selectedDays: selectedDays)
+        
+        guard let day = dayOpt else { return }
+        goal.days.append(day)
+        self.goals.append(goal)
+        saveToPersistentStorage()
     }
     
     func createGoalDictionary(goal: Goal, day: [String: Any]) -> [String: Any] {
@@ -254,5 +283,35 @@ extension GoalController {
     
     func cancelUserNotification(for goal: Goal){
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [goal.goalUUID])
+    }
+    
+    // MARK: - Persistence
+    
+    private func fileURL() -> URL {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let fileName = "goal.json"
+        let documentsDirectoryURL = urls[0].appendingPathComponent(fileName)
+        return documentsDirectoryURL
+    }
+    
+    private func loadFromPersistentStorage() {
+        let decoder = JSONDecoder()
+        do {
+            let data = try Data(contentsOf: fileURL())
+            let goals = try decoder.decode([Goal].self, from: data)
+            self.goals = goals
+        } catch let error {
+            print("There was an error saving to persistent storage: \(error)")
+        }
+    }
+    
+    private func saveToPersistentStorage() {
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(goals)
+            try data.write(to: fileURL())
+        } catch let error {
+            print("There was an error saving to persistent storage: \(error)")
+        }
     }
 }

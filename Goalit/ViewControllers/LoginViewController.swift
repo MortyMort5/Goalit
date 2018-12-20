@@ -48,6 +48,10 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         loginButton.layer.cornerRadius = Constant.buttonCornerRadius
         textFieldBackgroundView.layer.cornerRadius = Constant.viewCornerRadius
+        emailTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
+        passwordTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
+        emailTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
+        passwordTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
         emailTextField.setBottomBorder(withColor: Constant.grayMainColor)
     }
     

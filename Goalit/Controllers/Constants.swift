@@ -62,4 +62,7 @@ class Constant {
     
     // View Around TextFields
     static let viewCornerRadius: CGFloat = 10
+    
+    // Text Fields
+    static let paddingLeftAndRight: CGFloat = 20
 }

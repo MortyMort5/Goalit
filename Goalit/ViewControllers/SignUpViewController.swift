@@ -19,7 +19,15 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         emailTextField.delegate = self
         
         usernameTextField.setBottomBorder(withColor: Constant.grayMainColor)
+        usernameTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
+        usernameTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
+        
+        emailTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
+        emailTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
         emailTextField.setBottomBorder(withColor: Constant.grayMainColor)
+        
+        passwordTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
+        passwordTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
         
         textFieldBackgroundView.layer.cornerRadius = Constant.viewCornerRadius
         

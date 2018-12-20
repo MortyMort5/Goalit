@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-class Goal {
+class Goal : Codable {
     
     var name: String
     let dateCreated: Date
@@ -23,7 +23,7 @@ class Goal {
     var days: [Day]
     var todayCompleted: Bool = false
     
-    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String, reminderTime: String, goalDescription: String = "", days: [Day] = []) {
+    init(dateCreated: Date,name: String, totalCompleted: Int, goalUUID: String, selectedDays: String, goalType: Int, userIDRef: String = "", reminderTime: String, goalDescription: String = "", days: [Day] = []) {
         self.name = name
         self.dateCreated = dateCreated
         self.totalCompleted = totalCompleted
