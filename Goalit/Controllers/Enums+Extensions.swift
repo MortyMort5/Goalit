@@ -91,7 +91,7 @@ extension UITextField
         self.backgroundColor = UIColor.clear
         let width: CGFloat = 1.0
         
-        let borderLine = UIView(frame: CGRect(x: 20, y: self.frame.height - width, width: self.frame.width, height: width))
+        let borderLine = UIView(frame: CGRect(x: 20, y: self.frame.height - width, width: self.frame.width - 40, height: width))
         borderLine.backgroundColor = color
         self.addSubview(borderLine)
     }
@@ -106,5 +106,36 @@ extension UITextField
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.rightView = paddingView
         self.rightViewMode = .always
+    }
+    
+    func setBottomBorderWithOutPadding(withColor color: UIColor)
+    {
+        self.borderStyle = UITextField.BorderStyle.none
+        self.backgroundColor = UIColor.clear
+        let width: CGFloat = 1.0
+        
+        let borderLine = UIView(frame: CGRect(x: 0, y: self.frame.height - width, width: self.frame.width, height: width))
+        borderLine.backgroundColor = color
+        self.addSubview(borderLine)
+    }
+    
+    func setTopBorderWithOutPadding(withColor color: UIColor)
+    {
+        let width: CGFloat = 1.0
+        
+        let borderLine = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: width))
+        borderLine.backgroundColor = color
+        self.addSubview(borderLine)
+    }
+}
+
+extension UITextView {
+    func setBottomBorderWithOutPadding(withColor color: UIColor)
+    {
+        let width: CGFloat = 1.0
+        
+        let borderLine = UIView(frame: CGRect(x: 0, y: self.frame.height - width, width: self.frame.width, height: width))
+        borderLine.backgroundColor = color
+        self.addSubview(borderLine)
     }
 }

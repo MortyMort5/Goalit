@@ -23,29 +23,4 @@ class DayController {
         ref = Database.database().reference()
         ref.child("days").removeValue()
     }
-    
-    func modifyDay(day: Day, completion:@escaping() -> Void) {
-        guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
-        let goalID = day.goalIDRef
-        let dayID = day.dayUUID
-        
-        if day.completed == CompletedGoalForDay.completed.rawValue {
-            day.completed = CompletedGoalForDay.failedToComplete.rawValue
-        } else if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
-            day.completed = CompletedGoalForDay.completed.rawValue
-        }
-        
-        let dayDict = day.dictionaryRepresentaion
-        ref = Database.database().reference()
-        ref.child("goals").child(userID).child(goalID).child("days").child(dayID).updateChildValues(dayDict) {
-            (error:Error?, ref:DatabaseReference) in
-            if let error = error {
-                print("Day could not be Modified: \(error.localizedDescription).")
-                completion()
-            } else {
-                print("Day was modified successfully!")
-                completion()
-            }
-        }
-    }
 }

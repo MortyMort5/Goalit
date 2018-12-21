@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateGoalViewController: UIViewController {
+class CreateGoalViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var reminderTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -40,13 +40,32 @@ class CreateGoalViewController: UIViewController {
     var thursday = 1
     var friday = 1
     var saturday = 1
-    let selectedColor:UIColor = UIColor.green
-    let unselectedColor:UIColor = UIColor.red
+    let selectedColor:UIColor = Constant.yellowMainColor
+    let unselectedColor:UIColor = Constant.grayMainColor
     let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpDatePicker()
+        createGoalButton.layer.cornerRadius = Constant.buttonCornerRadius
+        
+        goalNameTextField.setBottomBorderWithOutPadding(withColor: Constant.grayMainColor)
+        goalNameTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
+        
+        reminderTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
+        reminderTextField.setBottomBorderWithOutPadding(withColor: Constant.grayMainColor)
+        reminderTextField.setTopBorderWithOutPadding(withColor: Constant.grayMainColor)
+        
+        descriptionTextView.setBottomBorderWithOutPadding(withColor: Constant.grayMainColor)
+        descriptionTextView.delegate = self
+        
+        mondayButton.layer.cornerRadius = mondayButton.frame.height/2
+        tuesdayButton.layer.cornerRadius = tuesdayButton.frame.height/2
+        wednesdayButton.layer.cornerRadius = wednesdayButton.frame.height/2
+        thursdayButton.layer.cornerRadius = thursdayButton.frame.height/2
+        fridayButton.layer.cornerRadius = fridayButton.frame.height/2
+        saturdayButton.layer.cornerRadius = saturdayButton.frame.height/2
+        sundayButton.layer.cornerRadius = sundayButton.frame.height/2
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +94,10 @@ class CreateGoalViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        descriptionTextView.text = String()
     }
     
     @IBAction func sundayButtonTapped(_ sender: Any) {
@@ -151,7 +174,7 @@ class CreateGoalViewController: UIViewController {
         guard let name = goalNameTextField.text, !name.isEmpty,
             let time = reminderTextField.text, !time.isEmpty,
             let goalDescription = descriptionTextView.text
-            else { StaticFunction.missingFieldAlert(viewController: self, message: "Must enter name"); return }
+            else { StaticFunction.missingFieldAlert(viewController: self, message: "Must enter name"); self.loadingIndicator.stopAnimating(); return }
         
         if let goal = self.goal {
             goal.name = name
@@ -168,6 +191,7 @@ class CreateGoalViewController: UIViewController {
     }
     
     func createGoal(name: String, time: String, goalDescription: String, selectedDays: String) {
+        
         GoalController.shared.createGoal(withName: name,
                                          dateCreated: DateHelper.currentDate(),
                                          totalCompleted: 1,

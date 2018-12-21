@@ -17,7 +17,7 @@ class Goal : Codable {
     let goalUUID: String
     var selectedDays: String
     let totalCompleted: Int
-    let userIDRef: String
+    var userIDRef: String
     var reminderTime: String
     var goalDescription: String
     var days: [Day]
@@ -62,6 +62,7 @@ class Goal : Codable {
     
     var dictionaryRepresentaion: [String: Any] {
         let stringDateCreated = DateHelper.convertDateToString(date: self.dateCreated)
+        let dayDict = self.days.compactMap({ $0.dictionaryRepresentaion })
         let dictionary = [Constant.userIDRefKey: self.userIDRef,
                     Constant.goalNameKey: self.name,
                     Constant.goalDateCreatedKey: stringDateCreated,
@@ -70,7 +71,12 @@ class Goal : Codable {
                     Constant.goalTypeKey: self.goalType,
                     Constant.goalReminderTimeKey: self.reminderTime,
                     Constant.goalDescriptionKey: self.goalDescription,
-                    Constant.selectedDaysKey: self.selectedDays] as [String : Any]
+                    Constant.selectedDaysKey: self.selectedDays,
+                    Constant.goalDaysKey: dayDict] as [String : Any]
         return dictionary
+    }
+    
+    var jsonData: Data? {
+        return try? JSONSerialization.data(withJSONObject: dictionaryRepresentaion, options: .prettyPrinted)
     }
 }

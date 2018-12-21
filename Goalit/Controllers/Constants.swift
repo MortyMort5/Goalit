@@ -48,8 +48,9 @@ class Constant {
     static let loadingTOloginSegue =  "loadingTOloginSegue"
     static let loadingTOgoalSegue = "loadingTOgoalSegue"
     static let loginTOgoalSegue = "loginTOgoalSegue"
-    static let goalTOcreateSegue = "toCreateGoalVC"
     static let signUpTOgoalSegue = "signUpToGoals"
+    static let goalsTOprofileSegue = "goalsToProfileSegue"
+    static let goalsTOcreateSegue = "goalsToCreateGoalSegue"
     
     // Buttons
     static let buttonCornerRadius: CGFloat = 15

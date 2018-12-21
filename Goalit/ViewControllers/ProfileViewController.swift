@@ -40,7 +40,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             print ("Error signing out: %@", signOutError)
         }
         print("Signed Out")
-        self.navigationController!.popToRootViewController(animated: true)
+        GoalController.shared.logoutClearAllPersistedData()
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)

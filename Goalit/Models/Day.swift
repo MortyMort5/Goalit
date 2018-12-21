@@ -35,21 +35,14 @@ class Day: Codable {
         self.goalIDRef = goalIDRef
     }
     
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.completed, forKey: Constant.dayCompletedKey)
-        aCoder.encode(self.date, forKey: Constant.dayDateKey)
-        aCoder.encode(self.dayUUID, forKey: Constant.dayUUIDKey)
-        aCoder.encode(self.goalIDRef, forKey: Constant.dayGoalIDRefKey)
-    }
-    
-    var dictionaryRepresentaion: [String: Any] {
+    var dictionaryRepresentaion: [String:[String: Any]] {
         let stringDate = DateHelper.convertDateToString(date: self.date)
-        let dictionary: [String: Any] = [
+        let dictionary: [String:[String: Any]] = [self.dayUUID:[
             Constant.dayCompletedKey: self.completed,
             Constant.dayDateKey: stringDate,
             Constant.dayUUIDKey: self.dayUUID,
             Constant.dayGoalIDRefKey: self.goalIDRef
-        ]
+        ]]
         return dictionary
     }
     

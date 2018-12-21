@@ -11,7 +11,6 @@ import UIKit
 class DayCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dayCompletedButton: UIButton!
-    @IBOutlet weak var dayOfWeekLabel: UILabel!
     weak var delegate: updateDayDelegate?
     
     var day: Day? {
@@ -24,9 +23,7 @@ class DayCollectionViewCell: UICollectionViewCell {
         guard let day = self.day else { return }
         let dateDate = day.date
         let dateNum = dayOfWeekNumber(date: dateDate)
-        let dateLetters = dayOfWeekLetter(date: dateDate)
         dayCompletedButton.setTitle("\(dateNum)", for: .normal)
-        dayOfWeekLabel.text = dateLetters
         if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
             dayCompletedButton.layer.backgroundColor = UIColor(red: 255/255, green: 86/255, blue: 106/255, alpha: 1.0).cgColor
         }

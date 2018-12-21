@@ -23,4 +23,11 @@ class StaticFunction {
         alertController.addAction(okAction)
         viewController.present(alertController, animated: true, completion: nil)
     }
+    
+    static func createAccountAlert(viewController: UIViewController) {
+        let alertController = UIAlertController(title: "Not a User!", message: "Create an account to create more goals.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        viewController.present(alertController, animated: true, completion: nil)
+    }
 }

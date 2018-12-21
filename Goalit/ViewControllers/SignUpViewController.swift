@@ -58,7 +58,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var textFieldBackgroundView: UIView!
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -89,7 +89,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func createUserButtonTapped(_ sender: Any) {
         self.disableButtons()
-        guard let email = emailTextField.text, !email.isEmpty, let username = usernameTextField.text, !username.isEmpty, let password = passwordTextField.text, !password.isEmpty else { return }
+        guard let email = emailTextField.text, !email.isEmpty,
+            let username = usernameTextField.text, !username.isEmpty,
+            let password = passwordTextField.text, !password.isEmpty else { return }
+        
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let error = error {
                 print("Error on creating User \(error.localizedDescription)")
@@ -97,6 +100,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                 StaticFunction.errorAlert(viewController: self, error: error)
                 return
             }
+            // Successfully Authorized User
+            // Now add username to account
             guard let user = user else { return }
             let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
             changeRequest?.displayName = username
@@ -108,7 +113,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     StaticFunction.errorAlert(viewController: self, error: error)
                     return
                 }
-                print("Created USER succesfully")
+                // Successfully add username
+                // Now save image to storage
                 let userID = user.user.uid
                 
                 let imageDataID = NSUUID().uuidString
@@ -121,17 +127,29 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                         self.enableButtons()
                         return
                     }
-                    
+                    // Successfully Saved Profile image to Storage
+                    // Now download Profile image URL
                     storageRef.downloadURL(completion: { (url, error) in
                         if let error = error {
                             print("Error downloading image url: \(error.localizedDescription)")
                             StaticFunction.errorAlert(viewController: self, error: error)
                             return
                         }
+                        // Successfully Downloaded URL
+                        // Now Create User in Realtime Database
                         guard let downloadURL = url else { return }
-                        UserController.shared.createUser(withUsername: username, userID: userID, email: email, imageURL: downloadURL.absoluteString, profileImageData: imageData, completion: {
-                            self.loadingIndicator.stopAnimating()
-                            self.performSegue(withIdentifier: Constant.signUpTOgoalSegue, sender: nil)
+                        UserController.shared.createUser(withUsername: username,
+                                                         userID: userID,
+                                                         email: email,
+                                                         imageURL: downloadURL.absoluteString,
+                                                         profileImageData: imageData,
+                                                         completion: {
+                            // Successfully Saved User to Realtime Database
+                            // Now save any goals that were already created
+                            GoalController.shared.writeAllDataToServer(userID: userID, completion: {
+                                self.loadingIndicator.stopAnimating()
+                                self.dismiss(animated: true, completion: nil)
+                            })
                         })
                     })
                     

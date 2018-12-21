@@ -17,6 +17,11 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var textFieldBackgroundView: UIView!
+    @IBOutlet weak var backButton: UIButton!
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         loadingIndicator.startAnimating()
@@ -34,7 +39,7 @@ class LoginViewController: UIViewController {
                 UserController.shared.fetchUser(userID: userID, completion: {
                     GoalController.shared.fetchDataForUser {
                         self.loadingIndicator.stopAnimating()
-                        self.performSegue(withIdentifier: Constant.loginTOgoalSegue, sender: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 })
             }
@@ -47,20 +52,25 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.layer.cornerRadius = Constant.buttonCornerRadius
+        backButton.layer.cornerRadius = Constant.buttonCornerRadius
         textFieldBackgroundView.layer.cornerRadius = Constant.viewCornerRadius
+        
         emailTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
-        passwordTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
         emailTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
-        passwordTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
         emailTextField.setBottomBorder(withColor: Constant.grayMainColor)
+        
+        passwordTextField.setLeftPaddingPoints(Constant.paddingLeftAndRight)
+        passwordTextField.setRightPaddingPoints(Constant.paddingLeftAndRight)
     }
     
     func disableAllButtons() {
         loginButton.isEnabled = false
         signUpButton.isEnabled = false
+        backButton.isEnabled = false
     }
     
     func enableAllButtons() {
+        backButton.isEnabled = true
         loginButton.isEnabled = true
         signUpButton.isEnabled = true
     }

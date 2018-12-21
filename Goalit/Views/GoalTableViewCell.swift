@@ -12,10 +12,8 @@ class GoalTableViewCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate: buttonTappedDelegate?
-    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var completedGoalButton: UIButton!
     @IBOutlet weak var goalNameLabel: UILabel!
-    @IBOutlet weak var totalCompletedLabel: UILabel!
     
     var goal: Goal? {
         didSet {
@@ -36,9 +34,7 @@ class GoalTableViewCell: UITableViewCell {
         let total = totalCountCompleted(days: days)
         let totalInRow = totalCountCompletedInARow(days: days)
         goalNameLabel.text = goal.name
-        totalCompletedLabel.text = "\(total)"
         completedGoalButton.setTitle("\(totalInRow.count)", for: .normal)
-        monthLabel.text = totalInRow.month
     }
     
     func totalCountCompleted(days: [Day]) -> Int {

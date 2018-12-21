@@ -22,6 +22,19 @@ class GoalController {
     }
 
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int, goalType: Int, reminderTime: String, selectedDays: String, goalDescription: String, completion:@escaping() -> Void) {
+        if Auth.auth().currentUser?.uid == nil {
+            createGoalWithoutUser(withName: name,
+                                  dateCreated: dateCreated,
+                                  totalCompleted: totalCompleted,
+                                  goalType: goalType,
+                                  reminderTime: reminderTime,
+                                  selectedDays: selectedDays,
+                                  goalDescription: goalDescription)
+            
+            completion()
+            return
+        }
+        
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         
         ref = Database.database().reference()
@@ -51,10 +64,11 @@ class GoalController {
         goal.todayCompleted = true
         self.goals.append(goal)
 
-        let dayDictionary = day.dictionaryRepresentaion
-        let dayUpdate = [daysNodeKey: dayDictionary]
+//        let dayDictionary = day.dictionaryRepresentaion
+//        let dayUpdate = [daysNodeKey: dayDictionary]
         
-        let goalDict = createGoalDictionary(goal: goal, day: dayUpdate)
+//        let goalDict = createGoalDictionary(goal: goal, day: dayDictionary)
+        let goalDict = goal.dictionaryRepresentaion
         
         let childUpdates = ["\(userID)/\(goalNodeKey)": goalDict]
 
@@ -112,17 +126,50 @@ class GoalController {
     }
     
     func modifyGoal(goal: Goal, completion:@escaping() -> Void) {
-        let userID = goal.userIDRef
-        let goalID = goal.goalUUID
+        guard let goalIndex = self.goals.index(where: {$0.goalUUID == goal.goalUUID }) else { completion(); return }
+        self.goals[goalIndex] = goal
+        saveToPersistentStorage()
+        if Auth.auth().currentUser == nil { completion(); return }
+        
         let goalDict = goal.dictionaryRepresentaion
         ref = Database.database().reference()
-        ref.child("goals").child(userID).child(goalID).updateChildValues(goalDict) {
+        ref.child("goals").child(goal.userIDRef).child(goal.goalUUID).updateChildValues(goalDict) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Goal could not be saved: \(error.localizedDescription).")
                 completion()
             } else {
                 print("Goal saved successfully!")
+                completion()
+            }
+        }
+    }
+    
+    func modifyDay(day: Day, completion:@escaping() -> Void) {
+        let goalID = day.goalIDRef
+        let dayID = day.dayUUID
+        
+        if day.completed == CompletedGoalForDay.completed.rawValue {
+            day.completed = CompletedGoalForDay.failedToComplete.rawValue
+        } else if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
+            day.completed = CompletedGoalForDay.completed.rawValue
+        }
+        
+        guard let goalIndex = self.goals.index(where: {$0.goalUUID == goalID }) else { completion(); return }
+        guard let dayIndex = self.goals[goalIndex].days.index(where: {$0.dayUUID == dayID }) else { completion(); return }
+        self.goals[goalIndex].days[dayIndex] = day
+        saveToPersistentStorage()
+        guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
+        
+        let dayDict = day.dictionaryRepresentaion
+        ref = Database.database().reference()
+        ref.child("goals").child(userID).child(goalID).child("days").child(dayID).updateChildValues(dayDict) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Day could not be Modified: \(error.localizedDescription).")
+                completion()
+            } else {
+                print("Day was modified successfully!")
                 completion()
             }
         }
@@ -179,12 +226,41 @@ class GoalController {
         }
     }
     
-    func deleteGoal(goal: Goal) {
+    func writeAllDataToServer(userID: String, completion:@escaping() -> Void) {
         ref = Database.database().reference()
-        ref.child("goals").child(goal.userIDRef).child(goal.goalUUID).removeValue()
+        for goal in self.goals {
+            goal.userIDRef = userID
+            
+            let goalDict = goal.dictionaryRepresentaion
+            let childUpdates = ["\(userID)/\(goal.goalUUID)": goalDict]
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: childUpdates, options: [])
+            let jsonString = String(data: jsonData!, encoding: .utf8)!
+            print(jsonString)
+            
+            ref.child("goals").updateChildValues(childUpdates) {
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Goal could not be saved: \(error).")
+                    completion()
+                } else {
+                    print("Goal saved successfully!")
+                    self.scheduleUserNotification(goal: goal)
+                    completion()
+                }
+            }
+        }
+    }
+    
+    func deleteGoal(goal: Goal) {
         guard let goalIndex = self.goals.index(where: {$0.goalUUID == goal.goalUUID }) else { return }
         self.goals.remove(at: goalIndex)
         cancelUserNotification(for: goal)
+        saveToPersistentStorage()
+        if Auth.auth().currentUser == nil { return }
+        
+        ref = Database.database().reference()
+        ref.child("goals").child(goal.userIDRef).child(goal.goalUUID).removeValue()
         print("Deleted Goal")
     }
     
@@ -194,7 +270,6 @@ class GoalController {
         
         goalArr: for goal in self.goals {
             let days = goal.days
-            let userID = goal.userIDRef
             var daysCreated: [Day] = []
             let goalID = goal.goalUUID
             let selectedDays = goal.selectedDays
@@ -233,9 +308,10 @@ class GoalController {
                 // then check again if that date is equal to today's date and go until it does equal todays date
                 if DateHelper.compareDateWithCurrentDate(date: incrementedLastDayDate) {
                     // then send up daysCreated to the server
-                    guard let goalIndex = self.goals.index(where: {$0.goalUUID == goalID }) else { return }
+                    guard let goalIndex = self.goals.index(where: {$0.goalUUID == goalID }) else { completion(); return }
                     self.goals[goalIndex].days.append(contentsOf: daysCreated)
-                    self.writeNewDaysToServer(days: daysCreated, userID: userID, goalID: goalID)
+                    self.saveToPersistentStorage()
+                    self.writeNewDaysToServer(days: daysCreated, goal: goal)
                     continue goalArr
                 }   
             }
@@ -243,18 +319,25 @@ class GoalController {
         completion()
     }
     
-    func writeNewDaysToServer(days: [Day], userID: String, goalID: String) {
+    func writeNewDaysToServer(days: [Day], goal: Goal) {
+        if Auth.auth().currentUser == nil { return }
         ref = Database.database().reference()
-        if userID.count == 0 || goalID.count == 0 {
+        if goal.userIDRef.count == 0 || goal.goalUUID.count == 0 {
             return
         }
-        ref = Database.database().reference().child("goals/\(userID)/\(goalID)/days")
+        ref = Database.database().reference().child("goals/\(goal.userIDRef)/\(goal.goalUUID)/days")
         print("Total days to write \(days.count)")
         for day in days {
             let data = day.dictionaryRepresentaion
             let childUpdate = [day.dayUUID: data]
             ref.updateChildValues(childUpdate)
         }
+    }
+    
+    func logoutClearAllPersistedData() {
+        UserController.shared.currentUser = nil
+        self.goals = []
+        saveToPersistentStorage()
     }
 }
 
