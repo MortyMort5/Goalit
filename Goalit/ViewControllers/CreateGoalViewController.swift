@@ -215,7 +215,7 @@ class CreateGoalViewController: UIViewController, UITextViewDelegate {
             let reminderTime = goal?.reminderTime,
             let goalDescription = goal?.goalDescription else { return }
         
-        self.createGoalButton.setTitle("Update", for: .normal)
+        self.createGoalButton.setTitle("update", for: .normal)
         
         let daysSelectedArray: [UIButton] = [sundayButton,
                                              mondayButton,
@@ -227,7 +227,7 @@ class CreateGoalViewController: UIViewController, UITextViewDelegate {
         goalNameTextField.text = name
         reminderTextField.text = reminderTime
         descriptionTextView.text = goalDescription
-        goalCreationDateLabel.text = "Created: \(DateHelper.convertDateToString(date: creationDate))"
+        goalCreationDateLabel.text = "created: \(DateHelper.convertDateToString(date: creationDate))"
         goalCreationDateLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
         
         var counter = 0

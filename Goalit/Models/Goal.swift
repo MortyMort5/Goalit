@@ -72,7 +72,7 @@ class Goal : Codable {
                     Constant.goalReminderTimeKey: self.reminderTime,
                     Constant.goalDescriptionKey: self.goalDescription,
                     Constant.selectedDaysKey: self.selectedDays,
-                    Constant.goalDaysKey: dayDict] as [String : Any]
+                    Constant.goalDaysKey: dayDict as [[String:Any]]] as [String : Any]
         return dictionary
     }
     

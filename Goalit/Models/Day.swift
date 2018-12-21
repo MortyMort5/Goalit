@@ -35,23 +35,18 @@ class Day: Codable {
         self.goalIDRef = goalIDRef
     }
     
-    var dictionaryRepresentaion: [String:[String: Any]] {
+    var dictionaryRepresentaion: [String: Any] {
         let stringDate = DateHelper.convertDateToString(date: self.date)
-        let dictionary: [String:[String: Any]] = [self.dayUUID:[
+        let dictionary: [String: Any] = [
             Constant.dayCompletedKey: self.completed,
             Constant.dayDateKey: stringDate,
             Constant.dayUUIDKey: self.dayUUID,
             Constant.dayGoalIDRefKey: self.goalIDRef
-        ]]
+        ]
         return dictionary
     }
-    
-    // MARK: - PUT
-    // Turn or serialize dictionaryRep into data
-    // Returns JSON data from our object - to go up to Firebase. Firebase is JSON!!!
     
     var jsonData: Data? {
         return try? JSONSerialization.data(withJSONObject: dictionaryRepresentaion, options: .prettyPrinted)
     }
-    
 }

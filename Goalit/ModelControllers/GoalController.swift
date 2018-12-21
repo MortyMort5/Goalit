@@ -159,10 +159,12 @@ class GoalController {
         guard let dayIndex = self.goals[goalIndex].days.index(where: {$0.dayUUID == dayID }) else { completion(); return }
         self.goals[goalIndex].days[dayIndex] = day
         saveToPersistentStorage()
+        
         guard let userID = Auth.auth().currentUser?.uid else { completion(); return }
         
         let dayDict = day.dictionaryRepresentaion
         ref = Database.database().reference()
+        
         ref.child("goals").child(userID).child(goalID).child("days").child(dayID).updateChildValues(dayDict) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
@@ -234,10 +236,6 @@ class GoalController {
             let goalDict = goal.dictionaryRepresentaion
             let childUpdates = ["\(userID)/\(goal.goalUUID)": goalDict]
             
-            let jsonData = try? JSONSerialization.data(withJSONObject: childUpdates, options: [])
-            let jsonString = String(data: jsonData!, encoding: .utf8)!
-            print(jsonString)
-            
             ref.child("goals").updateChildValues(childUpdates) {
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
@@ -249,6 +247,9 @@ class GoalController {
                     completion()
                 }
             }
+        }
+        if self.goals.count == 0 {
+            completion()
         }
     }
     
@@ -321,10 +322,10 @@ class GoalController {
     
     func writeNewDaysToServer(days: [Day], goal: Goal) {
         if Auth.auth().currentUser == nil { return }
-        ref = Database.database().reference()
         if goal.userIDRef.count == 0 || goal.goalUUID.count == 0 {
             return
         }
+        let dayDictArr = days.flatMap({ $0.dictionaryRepresentaion })
         ref = Database.database().reference().child("goals/\(goal.userIDRef)/\(goal.goalUUID)/days")
         print("Total days to write \(days.count)")
         for day in days {

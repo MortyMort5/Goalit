@@ -26,10 +26,10 @@ class LoadingViewController: UIViewController {
             if let userID = Auth.auth().currentUser?.uid {
                 UserController.shared.fetchUser(userID: userID, completion: {
                     GoalController.shared.fetchDataForUser {
-//                        GoalController.shared.writeAllDataToServer(userID: userID, completion: {
+                        GoalController.shared.writeAllDataToServer(userID: userID, completion: {
                             
                             self.performSegue(withIdentifier: Constant.loadingTOgoalSegue, sender: nil)
-//                        })
+                        })
                     }
                 })
             } else {
