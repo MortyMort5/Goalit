@@ -31,7 +31,6 @@
 		B3335CA621CA2F5300D65B2D /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3335CA521CA2F5300D65B2D /* OnboardViewController.swift */; };
 		B383579D21CCBBAB00C9FB94 /* ProspectusStdBlk.otf in Resources */ = {isa = PBXBuildFile; fileRef = B383579C21CCBBAB00C9FB94 /* ProspectusStdBlk.otf */; };
 		B3E6F35E21AF9ADD00244934 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */; };
-		B3EA56B121CD207F000BDF93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */; };
 		B3F5559B21C7472300A0454E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F5559A21C7472300A0454E /* ProfileViewController.swift */; };
 		B3F9441C21B7DF5300AA4530 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9441B21B7DF5300AA4530 /* DummyData.swift */; };
 /* End PBXBuildFile section */
@@ -54,7 +53,7 @@
 		81BC355B202276FD00E6A95F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		81BC355D2022790E00E6A95F /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		81DE935E202B8B6300BAC472 /* Enums+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enums+Extensions.swift"; sourceTree = "<group>"; };
-		81ED3E5020110E9F00D531F6 /* Goalit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goalit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		81ED3E5020110E9F00D531F6 /* Habitz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Habitz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81ED3E5320110E9F00D531F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81ED3E5820110E9F00D531F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81ED3E5D20110E9F00D531F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,7 +65,6 @@
 		B3335CA521CA2F5300D65B2D /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
 		B383579C21CCBBAB00C9FB94 /* ProspectusStdBlk.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProspectusStdBlk.otf; sourceTree = SOURCE_ROOT; };
 		B3E6F35D21AF9ADD00244934 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F5559A21C7472300A0454E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B3F9441B21B7DF5300AA4530 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,7 +87,6 @@
 				B383579B21CCBAB300C9FB94 /* Fonts */,
 				81ED3E5D20110E9F00D531F6 /* Assets.xcassets */,
 				81ED3E6220110E9F00D531F6 /* Info.plist */,
-				B3EA56B021CD207F000BDF93 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -180,7 +177,7 @@
 		81ED3E5120110E9F00D531F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				81ED3E5020110E9F00D531F6 /* Goalit.app */,
+				81ED3E5020110E9F00D531F6 /* Habitz.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,9 +217,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		81ED3E4F20110E9F00D531F6 /* Goalit */ = {
+		81ED3E4F20110E9F00D531F6 /* Habitz */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81ED3E6520110E9F00D531F6 /* Build configuration list for PBXNativeTarget "Goalit" */;
+			buildConfigurationList = 81ED3E6520110E9F00D531F6 /* Build configuration list for PBXNativeTarget "Habitz" */;
 			buildPhases = (
 				0F61A3A55C43FEEAFE67F827 /* [CP] Check Pods Manifest.lock */,
 				81ED3E4C20110E9F00D531F6 /* Sources */,
@@ -234,9 +231,9 @@
 			);
 			dependencies = (
 			);
-			name = Goalit;
+			name = Habitz;
 			productName = Goalit;
-			productReference = 81ED3E5020110E9F00D531F6 /* Goalit.app */;
+			productReference = 81ED3E5020110E9F00D531F6 /* Habitz.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -267,7 +264,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 81ED3E4B20110E9F00D531F6 /* Build configuration list for PBXProject "Goalit" */;
+			buildConfigurationList = 81ED3E4B20110E9F00D531F6 /* Build configuration list for PBXProject "Habitz" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -280,7 +277,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				81ED3E4F20110E9F00D531F6 /* Goalit */,
+				81ED3E4F20110E9F00D531F6 /* Habitz */,
 			);
 		};
 /* End PBXProject section */
@@ -291,7 +288,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				81ED3E6120110E9F00D531F6 /* LaunchScreen.storyboard in Resources */,
-				B3EA56B121CD207F000BDF93 /* GoogleService-Info.plist in Resources */,
 				B383579D21CCBBAB00C9FB94 /* ProspectusStdBlk.otf in Resources */,
 				81ED3E5E20110E9F00D531F6 /* Assets.xcassets in Resources */,
 				81ED3E5920110E9F00D531F6 /* Main.storyboard in Resources */,
@@ -527,7 +523,7 @@
 				DEVELOPMENT_TEAM = 5H73PY6T7Z;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.GitSwifty.Goalit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.GitSwifty.Habitz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -544,7 +540,7 @@
 				DEVELOPMENT_TEAM = 5H73PY6T7Z;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.GitSwifty.Goalit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.GitSwifty.Habitz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -554,7 +550,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		81ED3E4B20110E9F00D531F6 /* Build configuration list for PBXProject "Goalit" */ = {
+		81ED3E4B20110E9F00D531F6 /* Build configuration list for PBXProject "Habitz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81ED3E6320110E9F00D531F6 /* Debug */,
@@ -563,7 +559,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81ED3E6520110E9F00D531F6 /* Build configuration list for PBXNativeTarget "Goalit" */ = {
+		81ED3E6520110E9F00D531F6 /* Build configuration list for PBXNativeTarget "Habitz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81ED3E6620110E9F00D531F6 /* Debug */,

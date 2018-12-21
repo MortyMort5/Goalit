@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>244196011165-lu2itiuraop60ldlrtjp8qpg1pfci6gt.apps.googleusercontent.com</string>
+	<string>244196011165-1fq86b0feptimurlcp2ht3etpe3bnjgp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.244196011165-lu2itiuraop60ldlrtjp8qpg1pfci6gt</string>
+	<string>com.googleusercontent.apps.244196011165-1fq86b0feptimurlcp2ht3etpe3bnjgp</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBJiJe_IMyFdECj7_gfa2cCNSiiXD1hVIU</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.GitSwifty.Goalit</string>
+	<string>com.GitSwifty.Habitz</string>
 	<key>PROJECT_ID</key>
 	<string>goalz-e343e</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:244196011165:ios:3428478cfbe54681</string>
+	<string>1:244196011165:ios:7a2f94f543736f51</string>
 	<key>DATABASE_URL</key>
 	<string>https://goalz-e343e.firebaseio.com</string>
 </dict>
