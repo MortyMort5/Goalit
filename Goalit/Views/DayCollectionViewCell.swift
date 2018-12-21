@@ -20,17 +20,14 @@ class DayCollectionViewCell: UICollectionViewCell {
     }
     
     func updateView() {
+        dayCompletedButton.layer.cornerRadius = dayCompletedButton.frame.height/2
         guard let day = self.day else { return }
-        let dateDate = day.date
-        let dateNum = dayOfWeekNumber(date: dateDate)
-        dayCompletedButton.setTitle("\(dateNum)", for: .normal)
         if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
-            dayCompletedButton.layer.backgroundColor = UIColor(red: 255/255, green: 86/255, blue: 106/255, alpha: 1.0).cgColor
-        }
-        else if day.completed == CompletedGoalForDay.completed.rawValue {
-            dayCompletedButton.layer.backgroundColor = UIColor(red: 91/255, green: 214/255, blue: 111/255, alpha: 1.0).cgColor
+            dayCompletedButton.layer.backgroundColor = Constant.failedToCompleteColor
+        } else if day.completed == CompletedGoalForDay.completed.rawValue {
+            dayCompletedButton.layer.backgroundColor = Constant.completedDayColor
         } else if day.completed == CompletedGoalForDay.excused.rawValue {
-            dayCompletedButton.layer.backgroundColor = UIColor(red: 63/255, green: 130/255, blue: 255/255, alpha: 1.0).cgColor
+            dayCompletedButton.layer.backgroundColor = Constant.excusedColor
         }
     }
     

@@ -59,12 +59,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.emailTextField.backgroundColor = UIColor.clear
         self.emailTextField.borderStyle = .none
         self.emailTextField.isEnabled = false
-        self.emailTextField.textAlignment = .center
         
         self.usernameTextField.backgroundColor = UIColor.clear
         self.usernameTextField.borderStyle = .none
         self.usernameTextField.isEnabled = false
-        self.usernameTextField.textAlignment = .center
         
         self.profileImageView.layer.masksToBounds = false
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.height/2

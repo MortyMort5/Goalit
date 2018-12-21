@@ -56,14 +56,45 @@ class Constant {
     static let buttonCornerRadius: CGFloat = 15
     
     // Main Colors
-    static let grayMainColor: UIColor = UIColor(red: 88/255, green: 89/255, blue: 91/255, alpha: 1.0)
-    static let lightBlueMainColor: UIColor = UIColor(red: 225/255, green: 235/255, blue: 232/255, alpha: 1.0)
-    static let blueMainColor: UIColor = UIColor(red: 58/255, green: 121/255, blue: 166/255, alpha: 1.0)
-    static let yellowMainColor: UIColor = UIColor(red: 253/255, green: 216/255, blue: 92/255, alpha: 1.0)
+    static let grayMainColor: UIColor = UIColor(red: 88/255,
+                                                green: 89/255,
+                                                blue: 91/255,
+                                                alpha: 1.0)
+    
+    static let lightBlueMainColor: UIColor = UIColor(red: 225/255,
+                                                     green: 235/255,
+                                                     blue: 232/255,
+                                                     alpha: 1.0)
+    
+    static let blueMainColor: UIColor = UIColor(red: 58/255,
+                                                green: 121/255,
+                                                blue: 166/255,
+                                                alpha: 1.0)
+    
+    static let yellowMainColor: UIColor = UIColor(red: 253/255,
+                                                  green: 216/255,
+                                                  blue: 92/255,
+                                                  alpha: 1.0)
     
     // View Around TextFields
     static let viewCornerRadius: CGFloat = 10
     
     // Text Fields
     static let paddingLeftAndRight: CGFloat = 20
+    
+    // Day Collection View Cell Colors
+    static let completedDayColor: CGColor = UIColor(red: 253/255,
+                                                    green: 216/255,
+                                                    blue: 92/255,
+                                                    alpha: 1.0).cgColor
+    
+    static let failedToCompleteColor: CGColor = UIColor(red: 88/255,
+                                                        green: 89/255,
+                                                        blue: 91/255,
+                                                        alpha: 1.0).cgColor
+    
+    static let excusedColor: CGColor = UIColor(red: 253/255,
+                                               green: 216/255,
+                                               blue: 92/255,
+                                               alpha: 1.0).cgColor
 }
