@@ -125,7 +125,7 @@ class CreateGoalViewController: UIViewController {
     
     @IBAction func createGoalButtonTapped(_ sender: Any) {
         self.selectedDays = convertSelectedDaysToString()
-        guard let name = goalNameTextField.text, !name.isEmpty else { return }
+        guard let name = goalNameTextField.text, !name.isEmpty else { self.missingFieldAlert(); return }
         if let goal = self.goal {
             goal.name = name
             GoalController.shared.modifyGoal(goal: goal)
@@ -138,5 +138,12 @@ class CreateGoalViewController: UIViewController {
     
     func convertSelectedDaysToString() -> String {
          return "\(sunday)\(monday)\(tuesday)\(wednesday)\(thursday)\(friday)\(saturday)"
+    }
+    
+    func missingFieldAlert() {
+        let alertController = UIAlertController(title: "Must enter a name.", message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

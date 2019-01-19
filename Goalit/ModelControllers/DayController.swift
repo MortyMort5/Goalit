@@ -15,7 +15,7 @@ class DayController {
     static let shared = DayController()
     
     func createDay(withDate date: Date, completed: Int32, goal: Goal) {
-        let _ = Day(date: date, goal: goal, dayUUID: NSUUID().uuidString)
+        let _ = Day(date: date, completed: completed, goal: goal, dayUUID: NSUUID().uuidString)
         GoalController.shared.saveToPersistentStore()
     }
     
@@ -33,8 +33,7 @@ class DayController {
                     day.completed = CompletedGoalForDay.failedToComplete.rawValue
                 } else if day.completed == CompletedGoalForDay.failedToComplete.rawValue {
                     day.completed = CompletedGoalForDay.completed.rawValue
-                }
-                
+                } 
             } catch {
                 fatalError("Failed to fetch goals: \(error.localizedDescription)")
             }

@@ -27,23 +27,22 @@ class GoalController {
     func createGoal(withName name: String, dateCreated: Date, totalCompleted: Int32, goalType: Int32, selectedDays: String) {
         guard let user = UserController.shared.currentUser else { return }
         let goal = Goal(dateCreated: dateCreated, name: name, totalCompleted: totalCompleted, user: user, goalUUID: NSUUID().uuidString, selectedDays: selectedDays, goalType: goalType)
-        let currentDaySelected = self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays)
-        if currentDaySelected == 1 {
+        if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: DateHelper.currentDate()) {
             DayController.shared.createDay(withDate: DateHelper.currentDate(), completed: 1, goal: goal)
         }
         print(goal)
         saveToPersistentStore()
     }
     
-    func checkSelectedDaysBeforeCreatingDayObject(selectedDays: String) -> Int32 {
+    func checkSelectedDaysBeforeCreatingDayObject(selectedDays: String, date: Date) -> Bool {
         let daysOfTheWeek = ["Su": 0, "Mo": 1, "Tu": 2, "We": 3, "Th": 4, "Fr": 5, "Sa": 6]
-        let today = DateHelper.dayOfWeekLetter(date: Date())
-        guard let value = daysOfTheWeek[today] else { return 0 }
-        let char:Int? = Int(selectedDays[value])
+        let today = DateHelper.dayOfWeekLetter(date: date)
+        guard let value = daysOfTheWeek[today] else { return false }
+        guard let char:Int = Int(selectedDays[value]) else { return false }
         if char == 1 {
-            return 1
+            return true
         } else {
-            return 0
+            return false
         }
     }
     
@@ -53,16 +52,35 @@ class GoalController {
         moc.perform {
             do {
                 let fetchedGoals: [Goal] = try moc.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [Goal]
-                var tomorrow = Date()
+                var tomorrow = DateHelper.currentDate()
                 goalArr: for goal in fetchedGoals {
-                    guard let daysNSSet = goal.days, let days: [Day] = Array(daysNSSet) as? [Day], let date = days.last?.date else { return }
+                    guard let selectedDays = goal.selectedDays, let dateCreated = goal.dateCreated else { return }
+                    guard let daysNSSet = goal.days, let days: [Day] = Array(daysNSSet) as? [Day], let date = days.last?.date else {
+                        var changingDateFromGoalCreationDate = dateCreated
+                        if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+                        while (true) {
+                            if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: changingDateFromGoalCreationDate) {
+                                DayController.shared.createDay(withDate: changingDateFromGoalCreationDate, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
+                                changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
+                                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+                            } else {
+                                changingDateFromGoalCreationDate = Calendar.current.date(byAdding: .day, value: 1, to: changingDateFromGoalCreationDate)!
+                                if StaticFunction.compareDateWithCurrentDate(date: changingDateFromGoalCreationDate) { continue goalArr }
+                            }
+                        }
+                    }
                     tomorrow = date
                     if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
-                    
+                    tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
                     while (true) {
-                        tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
-                        DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
-                        if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+                        if self.checkSelectedDaysBeforeCreatingDayObject(selectedDays: selectedDays, date: tomorrow) {
+                            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+                            DayController.shared.createDay(withDate: tomorrow, completed: CompletedGoalForDay.failedToComplete.rawValue, goal: goal)
+                            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+                        } else {
+                            tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: tomorrow)!
+                            if StaticFunction.compareDateWithCurrentDate(date: tomorrow) { continue goalArr }
+                        }
                     }
                 }
             } catch {
